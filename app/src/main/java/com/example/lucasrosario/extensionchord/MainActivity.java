@@ -23,7 +23,7 @@ public class MainActivity extends ActionBarActivity {
 
         // TEST CODE FOR PARSE BELOW - DELETE LATER
         ParseObject testObject = new ParseObject("TestObject");
-        testObject.put("foo", "bar");
+        testObject.put("foo", "foofoo");
         testObject.saveInBackground();
         // DELETE ABOVE TEST CODE LATER
     }
