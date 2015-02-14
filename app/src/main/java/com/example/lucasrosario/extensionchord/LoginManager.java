@@ -90,4 +90,14 @@ public class LoginManager {
             }
         });
     }
+
+    /**
+     * Logout the currently signed in user.
+     */
+    public void logout(){
+        if(ParseUser.getCurrentUser() != null)
+            ParseUser.logOut();
+        else
+            Toast.makeText(currContext, "No user currently logged in to log out.", Toast.LENGTH_LONG).show();
+    }
 }

@@ -48,4 +48,17 @@ public class LoginTest extends AndroidTestCase {
 
         assertNotNull(ParseUser.getCurrentUser());
     }
+
+    public void testLogOut() throws ParseException{
+        //First we need to create a user to log in then out with.
+        ParseUser currUser = new ParseUser();
+        currUser.setPassword("Banana");
+        currUser.setUsername("Tester");
+        currUser.signUp();
+        assertNotNull(ParseUser.getCurrentUser());
+
+        //Now we need to test the logout functionality.
+        userManager.logout();
+        assertNull(ParseUser.getCurrentUser());
+    }
 }
