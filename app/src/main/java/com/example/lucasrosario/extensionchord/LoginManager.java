@@ -5,12 +5,11 @@ import android.widget.Toast;
 import android.content.Intent;
 
 import com.parse.LogInCallback;
+import com.parse.SignUpCallback;
 import com.parse.ParseException;
 import com.parse.ParseUser;
 
 /**
- * Created by Jakub Wlodarczyk on 2/14/2015.
- *
  * LoginManager does all login/signup logic.
  */
 
@@ -42,11 +41,30 @@ public class LoginManager {
      * @param password = password associated with the user.
      */
     public void signup(String username, String password){
-        if(!testFlag && !username.equals("Tester")){
+        if(!testFlag && !username.equalsIgnoreCase("Tester")){
+            //Set user information.
+            ParseUser currUser = new ParseUser();
+            currUser.setUsername(username);
+            currUser.setPassword(password);
 
+            //Sign the user up.
+            currUser.signUpInBackground(new SignUpCallback(){
+                @Override
+                public void done(ParseException e){
+                    if (e != null) {
+                        // Show the error message
+                        Toast.makeText(currContext, e.getMessage(), Toast.LENGTH_LONG).show();
+                    } else {
+                        // Start an intent for the dispatch activity
+                        Intent intent = new Intent(currContext, MainActivity.class);
+                        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+                        currContext.startActivity(intent);
+                    }
+                }
+            });
         }
         else{
-
+            Toast.makeText(currContext, "Reserved Name Entered!", Toast.LENGTH_LONG).show();
         }
     }
 
