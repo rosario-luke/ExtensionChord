@@ -9,7 +9,7 @@ public class Application extends android.app.Application{
 
     /**
      * onCreate function runs when the application starts.
-     * This is where Parse is enabled. 
+     * This is where Parse is enabled.
      */
     @Override
     public void onCreate() {
