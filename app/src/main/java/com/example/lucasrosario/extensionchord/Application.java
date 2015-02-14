@@ -6,6 +6,11 @@ import com.parse.Parse;
  * Handles initialization logic for the application.
  */
 public class Application extends android.app.Application{
+    // Debugging switch
+    public static final boolean APPDEBUG = false;
+
+    // Debugging tag
+    public static final String APPTAG = "ExtensionChord";
 
     /**
      * onCreate function runs when the application starts.
