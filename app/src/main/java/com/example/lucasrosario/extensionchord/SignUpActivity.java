@@ -1,6 +1,5 @@
 package com.example.lucasrosario.extensionchord;
 
-import android.content.Intent;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
@@ -8,45 +7,29 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
-import com.parse.ParseObject;
 
-
-public class MainActivity extends ActionBarActivity {
+public class SignUpActivity extends ActionBarActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-
-        //BELOW IS HANDLED IN APPLICATION.JAVA, REMOVE IF APPLICATION IS WORKING.
-        // Enable Local Datastore.
-        //Parse.enableLocalDatastore(this);
-        // Enables Parse with application key for ExtensionChord
-        //Parse.initialize(this, "f539HwpFiyK3DhDsOb7xYRNwCtr7vCeMihU776Vk", "tH1ktzEjhCBZSvMzVR9Thjqj6sDtrrb1gwUYIlh1");
-
-        // TEST CODE FOR PARSE BELOW - DELETE LATER
-        ParseObject testObject = new ParseObject("TestObject");
-        testObject.put("foo", "foofoo");
-        testObject.saveInBackground();
-        // DELETE ABOVE TEST CODE LATER
+        setContentView(R.layout.activity_sign_up);
 
         final LoginManager loginManager = new LoginManager(this);
-        final Button loginButton = (Button) findViewById(R.id.login);
-        loginButton.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                loginManager.login(((EditText) findViewById(R.id.loginUsername)).getText().toString(), ((EditText) findViewById(R.id.loginPassword)).getText().toString());
-            }
-        });
-
         final Button signUpButton = (Button) findViewById(R.id.signUp);
         signUpButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                Intent myIntent = new Intent(MainActivity.this, SignUpActivity.class);
-                MainActivity.this.startActivity(myIntent);
+                if(((EditText) findViewById(R.id.loginPassword)).getText().toString().equals(((EditText) findViewById(R.id.loginPasswordCheck)).getText().toString())) {
+                    loginManager.signup(((EditText) findViewById(R.id.loginUsername)).getText().toString(), ((EditText) findViewById(R.id.loginPassword)).getText().toString());
+                }
+                else
+                {
+                    Toast.makeText(SignUpActivity.this, "Passwords do not match", Toast.LENGTH_LONG).show();
+                }
             }
         });
-
 
     }
 
@@ -54,7 +37,7 @@ public class MainActivity extends ActionBarActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_main, menu);
+        getMenuInflater().inflate(R.menu.menu_sign_up, menu);
         return true;
     }
 
