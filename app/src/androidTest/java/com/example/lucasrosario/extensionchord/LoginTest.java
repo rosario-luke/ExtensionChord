@@ -1,6 +1,7 @@
 package com.example.lucasrosario.extensionchord;
 
-import android.test.AndroidTestCase;
+import android.content.Intent;
+import android.test.ActivityUnitTestCase;
 
 import com.parse.Parse;
 import com.parse.ParseUser;
@@ -10,15 +11,25 @@ import com.parse.ParseException;
  *  Login logic tests.
  *  Tests LoginManager.java
  */
-public class LoginTest extends AndroidTestCase {
-    LoginManager  userManager;
-    LoginActivity testActivity;
+public class LoginTest extends ActivityUnitTestCase<MainActivity> {
+    LoginManager userManager;
+    MainActivity testActivity;
+
+    public LoginTest() {
+        super(MainActivity.class);
+    }
 
     @Override
-    public void setUp(){
-        testActivity = new LoginActivity();
+    public void setUp() throws Exception {
+        super.setUp();
+
+        Intent testIntent = new Intent(getInstrumentation().getTargetContext(), MainActivity.class);
+        startActivity(testIntent, null, null);
+
+        testActivity = getActivity();
         userManager = new LoginManager(testActivity);
         userManager.setTestFlag();
+
         Parse.initialize(testActivity, "f539HwpFiyK3DhDsOb7xYRNwCtr7vCeMihU776Vk", "tH1ktzEjhCBZSvMzVR9Thjqj6sDtrrb1gwUYIlh1");
     }
 
