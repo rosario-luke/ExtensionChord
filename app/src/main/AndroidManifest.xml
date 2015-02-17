@@ -24,6 +24,10 @@
             android:name=".SignUpActivity"
             android:label="@string/title_activity_sign_up" >
         </activity>
+        <activity
+            android:name=".JoinRoomActivity"
+            android:label="@string/title_activity_join_room" >
+        </activity>
     </application>
 
 </manifest>

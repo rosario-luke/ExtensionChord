@@ -56,7 +56,7 @@ public class LoginManager {
                         Toast.makeText(currContext, e.getMessage(), Toast.LENGTH_LONG).show();
                     } else {
                         // Start an intent for the dispatch activity
-                        Intent intent = new Intent(currContext, MainActivity.class);
+                        Intent intent = new Intent(currContext, JoinRoomActivity.class);
                         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
                         currContext.startActivity(intent);
                     }
@@ -83,7 +83,7 @@ public class LoginManager {
                     Toast.makeText(currContext, e.getMessage(), Toast.LENGTH_LONG).show();
                 }else {
                     // Start an intent for the activity after successful login.
-                    Intent intent = new Intent(currContext, MainActivity.class);
+                    Intent intent = new Intent(currContext, JoinRoomActivity.class);
                     intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
                     currContext.startActivity(intent);
                 }
