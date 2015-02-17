@@ -3,7 +3,8 @@
     android:layout_height="match_parent" android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    android:paddingBottom="@dimen/activity_vertical_margin" tools:context=".MainActivity">
+    android:paddingBottom="@dimen/activity_vertical_margin" tools:context=".MainActivity"
+    android:background="#ffd51500">
 
     <EditText
         android:layout_width="wrap_content"
@@ -12,7 +13,8 @@
         android:layout_below="@+id/textView"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="137dp"
-        android:text="Username" />
+        android:text="Username"
+        android:textColor="#ffffffff" />
 
     <EditText
         android:layout_width="wrap_content"
@@ -22,7 +24,8 @@
         android:id="@+id/loginPassword"
         android:layout_centerVertical="true"
         android:layout_centerHorizontal="true"
-        android:text="Password" />
+        android:text="Password"
+        android:textColor="#ffffffff" />
 
     <Button
         android:layout_width="match_parent"
@@ -31,16 +34,21 @@
         android:id="@+id/login"
         android:layout_above="@+id/button"
         android:layout_alignLeft="@+id/button"
-        android:layout_alignStart="@+id/button" />
+        android:layout_alignStart="@+id/button"
+        android:background="#ff034eb2"
+        android:textColor="#ffffffff" />
 
     <Button
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Sign Up"
         android:id="@+id/signUp"
-        android:layout_marginBottom="54dp"
+        android:paddingTop="5dp"
+        android:layout_marginBottom="52dp"
         android:layout_gravity="center"
         android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true" />
+        android:layout_centerHorizontal="true"
+        android:background="#ff034eb2"
+        android:textColor="#ffffffff" />
 
 </TableLayout>
