@@ -13,7 +13,7 @@
         android:layout_below="@+id/textView"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="137dp"
-        android:text="Username"
+        android:hint="Username"
         android:textColor="#ffffffff" />
 
     <EditText
@@ -24,7 +24,7 @@
         android:id="@+id/loginPassword"
         android:layout_centerVertical="true"
         android:layout_centerHorizontal="true"
-        android:text="Password"
+        android:hint="Password"
         android:textColor="#ffffffff" />
 
     <Button
