@@ -4,7 +4,7 @@
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     android:paddingBottom="@dimen/activity_vertical_margin" tools:context=".MainActivity"
-    android:background="#ffd51500">
+    android:background="#FFCC00">
 
     <EditText
         android:layout_width="wrap_content"
@@ -35,7 +35,7 @@
         android:layout_above="@+id/button"
         android:layout_alignLeft="@+id/button"
         android:layout_alignStart="@+id/button"
-        android:background="#ff034eb2"
+        android:background="#ffffa200"
         android:textColor="#ffffffff" />
 
     <Button
@@ -48,7 +48,7 @@
         android:layout_gravity="center"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
-        android:background="#ff034eb2"
+        android:background="#ffffa200"
         android:textColor="#ffffffff" />
 
 </TableLayout>

@@ -26,9 +26,9 @@ public class MainActivity extends Activity {
         //Parse.initialize(this, "f539HwpFiyK3DhDsOb7xYRNwCtr7vCeMihU776Vk", "tH1ktzEjhCBZSvMzVR9Thjqj6sDtrrb1gwUYIlh1");
 
         // TEST CODE FOR PARSE BELOW - DELETE LATER
-        ParseObject testObject = new ParseObject("TestObject");
-        testObject.put("foo", "foofoo");
-        testObject.saveInBackground();
+        //ParseObject testObject = new ParseObject("TestObject");
+        //testObject.put("foo", "foofoo");
+        //testObject.saveInBackground();
         // DELETE ABOVE TEST CODE LATER
 
         final LoginManager loginManager = new LoginManager(this);
