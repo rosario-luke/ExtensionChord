@@ -44,8 +44,13 @@ public class LoginTest extends ActivityUnitTestCase<MainActivity> {
     @Override
     public void tearDown() throws ParseException{
         //Delete the user from the server.
-        if(ParseUser.getCurrentUser() != null)
-            ParseUser.getCurrentUser().delete();
+        if(ParseUser.getCurrentUser() != null) {
+            try {
+                ParseUser.getCurrentUser().delete();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
     }
 
     public void testLogin() throws Exception{
@@ -56,8 +61,8 @@ public class LoginTest extends ActivityUnitTestCase<MainActivity> {
         currUser.signUp();
 
         ParseUser.logOut();
-        Thread.sleep(1000);
         userManager.login("Tester", "Banana");
+        Thread.sleep(1000);
 
         assertNotNull(ParseUser.getCurrentUser());
     }
