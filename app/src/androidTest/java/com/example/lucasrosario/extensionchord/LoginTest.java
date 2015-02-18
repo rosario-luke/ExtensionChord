@@ -2,6 +2,7 @@ package com.example.lucasrosario.extensionchord;
 
 import android.content.Intent;
 import android.test.ActivityUnitTestCase;
+import android.util.Log;
 
 import com.parse.Parse;
 import com.parse.ParseUser;
@@ -31,6 +32,13 @@ public class LoginTest extends ActivityUnitTestCase<MainActivity> {
         userManager.setTestFlag();
 
         Parse.initialize(testActivity, "f539HwpFiyK3DhDsOb7xYRNwCtr7vCeMihU776Vk", "tH1ktzEjhCBZSvMzVR9Thjqj6sDtrrb1gwUYIlh1");
+        try {
+            ParseUser.logIn("Tester", "Banana");
+            ParseUser.getCurrentUser().delete();
+        }
+        catch(ParseException e){
+            Log.i("Login Test", "User not found.");
+        }
     }
 
     @Override
@@ -40,7 +48,7 @@ public class LoginTest extends ActivityUnitTestCase<MainActivity> {
             ParseUser.getCurrentUser().delete();
     }
 
-    public void testLogin() throws ParseException{
+    public void testLogin() throws Exception{
         //Testing if the user can login given correct details.
         ParseUser currUser = new ParseUser();
         currUser.setPassword("Banana");
@@ -48,15 +56,16 @@ public class LoginTest extends ActivityUnitTestCase<MainActivity> {
         currUser.signUp();
 
         ParseUser.logOut();
+        Thread.sleep(1000);
         userManager.login("Tester", "Banana");
 
         assertNotNull(ParseUser.getCurrentUser());
     }
 
-    public void testSignUp(){
+    public void testSignUp() throws Exception{
         //Testing if user gets signed up and then logged in.
         userManager.signup("Tester", "Banana");
-
+        Thread.sleep(1000);
         assertNotNull(ParseUser.getCurrentUser());
     }
 
