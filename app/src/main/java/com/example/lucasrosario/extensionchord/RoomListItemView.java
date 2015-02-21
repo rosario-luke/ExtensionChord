@@ -66,17 +66,10 @@ public class RoomListItemView extends LinearLayout{
         myButton.setOnClickListener(listener);
     }
 
-    protected void onAttachedToWindow() {
-        super.onAttachedToWindow();
-        /*Button myButton = (Button) getChildAt(0);
-        myButton.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                //final Context context = RoomListItemView.this.getContext();
-                //Intent i = new Intent(context, NavDrawerActivity.class);
-                //context.startActivity(i);
-            }
-        });
-        **/
+    public void setButtonClickable(Boolean isClickable){
+        Button myButton = (Button) getChildAt(0);
+        myButton.setClickable(isClickable);
     }
+
+
 }
