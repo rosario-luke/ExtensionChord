@@ -6,6 +6,7 @@ import android.util.Log;
 
 import com.parse.Parse;
 import com.parse.ParseException;
+import com.parse.ParseGeoPoint;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
 import com.parse.ParseUser;
@@ -54,7 +55,14 @@ public class CreateRoomTest extends ActivityUnitTestCase<JoinRoomActivity> {
     public void testCreateRoom(){
 
 
-        roomManager.createRoom("TestRoom");
+        ParseGeoPoint geoPoint = new ParseGeoPoint(40.126126, -88.225247);
+        roomManager.createRoom("TestRoom",geoPoint);
+        try {
+            Thread.sleep(1000);
+        }
+        catch(InterruptedException e){
+            fail();
+        }
 
         ParseQuery<ParseObject> query = ParseQuery.getQuery("ParseRoom");
         query.whereEqualTo("roomName", "TestRoom");

@@ -1,6 +1,7 @@
 package com.example.lucasrosario.extensionchord;
 
 import com.parse.Parse;
+import com.parse.ParseObject;
 
 /**
  * Handles initialization logic for the application.
@@ -21,6 +22,7 @@ public class Application extends android.app.Application{
         super.onCreate();
 
         Parse.enableLocalDatastore(this);
+        ParseObject.registerSubclass(ParseRoom.class);
         Parse.initialize(this, "f539HwpFiyK3DhDsOb7xYRNwCtr7vCeMihU776Vk", "tH1ktzEjhCBZSvMzVR9Thjqj6sDtrrb1gwUYIlh1");
     }
 }
