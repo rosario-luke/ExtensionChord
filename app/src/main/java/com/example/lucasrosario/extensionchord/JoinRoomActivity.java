@@ -1,17 +1,59 @@
 package com.example.lucasrosario.extensionchord;
 
+import android.content.Intent;
+import android.location.Location;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.location.LocationServices;
+import com.parse.ParseGeoPoint;
 
-public class JoinRoomActivity extends ActionBarActivity {
+
+public class JoinRoomActivity extends ActionBarActivity implements GoogleApiClient.ConnectionCallbacks,
+        GoogleApiClient.OnConnectionFailedListener {
+
+    private ParseGeoPoint geoPoint;
+    private GoogleApiClient mGoogleApiClient;
+    private Location mLastLocation;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_join_room);
+
+
+
+    }
+
+    protected synchronized void buildGoogleApiClient() {
+        mGoogleApiClient = new GoogleApiClient.Builder(this)
+                .addConnectionCallbacks(this)
+                .addOnConnectionFailedListener(this)
+                .addApi(LocationServices.API)
+                .build();
+    }
+
+    @Override
+    public void onConnected(Bundle connectionHint) {
+        mLastLocation = LocationServices.FusedLocationApi.getLastLocation(
+                mGoogleApiClient);
+        if (mLastLocation != null) {
+            geoPoint = new ParseGeoPoint(mLastLocation.getLatitude(), mLastLocation.getLongitude());
+        }
+    }
+
+    public void onConnectionSuspended(int cs){
+        mLastLocation = null;
+        geoPoint = null;
+    }
+
+    public void onConnectionFailed(ConnectionResult cr){
+        mLastLocation = null;
+        geoPoint = null;
     }
 
 
