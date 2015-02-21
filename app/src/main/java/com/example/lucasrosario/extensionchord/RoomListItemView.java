@@ -61,7 +61,7 @@ public class RoomListItemView extends LinearLayout{
     /*
         Sets OnClickListener for plus button. Allows to set up
      */
-    public void setButtonListener(OnClickListener listener){
+    public void setButtonListener(Button.OnClickListener listener){
         Button myButton = (Button) getChildAt(0);
         myButton.setOnClickListener(listener);
     }

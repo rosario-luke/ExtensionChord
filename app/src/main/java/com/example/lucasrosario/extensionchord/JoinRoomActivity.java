@@ -1,11 +1,16 @@
 package com.example.lucasrosario.extensionchord;
 
+import android.app.ActionBar;
 import android.content.Intent;
 import android.location.Location;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.LinearLayout;
 
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
@@ -25,7 +30,24 @@ public class JoinRoomActivity extends ActionBarActivity implements GoogleApiClie
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_join_room);
 
+        // The make room button to be clicked after you fill out a name
+        Button makeRoom = (Button) findViewById(R.id.submitCreateRoomButton);
+        makeRoom.setOnClickListener(new Button.OnClickListener(){
+            public void onClick(View v){
+                EditText ed = (EditText) findViewById(R.id.roomNameField);
+            }
+        });
 
+        buildGoogleApiClient();
+        RoomListItemView createRoomBtn = (RoomListItemView) findViewById(R.id.createRoom);
+        createRoomBtn.setButtonListener(new Button.OnClickListener(){
+            public void onClick(View v){
+                Button makeRoom = (Button) findViewById(R.id.submitCreateRoomButton);
+                makeRoom.setVisibility(View.VISIBLE);
+                EditText ed = (EditText) findViewById(R.id.roomNameField);
+                ed.setVisibility(View.VISIBLE);
+            }
+        });
 
     }
 

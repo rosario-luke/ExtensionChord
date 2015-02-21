@@ -8,12 +8,28 @@
     android:background="@color/default_background"
     xmlns:custom="http://schemas.android.com/apk/res-auto"
     android:animateLayoutChanges="true"
+    android:id="@+id/createRoomLayout"
     tools:context="com.example.lucasrosario.extensionchord.JoinRoomActivity">
 
     <com.example.lucasrosario.extensionchord.RoomListItemView
         android:layout_height="wrap_content"
         android:layout_width="wrap_content"
         android:layout_marginTop="5dp"
+        android:id="@+id/createRoom"
         custom:room_name="Create Room"/>
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:hint="Room Name"
+        android:id="@+id/roomNameField"
+        android:visibility="gone"/>
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/submitCreateRoomButton"
+        android:text="Submit"
+        android:visibility="gone"/>
 
 </LinearLayout>
