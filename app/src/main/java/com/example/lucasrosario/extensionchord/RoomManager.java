@@ -32,6 +32,7 @@ public class RoomManager {
         // 2
         ParseACL acl = new ParseACL();
         acl.setPublicReadAccess(true);
+        acl.setPublicWriteAccess(true); //objects created are writable
         room.setACL(acl);
 
         // 3

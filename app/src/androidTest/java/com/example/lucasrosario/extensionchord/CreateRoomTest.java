@@ -27,13 +27,19 @@ public class CreateRoomTest extends ActivityUnitTestCase<JoinRoomActivity> {
     public void setUp() throws Exception{
         super.setUp();
 
-        Intent testIntent = new Intent(getInstrumentation().getTargetContext(), MainActivity.class);
+        Intent testIntent = new Intent(getInstrumentation().getTargetContext(), JoinRoomActivity.class);
         startActivity(testIntent, null, null);
 
         joinRoomActivity = getActivity();
         roomManager = new RoomManager(joinRoomActivity);
 
         Parse.initialize(joinRoomActivity, "f539HwpFiyK3DhDsOb7xYRNwCtr7vCeMihU776Vk", "tH1ktzEjhCBZSvMzVR9Thjqj6sDtrrb1gwUYIlh1");
+
+        //Testing if the user can login given correct details.
+        ParseUser currUser = new ParseUser();
+        currUser.setPassword("Banana");
+        currUser.setUsername("Tester");
+        currUser.signUp();
 
     }
 
@@ -42,13 +48,23 @@ public class CreateRoomTest extends ActivityUnitTestCase<JoinRoomActivity> {
         ParseQuery<ParseObject> query = ParseQuery.getQuery("ParseRoom");
         query.whereEqualTo("roomName", "TestRoom");
         List<ParseObject> objs = null;
+        Log.d("Clean up", "Going to Clean Up Objects");
         try {
             objs = query.find();
-            for(ParseObject p : objs){
-                p.delete();
-            }
+            Log.d("Clean up", "Found "+objs.size()+" objects to delete");
+            ParseObject.deleteAll(objs);
+
         } catch(ParseException e){
-            fail(e.getMessage());
+            Log.d("Parse Exception", e.getMessage());
+        }
+
+        //Delete the user from the server.
+        if(ParseUser.getCurrentUser() != null) {
+            try {
+                ParseUser.getCurrentUser().delete();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
         }
     }
 
@@ -73,7 +89,7 @@ public class CreateRoomTest extends ActivityUnitTestCase<JoinRoomActivity> {
             fail(e.getMessage());
         }
         assertNotNull(objs);
-        assertEquals(objs.size(), 1);
+        assertEquals(1, objs.size());
 
     }
 

@@ -1,6 +1,7 @@
 package com.example.lucasrosario.extensionchord;
 
 import android.app.ActionBar;
+import android.app.Activity;
 import android.content.Intent;
 import android.location.Location;
 import android.support.v7.app.ActionBarActivity;
@@ -24,7 +25,7 @@ import com.google.android.gms.location.LocationServices;
 import com.parse.ParseGeoPoint;
 
 
-public class JoinRoomActivity extends ActionBarActivity implements GoogleApiClient.ConnectionCallbacks,
+public class JoinRoomActivity extends Activity implements GoogleApiClient.ConnectionCallbacks,
         GoogleApiClient.OnConnectionFailedListener {
 
     private ParseGeoPoint geoPoint;
