@@ -12,6 +12,7 @@ import com.parse.SaveCallback;
 
 import android.widget.Toast;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -54,10 +55,10 @@ public class RoomManager {
      * Gets a list of nearby rooms in a specified radius (km), must pass in your current location.
      *
      * @param radius = radius in kilometers.
-     * @param location = center location of the search.
+     * @param point = center location of the search.
      */
     public List<ParseRoom> getNearbyRooms(double radius, ParseGeoPoint point){
-        List<ParseRoom> rooms;
+        ArrayList<ParseRoom> rooms = new ArrayList<ParseRoom>();
 
 
         return rooms;
