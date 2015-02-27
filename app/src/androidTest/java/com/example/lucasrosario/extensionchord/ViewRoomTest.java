@@ -54,9 +54,11 @@ public class ViewRoomTest extends ActivityUnitTestCase<MainActivity>{
         List<ParseRoom> results;
 
         results = manager.getNearbyRooms(0.5, testPoint);
-        Thread.sleep(1000);
 
         assertTrue(results.size() > 0);
-        results.get(0).delete();
+        for(ParseRoom room : results)
+        {
+            room.delete();
+        }
     }
 }

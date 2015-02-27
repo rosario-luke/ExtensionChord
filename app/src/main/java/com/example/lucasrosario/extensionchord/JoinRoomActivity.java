@@ -10,9 +10,12 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.ListView;
+import android.widget.Toast;
 
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GooglePlayServicesClient;
@@ -22,7 +25,10 @@ import com.google.android.gms.common.GooglePlayServicesClient.ConnectionCallback
 import com.google.android.gms.common.api.GoogleApiClient;
 
 import com.google.android.gms.location.LocationServices;
+import com.parse.ParseException;
 import com.parse.ParseGeoPoint;
+
+import java.util.List;
 
 
 public class JoinRoomActivity extends Activity implements GoogleApiClient.ConnectionCallbacks,
@@ -49,15 +55,23 @@ public class JoinRoomActivity extends Activity implements GoogleApiClient.Connec
             }
         });
 
+        Button refreshList = (Button) findViewById(R.id.createRoomReload);
+        refreshList.setOnClickListener(new Button.OnClickListener(){
+            public void onClick(View v){
+                viewRoomList();
+            }
+        });
+
         buildGoogleApiClient();
         mGoogleApiClient.connect();
         RoomListItemView createRoomBtn = (RoomListItemView) findViewById(R.id.createRoom);
-        createRoomBtn.setButtonListener(new Button.OnClickListener(){
-            public void onClick(View v){
+        createRoomBtn.setButtonListener(new Button.OnClickListener() {
+            public void onClick(View v) {
                 Button makeRoom = (Button) findViewById(R.id.submitCreateRoomButton);
                 makeRoom.setVisibility(View.VISIBLE);
                 EditText ed = (EditText) findViewById(R.id.roomNameField);
                 ed.setVisibility(View.VISIBLE);
+                viewRoomList();
             }
         });
 
@@ -80,12 +94,25 @@ public class JoinRoomActivity extends Activity implements GoogleApiClient.Connec
         if (mLastLocation != null) {
             Log.d("Got Location", "Location is" + mLastLocation.toString());
             geoPoint = new ParseGeoPoint(mLastLocation.getLatitude(), mLastLocation.getLongitude());
+            viewRoomList();
+
         } else {
             Log.d("Location", "mLastLocation was null");
         }
     }
 
+    private void viewRoomList() {
+        List<ParseRoom> rooms = roomManager.getNearbyRooms(0.5, geoPoint);
+        String[] values = new String[rooms.size()];
+        for (int i = 0; i < rooms.size(); i++) {
+            values[i] = rooms.get(i).getRoomName();
+        }
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
+                android.R.layout.simple_list_item_1, values);
+        ListView lv = (ListView) findViewById(R.id.roomList);
 
+        lv.setAdapter(adapter);
+    }
 
 
     public void onConnectionSuspended(int cs){

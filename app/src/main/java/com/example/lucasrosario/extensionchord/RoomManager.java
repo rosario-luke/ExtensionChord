@@ -2,11 +2,14 @@ package com.example.lucasrosario.extensionchord;
 
 import android.content.Context;
 import android.location.Location;
+import android.util.Log;
 import android.widget.Toast;
 
+import com.parse.FindCallback;
 import com.parse.ParseACL;
 import com.parse.ParseException;
 import com.parse.ParseGeoPoint;
+import com.parse.ParseQuery;
 import com.parse.ParseUser;
 import com.parse.SaveCallback;
 
@@ -20,6 +23,7 @@ import java.util.List;
  */
 public class RoomManager {
     private Context context;
+    private List<ParseRoom> rooms;
 
     public RoomManager(Context c){
         context = c;
@@ -57,9 +61,41 @@ public class RoomManager {
      * @param radius = radius in kilometers.
      * @param point = center location of the search.
      */
-    public List<ParseRoom> getNearbyRooms(double radius, ParseGeoPoint point){
-        ArrayList<ParseRoom> rooms = new ArrayList<ParseRoom>();
+    public List<ParseRoom> getNearbyRooms(double radius, ParseGeoPoint point) {
+        rooms = new ArrayList<ParseRoom>();
+        ParseQuery<ParseRoom> roomQuery = ParseRoom.getQuery();
 
+        roomQuery.whereWithinKilometers("location", point, radius);
+        try {
+            rooms = roomQuery.find();
+        }
+        catch (ParseException e)
+        {
+            Toast.makeText(context, "No Rooms Found", Toast.LENGTH_LONG);
+        }
+        //roomQuery.orderByDescending("createdAt");
+        //roomQuery.setLimit(10);
+        // Kick off the query in the background
+        /*roomQuery.findInBackground(new FindCallback<ParseRoom>() {
+            @Override
+            public void done(List<ParseRoom> objects, ParseException e) {
+                if(objects != null) {
+                    for(ParseRoom room : objects)
+                    {
+                        Log.d("Testing stuff", "Name: " + room.getRoomName());
+                        rooms.add(room);
+                    }
+                }
+                Log.d("Testing stuff", "Objects: " + objects.size());
+                if (e != null) {
+                    if (Application.APPDEBUG) {
+                        Log.d(Application.APPTAG, "An error occurred while querying for rooms.", e);
+                    }
+                    return;
+                }
+            }
+        });*/
+        Log.d("Testing stuff", "Room Size: " + rooms.size());
 
         return rooms;
     }
