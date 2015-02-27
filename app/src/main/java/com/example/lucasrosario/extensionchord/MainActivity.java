@@ -10,6 +10,7 @@ import android.widget.Button;
 import android.widget.EditText;
 
 import com.parse.ParseObject;
+import com.parse.ParseUser;
 
 
 public class MainActivity extends Activity {
@@ -30,23 +31,28 @@ public class MainActivity extends Activity {
         //testObject.put("foo", "foofoo");
         //testObject.saveInBackground();
         // DELETE ABOVE TEST CODE LATER
+        if(ParseUser.getCurrentUser() != null){
+            Intent intent = new Intent(this, JoinRoomActivity.class);
+            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+            this.startActivity(intent);
+        }
+        else {
+            final LoginManager loginManager = new LoginManager(this);
+            final Button loginButton = (Button) findViewById(R.id.login);
+            loginButton.setOnClickListener(new View.OnClickListener() {
+                public void onClick(View v) {
+                    loginManager.login(((EditText) findViewById(R.id.loginUsername)).getText().toString(), ((EditText) findViewById(R.id.loginPassword)).getText().toString());
+                }
+            });
 
-        final LoginManager loginManager = new LoginManager(this);
-        final Button loginButton = (Button) findViewById(R.id.login);
-        loginButton.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                loginManager.login(((EditText) findViewById(R.id.loginUsername)).getText().toString(), ((EditText) findViewById(R.id.loginPassword)).getText().toString());
-            }
-        });
-
-        final Button signUpButton = (Button) findViewById(R.id.signUp);
-        signUpButton.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                Intent myIntent = new Intent(MainActivity.this, SignUpActivity.class);
-                MainActivity.this.startActivity(myIntent);
-            }
-        });
-
+            final Button signUpButton = (Button) findViewById(R.id.signUp);
+            signUpButton.setOnClickListener(new View.OnClickListener() {
+                public void onClick(View v) {
+                    Intent myIntent = new Intent(MainActivity.this, SignUpActivity.class);
+                    MainActivity.this.startActivity(myIntent);
+                }
+            });
+        }
 
     }
 
