@@ -117,5 +117,6 @@ public class RoomManager {
         }
 
         room.addRoomUser(ParseUser.getCurrentUser().getUsername());
+        ParseUser.getCurrentUser().put("currentRoom", room);
     }
 }
