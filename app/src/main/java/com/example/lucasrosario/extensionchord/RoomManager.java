@@ -6,6 +6,7 @@ import android.util.Log;
 import android.widget.Toast;
 
 import com.parse.FindCallback;
+import com.parse.Parse;
 import com.parse.ParseACL;
 import com.parse.ParseException;
 import com.parse.ParseGeoPoint;
@@ -23,7 +24,6 @@ import java.util.List;
  */
 public class RoomManager {
     private Context context;
-    private List<ParseRoom> rooms;
 
     public RoomManager(Context c){
         context = c;
@@ -62,7 +62,7 @@ public class RoomManager {
      * @param point = center location of the search.
      */
     public List<ParseRoom> getNearbyRooms(double radius, ParseGeoPoint point) {
-        rooms = new ArrayList<ParseRoom>();
+        List<ParseRoom> rooms = new ArrayList<ParseRoom>();
         ParseQuery<ParseRoom> roomQuery = ParseRoom.getQuery();
 
         roomQuery.whereWithinKilometers("location", point, radius);
@@ -71,7 +71,7 @@ public class RoomManager {
         }
         catch (ParseException e)
         {
-            Toast.makeText(context, "No Rooms Found", Toast.LENGTH_LONG);
+            Toast.makeText(context, "No Rooms Found", Toast.LENGTH_LONG).show();
         }
         //roomQuery.orderByDescending("createdAt");
         //roomQuery.setLimit(10);
@@ -95,9 +95,27 @@ public class RoomManager {
                 }
             }
         });*/
-        Log.d("Testing stuff", "Room Size: " + rooms.size());
+        Log.d("Testing stuff", "Nearby rooms size: " + rooms.size());
 
         return rooms;
     }
 
+    /**
+     * Adds a user to a room's user list.
+     *
+     * @param roomName = name of the room to add the user to
+     */
+    public static void addUserToRoom(String roomName) {
+        ParseQuery<ParseRoom> query = ParseRoom.getQuery();
+        query.whereEqualTo("roomName", roomName);
+        ParseRoom room = new ParseRoom();
+
+        try {
+            room = query.getFirst();
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
+        room.addRoomUser(ParseUser.getCurrentUser().getUsername());
+    }
 }

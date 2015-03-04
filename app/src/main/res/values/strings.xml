@@ -6,5 +6,6 @@
     <string name="action_settings">Settings</string>
     <string name="title_activity_sign_up">SignUpActivity</string>
     <string name="title_activity_join_room">JoinRoomActivity</string>
+    <string name="title_activity_room">RoomActivity</string>
 
 </resources>

@@ -6,6 +6,8 @@ import com.parse.ParseObject;
 import com.parse.ParseQuery;
 import com.parse.ParseUser;
 
+import java.util.List;
+
 /**
  * Created by lucas on 2/21/15.
  */
@@ -26,6 +28,14 @@ public class ParseRoom extends ParseObject {
 
     public void setCreator(ParseUser creator){
         put("creator", creator);
+    }
+
+    public void addRoomUser(String username) {
+        add("roomUsers", username);
+    }
+
+    public List<String> getRoomUsers() {
+        return getList("roomUsers");
     }
 
     public ParseGeoPoint getLocation() {

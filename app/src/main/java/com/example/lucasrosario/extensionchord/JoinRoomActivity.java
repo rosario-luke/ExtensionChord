@@ -1,31 +1,23 @@
 package com.example.lucasrosario.extensionchord;
 
-import android.app.ActionBar;
 import android.app.Activity;
 import android.content.Intent;
 import android.location.Location;
-import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.LinearLayout;
 import android.widget.ListView;
-import android.widget.Toast;
+import android.widget.TextView;
 
 import com.google.android.gms.common.ConnectionResult;
-import com.google.android.gms.common.GooglePlayServicesClient;
-import com.google.android.gms.common.GooglePlayServicesClient.ConnectionCallbacks;
-
-
 import com.google.android.gms.common.api.GoogleApiClient;
-
 import com.google.android.gms.location.LocationServices;
-import com.parse.ParseException;
 import com.parse.ParseGeoPoint;
 
 import java.util.List;
@@ -112,6 +104,19 @@ public class JoinRoomActivity extends Activity implements GoogleApiClient.Connec
         ListView lv = (ListView) findViewById(R.id.roomList);
 
         lv.setAdapter(adapter);
+
+        lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                // When clicked, show a toast with the TextView text or do whatever you need.
+                String roomName = ((TextView) view).getText().toString();
+                RoomManager.addUserToRoom(roomName);
+
+                Intent myIntent = new Intent(JoinRoomActivity.this, RoomActivity.class);
+                myIntent.putExtra("roomName", roomName);
+
+                JoinRoomActivity.this.startActivity(myIntent);
+            }
+        });
     }
 
 
