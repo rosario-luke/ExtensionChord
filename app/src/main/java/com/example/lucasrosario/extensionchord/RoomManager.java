@@ -73,28 +73,7 @@ public class RoomManager {
         {
             Toast.makeText(context, "No Rooms Found", Toast.LENGTH_LONG).show();
         }
-        //roomQuery.orderByDescending("createdAt");
-        //roomQuery.setLimit(10);
-        // Kick off the query in the background
-        /*roomQuery.findInBackground(new FindCallback<ParseRoom>() {
-            @Override
-            public void done(List<ParseRoom> objects, ParseException e) {
-                if(objects != null) {
-                    for(ParseRoom room : objects)
-                    {
-                        Log.d("Testing stuff", "Name: " + room.getRoomName());
-                        rooms.add(room);
-                    }
-                }
-                Log.d("Testing stuff", "Objects: " + objects.size());
-                if (e != null) {
-                    if (Application.APPDEBUG) {
-                        Log.d(Application.APPTAG, "An error occurred while querying for rooms.", e);
-                    }
-                    return;
-                }
-            }
-        });*/
+
         Log.d("Testing stuff", "Nearby rooms size: " + rooms.size());
 
         return rooms;
