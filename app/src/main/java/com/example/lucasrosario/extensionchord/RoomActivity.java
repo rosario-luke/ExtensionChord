@@ -18,8 +18,10 @@ public class RoomActivity extends Activity {
 
         setContentView(R.layout.activity_room);
 
-        TextView welcomeTextView = (TextView) findViewById(R.id.welcomeText);
-        welcomeTextView.setText("Successfully joined room: " + intent.getString("roomName"));
+        if (intent != null) {
+            TextView welcomeTextView = (TextView) findViewById(R.id.welcomeText);
+            welcomeTextView.setText("Successfully joined room: " + intent.getString("roomName"));
+        }
     }
 
 
