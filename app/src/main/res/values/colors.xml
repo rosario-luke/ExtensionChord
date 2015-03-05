@@ -4,5 +4,6 @@
     <color name="nav_background">#414B99</color>
     <color name="header_background">#1A2ECC</color>
     <color name="button_background">#FF6C00</color>
+    <color name="button_background_down">#CC5600</color>
     <color name="additional_background">#CC2D1A</color>
 </resources>
