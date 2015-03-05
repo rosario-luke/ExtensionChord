@@ -30,7 +30,7 @@
         android:id="@+id/login"
         android:layout_marginBottom="10dp"
         android:layout_marginTop="10dp"
-        android:background="@color/button_background"
+        android:background="@drawable/button_states"
         android:textColor="#ffffffff" />
 
     <Button
@@ -39,7 +39,7 @@
         android:text="Sign Up"
         android:id="@+id/signUp"
         android:layout_gravity="center"
-        android:background="@color/button_background"
+        android:background="@drawable/button_states"
         android:textColor="#ffffffff" />
 
     <ImageView android:layout_width="wrap_content"
