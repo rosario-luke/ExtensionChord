@@ -1,27 +1,50 @@
 package com.example.lucasrosario.extensionchord;
 
 import android.app.Activity;
+import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.ArrayAdapter;
+import android.widget.ListView;
 import android.widget.TextView;
+
+import com.parse.ParseUser;
 
 
 public class RoomActivity extends Activity {
+    private String[] mDrawerStrings;
+    private DrawerLayout mDrawerLayout;
+    private ListView mDrawerList;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        Bundle intent = getIntent().getExtras();
-
         setContentView(R.layout.activity_room);
 
+        createNavigationDrawer();
+    }
+
+    private void createNavigationDrawer() {
+        Bundle intent = getIntent().getExtras();
+
+        // Won't need this once we store room with the ParseUser object
         if (intent != null) {
-            TextView welcomeTextView = (TextView) findViewById(R.id.welcomeText);
-            welcomeTextView.setText("Successfully joined room: " + intent.getString("roomName"));
+            TextView roomNameTextView = (TextView) findViewById(R.id.drawer_roomname);
+            roomNameTextView.setText("Room: " + intent.getString("roomName"));
         }
+
+        TextView userNameTextView = (TextView) findViewById(R.id.drawer_username);
+        userNameTextView.setText("User: " + ParseUser.getCurrentUser().getUsername());
+
+        mDrawerLayout = (DrawerLayout) findViewById(R.id.room_drawer_layout);
+        mDrawerList = (ListView) findViewById(R.id.room_left_drawer);
+
+        mDrawerStrings = getResources().getStringArray(R.array.navdrawer_array);
+        mDrawerList.setAdapter(new ArrayAdapter<String>(this, R.layout.drawer_list_item, mDrawerStrings));
     }
 
 

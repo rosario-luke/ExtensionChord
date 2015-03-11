@@ -8,4 +8,8 @@
     <string name="title_activity_join_room">JoinRoomActivity</string>
     <string name="title_activity_room">RoomActivity</string>
 
+    <string-array name="navdrawer_array">
+        <item>Item 1</item>
+        <item>Item 2</item>
+    </string-array>
 </resources>
