@@ -25,7 +25,7 @@ public class JoinRoomTest extends ActivityUnitTestCase<RoomActivity> {
     RoomManager roomManager;
 
     @Override
-    public void setUp() throws Exception{
+    public void setUp() throws Exception {
         super.setUp();
 
         Intent testIntent = new Intent(getInstrumentation().getTargetContext(), RoomActivity.class);

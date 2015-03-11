@@ -46,7 +46,7 @@ public class RoomManager {
         room.saveInBackground(new SaveCallback() {
             @Override
             public void done(ParseException e) {
-                if(e  == null) {
+                if (e  == null) {
                     Toast.makeText(context, "Created Room Successfully", Toast.LENGTH_LONG).show();
                 } else {
                     Toast.makeText(context, e.getMessage(), Toast.LENGTH_LONG).show();
@@ -68,9 +68,7 @@ public class RoomManager {
         roomQuery.whereWithinKilometers("location", point, radius);
         try {
             rooms = roomQuery.find();
-        }
-        catch (ParseException e)
-        {
+        } catch (ParseException e) {
             Toast.makeText(context, "No Rooms Found", Toast.LENGTH_LONG).show();
         }
 

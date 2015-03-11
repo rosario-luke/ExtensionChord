@@ -22,7 +22,7 @@ public class LoginManager {
      *
      * @param context = context the LoginManager is being used in.
      */
-    public LoginManager(Context context){
+    public LoginManager(Context context) {
         currContext = context;
         testFlag = false;
     }
@@ -30,7 +30,7 @@ public class LoginManager {
     /**
      * Sets the test flag to allow for testing.
      */
-    public void setTestFlag(){
+    public void setTestFlag() {
         testFlag = true;
     }
 
@@ -40,17 +40,17 @@ public class LoginManager {
      * @param username = username to be signed up.
      * @param password = password associated with the user.
      */
-    public void signup(String username, String password){
-        if(!testFlag && !username.equalsIgnoreCase("Tester")){
+    public void signup(String username, String password) {
+        if(!testFlag && !username.equalsIgnoreCase("Tester")) {
             //Set user information.
             ParseUser currUser = new ParseUser();
             currUser.setUsername(username);
             currUser.setPassword(password);
 
             //Sign the user up.
-            currUser.signUpInBackground(new SignUpCallback(){
+            currUser.signUpInBackground(new SignUpCallback() {
                 @Override
-                public void done(ParseException e){
+                public void done(ParseException e) {
                     if (e != null) {
                         // Show the error message
                         Toast.makeText(currContext, e.getMessage(), Toast.LENGTH_LONG).show();
@@ -62,8 +62,7 @@ public class LoginManager {
                     }
                 }
             });
-        }
-        else{
+        } else {
             Toast.makeText(currContext, "Reserved Name Entered!", Toast.LENGTH_LONG).show();
         }
     }
@@ -74,14 +73,14 @@ public class LoginManager {
      * @param username = username of user logging in.
      * @param password = password associated with the user.
      */
-    public void login(String username, String password){
+    public void login(String username, String password) {
         ParseUser.logInInBackground(username, password, new LogInCallback() {
             @Override
-            public void done(ParseUser user, ParseException e){
+            public void done(ParseUser user, ParseException e) {
                 //Show error message
-                if(e != null){
+                if (e != null) {
                     Toast.makeText(currContext, e.getMessage(), Toast.LENGTH_LONG).show();
-                }else {
+                } else {
                     // Start an intent for the activity after successful login.
                     Intent intent = new Intent(currContext, JoinRoomActivity.class);
                     intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
@@ -94,8 +93,8 @@ public class LoginManager {
     /**
      * Logout the currently signed in user.
      */
-    public void logout(){
-        if(ParseUser.getCurrentUser() != null)
+    public void logout() {
+        if (ParseUser.getCurrentUser() != null)
             ParseUser.logOut();
         else
             Toast.makeText(currContext, "No user currently logged in to log out.", Toast.LENGTH_LONG).show();

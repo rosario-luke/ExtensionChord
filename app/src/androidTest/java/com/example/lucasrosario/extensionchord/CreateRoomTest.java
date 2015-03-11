@@ -18,7 +18,9 @@ import java.util.List;
  */
 public class CreateRoomTest extends ActivityUnitTestCase<JoinRoomActivity> {
 
-    public CreateRoomTest(){ super(JoinRoomActivity.class); }
+    public CreateRoomTest() {
+        super(JoinRoomActivity.class);
+    }
 
     RoomManager roomManager;
     JoinRoomActivity joinRoomActivity;
@@ -44,7 +46,7 @@ public class CreateRoomTest extends ActivityUnitTestCase<JoinRoomActivity> {
     }
 
     @Override
-    public void tearDown() throws ParseException{
+    public void tearDown() throws ParseException {
         ParseQuery<ParseObject> query = ParseQuery.getQuery("ParseRoom");
         query.whereEqualTo("roomName", "TestRoom");
         List<ParseObject> objs = null;
@@ -53,13 +55,12 @@ public class CreateRoomTest extends ActivityUnitTestCase<JoinRoomActivity> {
             objs = query.find();
             Log.d("Clean up", "Found "+objs.size()+" objects to delete");
             ParseObject.deleteAll(objs);
-
-        } catch(ParseException e){
+        } catch(ParseException e) {
             Log.d("Parse Exception", e.getMessage());
         }
 
         //Delete the user from the server.
-        if(ParseUser.getCurrentUser() != null) {
+        if (ParseUser.getCurrentUser() != null) {
             try {
                 ParseUser.getCurrentUser().delete();
             } catch (Exception e) {
@@ -68,15 +69,12 @@ public class CreateRoomTest extends ActivityUnitTestCase<JoinRoomActivity> {
         }
     }
 
-    public void testCreateRoom(){
-
-
+    public void testCreateRoom() {
         ParseGeoPoint geoPoint = new ParseGeoPoint(40.126126, -88.225247);
         roomManager.createRoom("TestRoom",geoPoint);
         try {
             Thread.sleep(1000);
-        }
-        catch(InterruptedException e){
+        } catch(InterruptedException e) {
             fail();
         }
 
@@ -85,7 +83,7 @@ public class CreateRoomTest extends ActivityUnitTestCase<JoinRoomActivity> {
         List<ParseObject> objs = null;
         try {
             objs = query.find();
-        } catch(ParseException e){
+        } catch(ParseException e) {
             fail(e.getMessage());
         }
         assertNotNull(objs);

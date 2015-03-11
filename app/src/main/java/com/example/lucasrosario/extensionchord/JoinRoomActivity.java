@@ -41,15 +41,15 @@ public class JoinRoomActivity extends Activity implements GoogleApiClient.Connec
         // The make room button to be clicked after you fill out a name
         Button makeRoom = (Button) findViewById(R.id.submitCreateRoomButton);
         makeRoom.setOnClickListener(new Button.OnClickListener(){
-            public void onClick(View v){
+            public void onClick(View v) {
                 EditText ed = (EditText) findViewById(R.id.roomNameField);
                 roomManager.createRoom(ed.getText().toString(),geoPoint);
             }
         });
 
         Button refreshList = (Button) findViewById(R.id.createRoomReload);
-        refreshList.setOnClickListener(new Button.OnClickListener(){
-            public void onClick(View v){
+        refreshList.setOnClickListener(new Button.OnClickListener() {
+            public void onClick(View v) {
                 viewRoomList();
             }
         });
@@ -81,13 +81,12 @@ public class JoinRoomActivity extends Activity implements GoogleApiClient.Connec
 
     public void onConnected(Bundle bundle) {
         Log.d("Location", "Connected");
-        mLastLocation = LocationServices.FusedLocationApi.getLastLocation(
-                mGoogleApiClient);
+        mLastLocation = LocationServices.FusedLocationApi.getLastLocation(mGoogleApiClient);
+
         if (mLastLocation != null) {
             Log.d("Got Location", "Location is" + mLastLocation.toString());
             geoPoint = new ParseGeoPoint(mLastLocation.getLatitude(), mLastLocation.getLongitude());
             viewRoomList();
-
         } else {
             Log.d("Location", "mLastLocation was null");
         }
@@ -96,9 +95,11 @@ public class JoinRoomActivity extends Activity implements GoogleApiClient.Connec
     private void viewRoomList() {
         List<ParseRoom> rooms = roomManager.getNearbyRooms(0.5, geoPoint);
         String[] values = new String[rooms.size()];
+
         for (int i = 0; i < rooms.size(); i++) {
             values[i] = rooms.get(i).getRoomName();
         }
+
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
                 android.R.layout.simple_list_item_1, values);
         ListView lv = (ListView) findViewById(R.id.roomList);
@@ -120,13 +121,13 @@ public class JoinRoomActivity extends Activity implements GoogleApiClient.Connec
     }
 
 
-    public void onConnectionSuspended(int cs){
+    public void onConnectionSuspended(int cs) {
         Log.d("Location", "Could not find location");
         mLastLocation = null;
         geoPoint = null;
     }
 
-    public void onConnectionFailed(ConnectionResult cr){
+    public void onConnectionFailed(ConnectionResult cr) {
         Log.d("Location", "Could not find location");
 
         mLastLocation = null;

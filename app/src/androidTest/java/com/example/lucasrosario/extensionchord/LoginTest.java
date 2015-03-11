@@ -35,16 +35,15 @@ public class LoginTest extends ActivityUnitTestCase<MainActivity> {
         try {
             ParseUser.logIn("Tester", "Banana");
             ParseUser.getCurrentUser().delete();
-        }
-        catch(ParseException e){
+        } catch(ParseException e) {
             Log.i("Login Test", "User not found.");
         }
     }
 
     @Override
-    public void tearDown() throws ParseException{
+    public void tearDown() throws ParseException {
         //Delete the user from the server.
-        if(ParseUser.getCurrentUser() != null) {
+        if (ParseUser.getCurrentUser() != null) {
             try {
                 ParseUser.getCurrentUser().delete();
             } catch (Exception e) {
@@ -53,7 +52,7 @@ public class LoginTest extends ActivityUnitTestCase<MainActivity> {
         }
     }
 
-    public void testLogin() throws Exception{
+    public void testLogin() throws Exception {
         //Testing if the user can login given correct details.
         ParseUser currUser = new ParseUser();
         currUser.setPassword("Banana");
@@ -67,14 +66,14 @@ public class LoginTest extends ActivityUnitTestCase<MainActivity> {
         assertNotNull(ParseUser.getCurrentUser());
     }
 
-    public void testSignUp() throws Exception{
+    public void testSignUp() throws Exception {
         //Testing if user gets signed up and then logged in.
         userManager.signup("Tester", "Banana");
         Thread.sleep(1000);
         assertNotNull(ParseUser.getCurrentUser());
     }
 
-    public void testLogOut() throws ParseException{
+    public void testLogOut() throws ParseException {
         //First we need to create a user to log in then out with.
         ParseUser currUser = new ParseUser();
         currUser.setPassword("Banana");

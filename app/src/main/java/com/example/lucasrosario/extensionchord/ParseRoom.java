@@ -14,19 +14,19 @@ import java.util.List;
 @ParseClassName("ParseRoom")
 public class ParseRoom extends ParseObject {
 
-    public String getRoomName(){
+    public String getRoomName() {
         return getString("roomName");
     }
 
-    public void setRoomName(String value){
+    public void setRoomName(String value) {
         put("roomName", value);
     }
 
-    public ParseUser getCreator(){
+    public ParseUser getCreator() {
         return getParseUser("creator");
     }
 
-    public void setCreator(ParseUser creator){
+    public void setCreator(ParseUser creator) {
         put("creator", creator);
     }
 

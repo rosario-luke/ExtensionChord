@@ -20,7 +20,7 @@ public class ViewRoomTest extends ActivityUnitTestCase<MainActivity>{
     }
 
     @Override
-    public void setUp() throws Exception{
+    public void setUp() throws Exception {
         super.setUp();
 
         Intent testIntent = new Intent(getInstrumentation().getTargetContext(), MainActivity.class);
@@ -36,9 +36,9 @@ public class ViewRoomTest extends ActivityUnitTestCase<MainActivity>{
     }
 
     @Override
-    public void tearDown() throws Exception{
+    public void tearDown() throws Exception {
         //Delete the user from the server.
-        if(ParseUser.getCurrentUser() != null) {
+        if (ParseUser.getCurrentUser() != null) {
             try {
                 ParseUser.getCurrentUser().delete();
             } catch (Exception e) {
@@ -47,7 +47,7 @@ public class ViewRoomTest extends ActivityUnitTestCase<MainActivity>{
         }
     }
 
-    public void testGetRooms() throws Exception{
+    public void testGetRooms() throws Exception {
         ParseGeoPoint testPoint = new ParseGeoPoint(0, 90);
         manager.createRoom("Test Room", testPoint);
 
@@ -56,8 +56,7 @@ public class ViewRoomTest extends ActivityUnitTestCase<MainActivity>{
         results = manager.getNearbyRooms(0.5, testPoint);
 
         assertTrue(results.size() > 0);
-        for(ParseRoom room : results)
-        {
+        for(ParseRoom room : results) {
             room.delete();
         }
     }

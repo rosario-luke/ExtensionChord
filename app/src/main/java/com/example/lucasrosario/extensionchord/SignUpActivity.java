@@ -19,13 +19,17 @@ public class SignUpActivity extends ActionBarActivity {
 
         final LoginManager loginManager = new LoginManager(this);
         final Button signUpButton = (Button) findViewById(R.id.signUp);
+
         signUpButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                if(((EditText) findViewById(R.id.loginPassword)).getText().toString().equals(((EditText) findViewById(R.id.loginPasswordCheck)).getText().toString())) {
-                    loginManager.signup(((EditText) findViewById(R.id.loginUsername)).getText().toString(), ((EditText) findViewById(R.id.loginPassword)).getText().toString());
-                }
-                else
-                {
+                String loginPassword = ((EditText) findViewById(R.id.loginPassword)).getText().toString();
+                String loginPasswordCheck = ((EditText) findViewById(R.id.loginPasswordCheck)).getText().toString();
+
+                if(loginPassword.equals(loginPasswordCheck)) {
+                    String loginUsername = ((EditText) findViewById(R.id.loginUsername)).getText().toString();
+
+                    loginManager.signup(loginUsername, loginPassword);
+                } else {
                     Toast.makeText(SignUpActivity.this, "Passwords do not match", Toast.LENGTH_LONG).show();
                 }
             }

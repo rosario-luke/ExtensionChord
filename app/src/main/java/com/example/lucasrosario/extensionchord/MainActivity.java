@@ -20,28 +20,18 @@ public class MainActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        //BELOW IS HANDLED IN APPLICATION.JAVA, REMOVE IF APPLICATION IS WORKING.
-        // Enable Local Datastore.
-        //Parse.enableLocalDatastore(this);
-        // Enables Parse with application key for ExtensionChord
-        //Parse.initialize(this, "f539HwpFiyK3DhDsOb7xYRNwCtr7vCeMihU776Vk", "tH1ktzEjhCBZSvMzVR9Thjqj6sDtrrb1gwUYIlh1");
-
-        // TEST CODE FOR PARSE BELOW - DELETE LATER
-        //ParseObject testObject = new ParseObject("TestObject");
-        //testObject.put("foo", "foofoo");
-        //testObject.saveInBackground();
-        // DELETE ABOVE TEST CODE LATER
-        if(ParseUser.getCurrentUser() != null){
+        if (ParseUser.getCurrentUser() != null) {
             Intent intent = new Intent(this, JoinRoomActivity.class);
             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
             this.startActivity(intent);
-        }
-        else {
+        } else {
             final LoginManager loginManager = new LoginManager(this);
             final Button loginButton = (Button) findViewById(R.id.login);
             loginButton.setOnClickListener(new View.OnClickListener() {
                 public void onClick(View v) {
-                    loginManager.login(((EditText) findViewById(R.id.loginUsername)).getText().toString(), ((EditText) findViewById(R.id.loginPassword)).getText().toString());
+                    String loginUsername = ((EditText) findViewById(R.id.loginUsername)).getText().toString();
+                    String loginPassword = ((EditText) findViewById(R.id.loginPassword)).getText().toString();
+                    loginManager.login(loginUsername, loginPassword);
                 }
             });
 
