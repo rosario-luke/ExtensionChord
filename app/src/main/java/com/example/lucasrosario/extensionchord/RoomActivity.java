@@ -2,13 +2,15 @@ package com.example.lucasrosario.extensionchord;
 
 import android.app.Activity;
 import android.support.v4.widget.DrawerLayout;
-import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.parse.ParseUser;
 
@@ -45,8 +47,9 @@ public class RoomActivity extends Activity {
 
         mDrawerStrings = getResources().getStringArray(R.array.navdrawer_array);
         mDrawerList.setAdapter(new ArrayAdapter<String>(this, R.layout.drawer_list_item, mDrawerStrings));
-    }
 
+        mDrawerList.setOnItemClickListener(new DrawerItemClickListener() {});
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -68,5 +71,12 @@ public class RoomActivity extends Activity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    private class DrawerItemClickListener implements ListView.OnItemClickListener {
+        @Override
+        public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+            Toast.makeText(RoomActivity.this, "Clicked item at index: " + position, Toast.LENGTH_LONG).show();
+        }
     }
 }
