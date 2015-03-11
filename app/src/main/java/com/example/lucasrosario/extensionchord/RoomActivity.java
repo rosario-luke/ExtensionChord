@@ -39,8 +39,10 @@ public class RoomActivity extends Activity {
             roomNameTextView.setText("Room: " + intent.getString("roomName"));
         }
 
-        TextView userNameTextView = (TextView) findViewById(R.id.drawer_username);
-        userNameTextView.setText("User: " + ParseUser.getCurrentUser().getUsername());
+        if (ParseUser.getCurrentUser() != null) {
+            TextView userNameTextView = (TextView) findViewById(R.id.drawer_username);
+            userNameTextView.setText("User: " + ParseUser.getCurrentUser().getUsername());
+        }
 
         mDrawerLayout = (DrawerLayout) findViewById(R.id.room_drawer_layout);
         mDrawerList = (ListView) findViewById(R.id.room_left_drawer);
