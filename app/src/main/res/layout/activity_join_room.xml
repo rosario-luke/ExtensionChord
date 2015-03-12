@@ -36,6 +36,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/createRoomReload"
+        android:textColor="#ffffffff"
+        android:background="@drawable/button_states"
         android:text="Reload"/>
 
     <ListView
