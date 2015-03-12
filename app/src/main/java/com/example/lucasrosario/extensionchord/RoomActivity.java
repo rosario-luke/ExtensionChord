@@ -48,9 +48,13 @@ public class RoomActivity extends Activity {
         mDrawerList = (ListView) findViewById(R.id.room_left_drawer);
 
         mDrawerStrings = getResources().getStringArray(R.array.navdrawer_array);
-        mDrawerList.setAdapter(new ArrayAdapter<String>(this, R.layout.drawer_list_item, mDrawerStrings));
+        mDrawerList.setAdapter(new ArrayAdapter<String>(this, R.layout.generic_list_item, mDrawerStrings));
 
-        mDrawerList.setOnItemClickListener(new DrawerItemClickListener() {});
+        mDrawerList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Toast.makeText(RoomActivity.this, "Clicked item at index: " + position, Toast.LENGTH_LONG).show();
+            }
+        });
     }
 
     @Override
@@ -73,12 +77,5 @@ public class RoomActivity extends Activity {
         }
 
         return super.onOptionsItemSelected(item);
-    }
-
-    private class DrawerItemClickListener implements ListView.OnItemClickListener {
-        @Override
-        public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-            Toast.makeText(RoomActivity.this, "Clicked item at index: " + position, Toast.LENGTH_LONG).show();
-        }
     }
 }
