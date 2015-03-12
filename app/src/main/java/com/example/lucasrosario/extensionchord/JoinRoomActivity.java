@@ -101,7 +101,7 @@ public class JoinRoomActivity extends Activity implements GoogleApiClient.Connec
         }
 
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
-                android.R.layout.simple_list_item_1, values);
+                R.layout.generic_list_item, values);
         ListView lv = (ListView) findViewById(R.id.roomList);
 
         lv.setAdapter(adapter);

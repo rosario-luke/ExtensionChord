@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <color name="default_background">#07A6FF</color>
+    <color name="list_item_down">#0695E6</color>
     <color name="nav_background">#414B99</color>
     <color name="header_background">#1A2ECC</color>
     <color name="button_background">#FF6C00</color>
