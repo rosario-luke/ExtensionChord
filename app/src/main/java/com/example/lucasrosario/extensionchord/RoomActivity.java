@@ -1,26 +1,35 @@
 package com.example.lucasrosario.extensionchord;
 
 import android.app.Activity;
+
+import android.app.Fragment;
+import android.app.FragmentManager;
+import android.app.FragmentTransaction;
 import android.support.v4.widget.DrawerLayout;
 import android.os.Bundle;
+import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.parse.ParseUser;
 
+import java.util.ArrayList;
+
 
 public class RoomActivity extends Activity {
     private String[] mDrawerStrings;
     private DrawerLayout mDrawerLayout;
     private ListView mDrawerList;
-
-
+    private SearchFragment searchFragment;
+    private Fragment curFragment;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -28,6 +37,15 @@ public class RoomActivity extends Activity {
         setContentView(R.layout.activity_room);
 
         createNavigationDrawer();
+
+        searchFragment = new SearchFragment();
+        FragmentManager fragmentManager = this.getFragmentManager();
+        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+
+        fragmentTransaction.add(R.id.container,searchFragment,"SearchFragment");
+        fragmentTransaction.commit();
+        curFragment = searchFragment;
+
     }
 
     private void createNavigationDrawer() {
@@ -52,7 +70,15 @@ public class RoomActivity extends Activity {
 
         mDrawerList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Toast.makeText(RoomActivity.this, "Clicked item at index: " + position, Toast.LENGTH_LONG).show();
+                switch(position){
+                    case 0:
+                        setUpSearchFragment();
+                        break;
+                    default:
+                        Toast.makeText(RoomActivity.this, "Clicked item at index: " + position, Toast.LENGTH_LONG).show();
+                        break;
+                }
+                //Toast.makeText(RoomActivity.this, "Clicked item at index: " + position, Toast.LENGTH_LONG).show();
             }
         });
     }
@@ -77,5 +103,23 @@ public class RoomActivity extends Activity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    public void setUpSearchFragment(){
+        FragmentManager fragmentManager = this.getFragmentManager();
+        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+
+        fragmentTransaction.add(R.id.container,searchFragment,"SearchFragment");
+        fragmentTransaction.hide(curFragment);
+        fragmentTransaction.commit();
+        curFragment = searchFragment;
+    }
+
+    public void onSearchBtnClick(View v){
+        searchFragment.onSearchBtnClick(v);
+    }
+
+    public void addTracks(ArrayList<Track> tracks){
+        searchFragment.addTracks(tracks);
     }
 }

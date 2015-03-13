@@ -9,7 +9,7 @@
     <string name="title_activity_room">RoomActivity</string>
 
     <string-array name="navdrawer_array">
-        <item>Item 1</item>
+        <item>Search</item>
         <item>Item 2</item>
     </string-array>
 

@@ -77,12 +77,12 @@ public class SearchFragment extends Fragment {
     @Override
     public void onAttach(Activity activity) {
         super.onAttach(activity);
-        try {
+       /* try {
             mListener = (OnFragmentInteractionListener) activity;
         } catch (ClassCastException e) {
             throw new ClassCastException(activity.toString()
                     + " must implement OnFragmentInteractionListener");
-        }
+        }*/
     }
 
     @Override
@@ -114,7 +114,7 @@ public class SearchFragment extends Fragment {
         String query = searchField.getText().toString();
 
         ArrayList<Track> l = new ArrayList<Track>();
-        new SoundCloudSearch(this).execute(query);
+        new SoundCloudSearch((RoomActivity)this.getActivity()).execute(query);
 
     }
 
