@@ -23,6 +23,7 @@ public class Application extends android.app.Application{
 
         Parse.enableLocalDatastore(this);
         ParseObject.registerSubclass(ParseRoom.class);
+        ParseObject.registerSubclass(RoomUser.class);
         Parse.initialize(this, "f539HwpFiyK3DhDsOb7xYRNwCtr7vCeMihU776Vk", "tH1ktzEjhCBZSvMzVR9Thjqj6sDtrrb1gwUYIlh1");
     }
 }
