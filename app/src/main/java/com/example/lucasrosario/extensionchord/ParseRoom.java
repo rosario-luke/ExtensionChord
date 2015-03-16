@@ -60,4 +60,8 @@ public class ParseRoom extends ParseObject {
     public static ParseQuery<ParseRoom> getQuery() {
         return ParseQuery.getQuery(ParseRoom.class);
     }
+
+    public ParseMusicQueue getParseMusicQueue() { return (ParseMusicQueue)getParseObject("musicQueue");}
+
+    public void setParseMusicQueue() { put("musicQueue", new ParseMusicQueue());}
 }
