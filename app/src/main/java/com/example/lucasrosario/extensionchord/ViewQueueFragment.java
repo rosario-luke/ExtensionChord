@@ -28,8 +28,8 @@ public class ViewQueueFragment extends Fragment {
      * @return A new instance of fragment SearchFragment.
      */
     // TODO: Rename and change types and number of parameters
-    public static SearchFragment newInstance(String param1, String param2) {
-        SearchFragment fragment = new SearchFragment();
+    public static ViewQueueFragment newInstance(String param1, String param2) {
+        ViewQueueFragment fragment = new ViewQueueFragment();
         Bundle args = new Bundle();
 
         fragment.setArguments(args);
