@@ -8,8 +8,10 @@ import android.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 
@@ -123,7 +125,17 @@ public class SearchFragment extends Fragment {
         ArrayList<TrackDisplayItem> viewList = new ArrayList<TrackDisplayItem>();
         if(tList != null) {
             for (Track t : tList) {
-                viewList.add(new TrackDisplayItem(this.getActivity(), t));
+                TrackDisplayItem tempItem = new TrackDisplayItem(this.getActivity(), t);
+                final Track tempTrack = t;
+                tempItem.setBtnListener(new Button.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        String currRoom = ((RoomActivity)getActivity()).getRoomName();
+                        RoomManager.addTrack(tempTrack.getTrackID(), currRoom);
+                        Toast.makeText(getActivity(), "Successfully Added Track " + tempTrack.getTrackID(), Toast.LENGTH_LONG).show();
+                    }
+                });
+                viewList.add(tempItem);
             }
         }
 
@@ -175,5 +187,4 @@ public class SearchFragment extends Fragment {
         }
 
     }
-
 }

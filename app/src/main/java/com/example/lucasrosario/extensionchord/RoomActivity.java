@@ -33,6 +33,10 @@ public class RoomActivity extends Activity {
     private Fragment curFragment;
     private String roomName;
 
+    public String getRoomName(){
+        return roomName;
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -45,13 +49,13 @@ public class RoomActivity extends Activity {
         viewQueueFragment = new ViewQueueFragment();
 
         // Is this unnecessary? vvv
-//        FragmentManager fragmentManager = this.getFragmentManager();
-//        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-//
-//        fragmentTransaction.add(R.id.container,searchFragment,"SearchFragment");
-//        fragmentTransaction.commit();
-//        curFragment = searchFragment;
-        setUpSearchFragment();
+        FragmentManager fragmentManager = this.getFragmentManager();
+        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+
+        fragmentTransaction.add(R.id.container,searchFragment,"SearchFragment");
+        fragmentTransaction.commit();
+        curFragment = searchFragment;
+        //setUpSearchFragment();
 
     }
 
@@ -141,7 +145,7 @@ public class RoomActivity extends Activity {
         FragmentManager fragmentManager = this.getFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
 
-        fragmentTransaction.add(R.id.container,searchFragment,"ViewQueueFragment");
+        fragmentTransaction.add(R.id.container,viewQueueFragment,"ViewQueueFragment");
         fragmentTransaction.hide(curFragment);
         fragmentTransaction.commit();
         curFragment = viewQueueFragment;

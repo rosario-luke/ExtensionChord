@@ -36,6 +36,7 @@ public class RoomManager {
         room.setLocation(geoPoint);
         room.setCreator(ParseUser.getCurrentUser());
         room.setRoomName(roomName);
+        room.setParseMusicQueue();
 
         // 2
         ParseACL acl = new ParseACL();
@@ -158,6 +159,23 @@ public class RoomManager {
             Log.d("RoomManager", "Deleted all RoomUsers from room: " + roomName);
         } catch (ParseException e) {
             Log.d("RoomManager", "Failed to delete RoomUsers from room: " + roomName);
+        }
+    }
+
+    public static void addTrack (int id, String roomName){
+        ParseQuery<ParseRoom> query = ParseRoom.getQuery();
+        query.whereEqualTo("roomName", roomName);
+
+        ParseMusicQueue currQueue;
+        ParseRoom currRoom;
+
+        try{
+            currRoom = query.find().get(0);
+            currQueue = currRoom.getParseMusicQueue();
+            currQueue.addTrackToQueue(id);
+            currQueue.saveInBackground();
+        }catch (ParseException e){
+            Log.d("RoomManager", e.toString());
         }
     }
 }
