@@ -10,6 +10,7 @@ import com.parse.Parse;
 import com.parse.ParseACL;
 import com.parse.ParseException;
 import com.parse.ParseGeoPoint;
+import com.parse.ParseObject;
 import com.parse.ParseQuery;
 import com.parse.ParseUser;
 import com.parse.SaveCallback;
@@ -33,8 +34,8 @@ public class RoomManager {
         // 1
         ParseRoom room = new ParseRoom();
         room.setLocation(geoPoint);
-        room.setRoomName(roomName);
         room.setCreator(ParseUser.getCurrentUser());
+        room.setRoomName(roomName);
 
         // 2
         ParseACL acl = new ParseACL();
@@ -82,18 +83,81 @@ public class RoomManager {
      *
      * @param roomName = name of the room to add the user to
      */
-    public static void addUserToRoom(String roomName) {
+    public static boolean addUserToRoom(String roomName) {
+        RoomUser newUser = new RoomUser();
+        newUser.setUsername(ParseUser.getCurrentUser().getUsername());
+        newUser.setCurrentRoom(roomName);
+
+        ParseACL acl = new ParseACL();
+        acl.setPublicReadAccess(true);
+        acl.setPublicWriteAccess(true);
+        newUser.setACL(acl);
+
+        try {
+            newUser.save();
+            Log.d("RoomManager", "User successfully added to room");
+        } catch (ParseException e) {
+            Log.d("RoomManager", "Failed to add user to room");
+            return false;
+        }
+
+        return true;
+    }
+
+    public static ParseRoom getParseRoom(String roomName) {
         ParseQuery<ParseRoom> query = ParseRoom.getQuery();
         query.whereEqualTo("roomName", roomName);
-        ParseRoom room = new ParseRoom();
+        ParseRoom room;
 
         try {
             room = query.getFirst();
         } catch (ParseException e) {
-            e.printStackTrace();
+            room = new ParseRoom();
         }
 
-        room.addRoomUser(ParseUser.getCurrentUser().getUsername());
-        ParseUser.getCurrentUser().put("currentRoom", room);
+        return room;
+    }
+
+    public static void removeUserFromRoom(String username) {
+        ParseQuery<RoomUser> query = RoomUser.getQuery();
+        query.whereEqualTo("username", ParseUser.getCurrentUser().getUsername());
+        RoomUser user;
+
+        try {
+            user = query.getFirst();
+
+            user.delete();
+
+            Log.d("RoomManager", "Successfully removed " + username + " from the room");
+        } catch (ParseException e) {
+            Log.d("RoomManager", "Failed to remove " + username + " from the room");
+        }
+    }
+
+    public static void deleteRoom(String roomName) {
+        ParseRoom room = getParseRoom(roomName);
+
+        try {
+            room.delete();
+
+            Log.d("RoomManager", "Successfully deleted room: " + roomName);
+        } catch (Exception e) {
+            e.printStackTrace();
+            Log.d("RoomManager", "Failed to delete room: " + roomName);
+        }
+
+        deleteUsersFrom(roomName);
+    }
+
+    private static void deleteUsersFrom(String roomName) {
+        ParseQuery<RoomUser> query = RoomUser.getQuery();
+        query.whereEqualTo("currentRoom", roomName);
+
+        try {
+            RoomUser.deleteAll(query.find());
+            Log.d("RoomManager", "Deleted all RoomUsers from room: " + roomName);
+        } catch (ParseException e) {
+            Log.d("RoomManager", "Failed to delete RoomUsers from room: " + roomName);
+        }
     }
 }
