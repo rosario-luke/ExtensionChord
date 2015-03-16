@@ -49,7 +49,7 @@ public class JoinRoomTest extends ActivityUnitTestCase<RoomActivity> {
     @Override
     public void tearDown() throws ParseException {
         ParseQuery<ParseObject> query = ParseQuery.getQuery("ParseRoom");
-        query.whereEqualTo("roomName", "TestRoom");
+        query.whereEqualTo("roomName", "[Tester] TestRoom");
         List<ParseObject> objs;
 
         Log.d("Clean up", "Going to Clean Up Objects");
@@ -72,11 +72,11 @@ public class JoinRoomTest extends ActivityUnitTestCase<RoomActivity> {
         }
     }
 
-    public void testJoinRoom() {
+    public void testJoinRoom() throws Exception {
         RoomUser user = new RoomUser();
 
         ParseQuery<ParseRoom> query = ParseRoom.getQuery();
-        query.whereEqualTo("roomName", "TestRoom");
+        query.whereEqualTo("roomName", "[Tester] TestRoom");
         ParseRoom testRoom = new ParseRoom();
 
         try {
@@ -86,8 +86,9 @@ public class JoinRoomTest extends ActivityUnitTestCase<RoomActivity> {
         }
 
         user.joinRoom(testRoom.getRoomName());
-        List<String> roomUsers = testRoom.getRoomUsers();
 
-        assertEquals("Tester", roomUsers.get(0));
+        List<RoomUser> roomUsers = testRoom.getRoomUsers();
+
+        assertEquals("Tester", roomUsers.get(0).getUsername());
     }
 }

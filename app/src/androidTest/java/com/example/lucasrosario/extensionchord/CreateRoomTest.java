@@ -48,7 +48,7 @@ public class CreateRoomTest extends ActivityUnitTestCase<JoinRoomActivity> {
     @Override
     public void tearDown() throws ParseException {
         ParseQuery<ParseObject> query = ParseQuery.getQuery("ParseRoom");
-        query.whereEqualTo("roomName", "TestRoom");
+        query.whereEqualTo("roomName", "[Tester] TestRoom");
         List<ParseObject> objs = null;
         Log.d("Clean up", "Going to Clean Up Objects");
         try {
@@ -72,6 +72,7 @@ public class CreateRoomTest extends ActivityUnitTestCase<JoinRoomActivity> {
     public void testCreateRoom() {
         ParseGeoPoint geoPoint = new ParseGeoPoint(40.126126, -88.225247);
         roomManager.createRoom("TestRoom",geoPoint);
+
         try {
             Thread.sleep(1000);
         } catch(InterruptedException e) {
@@ -79,7 +80,7 @@ public class CreateRoomTest extends ActivityUnitTestCase<JoinRoomActivity> {
         }
 
         ParseQuery<ParseObject> query = ParseQuery.getQuery("ParseRoom");
-        query.whereEqualTo("roomName", "TestRoom");
+        query.whereEqualTo("roomName", "[Tester] TestRoom");
         List<ParseObject> objs = null;
         try {
             objs = query.find();
@@ -88,7 +89,6 @@ public class CreateRoomTest extends ActivityUnitTestCase<JoinRoomActivity> {
         }
         assertNotNull(objs);
         assertEquals(1, objs.size());
-
     }
 
 
