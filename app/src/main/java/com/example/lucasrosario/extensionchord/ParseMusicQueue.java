@@ -11,9 +11,9 @@ import java.util.List;
  */
 @ParseClassName("ParseMusicQueue")
 public class ParseMusicQueue extends ParseObject {
-    public void addTrackToQueue(int trackID){ add("tracks", trackID);}
+    public void addTrackToQueue(ParseTrack track){ add("tracks", track);}
 
-    public List<Integer> getTrackList(){ return getList("tracks");}
+    public List<ParseTrack> getTrackList(){ return getList("tracks");}
 
     public Integer getCurrentTrack(){ return (int)getList("tracks").get(0); }
 }

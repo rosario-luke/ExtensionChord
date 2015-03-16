@@ -131,7 +131,7 @@ public class SearchFragment extends Fragment {
                     @Override
                     public void onClick(View v) {
                         String currRoom = ((RoomActivity)getActivity()).getRoomName();
-                        RoomManager.addTrack(tempTrack.getTrackID(), currRoom);
+                        RoomManager.addTrack(tempTrack, currRoom);
                         Toast.makeText(getActivity(), "Successfully Added ParseTrack " + tempTrack.getTrackID(), Toast.LENGTH_LONG).show();
                     }
                 });

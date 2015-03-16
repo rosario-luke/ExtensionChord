@@ -162,7 +162,7 @@ public class RoomManager {
         }
     }
 
-    public static void addTrack (int id, String roomName){
+    public static void addTrack (ParseTrack track, String roomName){
         ParseQuery<ParseRoom> query = ParseRoom.getQuery();
         query.whereEqualTo("roomName", roomName);
 
@@ -172,7 +172,7 @@ public class RoomManager {
         try{
             currRoom = query.find().get(0);
             currQueue = currRoom.getParseMusicQueue();
-            currQueue.addTrackToQueue(id);
+            currQueue.addTrackToQueue(track);
             currQueue.saveInBackground();
         }catch (ParseException e){
             Log.d("RoomManager", e.toString());
