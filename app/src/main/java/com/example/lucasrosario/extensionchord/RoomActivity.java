@@ -30,6 +30,8 @@ public class RoomActivity extends Activity {
     private ListView mDrawerList;
     private SearchFragment searchFragment;
     private Fragment curFragment;
+    private String roomName;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -49,17 +51,17 @@ public class RoomActivity extends Activity {
     }
 
     private void createNavigationDrawer() {
-        Bundle intent = getIntent().getExtras();
-
-        // Won't need this once we store room with the ParseUser object
-        if (intent != null) {
-            TextView roomNameTextView = (TextView) findViewById(R.id.drawer_roomname);
-            roomNameTextView.setText("Room: " + intent.getString("roomName"));
+        if (ParseUser.getCurrentUser() != null) {
+            String userName = ParseUser.getCurrentUser().getUsername();
+            TextView userNameTextView = (TextView) findViewById(R.id.drawer_username);
+            userNameTextView.setText("User: " + userName);
         }
 
-        if (ParseUser.getCurrentUser() != null) {
-            TextView userNameTextView = (TextView) findViewById(R.id.drawer_username);
-            userNameTextView.setText("User: " + ParseUser.getCurrentUser().getUsername());
+        Bundle bundle = getIntent().getExtras();
+        if (bundle != null) {
+            roomName = bundle.getString("roomName");
+            TextView roomNameTextView = (TextView) findViewById(R.id.drawer_roomname);
+            roomNameTextView.setText("Room: " + roomName);
         }
 
         mDrawerLayout = (DrawerLayout) findViewById(R.id.room_drawer_layout);
@@ -81,6 +83,20 @@ public class RoomActivity extends Activity {
                 //Toast.makeText(RoomActivity.this, "Clicked item at index: " + position, Toast.LENGTH_LONG).show();
             }
         });
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+
+        RoomManager.removeUserFromRoom(ParseUser.getCurrentUser().getUsername());
+        ParseRoom room = RoomManager.getParseRoom(roomName);
+
+        String creatorUsername = room.getCreator().getUsername();
+        String currentUsername = ParseUser.getCurrentUser().getUsername();
+        if (creatorUsername.equals(currentUsername)) {
+            RoomManager.deleteRoom(roomName);
+        }
     }
 
     @Override
