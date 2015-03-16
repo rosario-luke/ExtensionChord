@@ -1,11 +1,15 @@
 package com.example.lucasrosario.extensionchord;
 
+import android.util.Log;
+
 import com.parse.ParseClassName;
+import com.parse.ParseException;
 import com.parse.ParseGeoPoint;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
 import com.parse.ParseUser;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -19,7 +23,7 @@ public class ParseRoom extends ParseObject {
     }
 
     public void setRoomName(String value) {
-        put("roomName", value);
+        put("roomName", "[" + getCreator().getUsername() + "] " + value);
     }
 
     public ParseUser getCreator() {
@@ -30,12 +34,19 @@ public class ParseRoom extends ParseObject {
         put("creator", creator);
     }
 
-    public void addRoomUser(String username) {
-        add("roomUsers", username);
-    }
+    public List<RoomUser> getRoomUsers() {
+        ParseQuery<RoomUser> query = RoomUser.getQuery();
+        query.whereEqualTo("currentRoom", getRoomName());
 
-    public List<String> getRoomUsers() {
-        return getList("roomUsers");
+        List<RoomUser> roomUsers = new ArrayList<RoomUser>();
+
+        try {
+            roomUsers = query.find();
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
+        return roomUsers;
     }
 
     public ParseGeoPoint getLocation() {
@@ -49,5 +60,4 @@ public class ParseRoom extends ParseObject {
     public static ParseQuery<ParseRoom> getQuery() {
         return ParseQuery.getQuery(ParseRoom.class);
     }
-
 }
