@@ -33,6 +33,10 @@ public class RoomActivity extends Activity {
     private Fragment curFragment;
     private String roomName;
 
+    public String getRoomName(){
+        return roomName;
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
