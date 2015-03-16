@@ -29,6 +29,7 @@ public class RoomActivity extends Activity {
     private DrawerLayout mDrawerLayout;
     private ListView mDrawerList;
     private SearchFragment searchFragment;
+    private ViewQueueFragment viewQueueFragment;
     private Fragment curFragment;
     private String roomName;
 
@@ -41,12 +42,16 @@ public class RoomActivity extends Activity {
         createNavigationDrawer();
 
         searchFragment = new SearchFragment();
-        FragmentManager fragmentManager = this.getFragmentManager();
-        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+        viewQueueFragment = new ViewQueueFragment();
 
-        fragmentTransaction.add(R.id.container,searchFragment,"SearchFragment");
-        fragmentTransaction.commit();
-        curFragment = searchFragment;
+        // Is this unnecessary? vvv
+//        FragmentManager fragmentManager = this.getFragmentManager();
+//        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+//
+//        fragmentTransaction.add(R.id.container,searchFragment,"SearchFragment");
+//        fragmentTransaction.commit();
+//        curFragment = searchFragment;
+        setUpSearchFragment();
 
     }
 
@@ -77,7 +82,8 @@ public class RoomActivity extends Activity {
                         setUpSearchFragment();
                         break;
                     default:
-                        Toast.makeText(RoomActivity.this, "Clicked item at index: " + position, Toast.LENGTH_LONG).show();
+//                        Toast.makeText(RoomActivity.this, "Clicked item at index: " + position, Toast.LENGTH_LONG).show();
+                        setUpViewQueueFragment();
                         break;
                 }
                 //Toast.makeText(RoomActivity.this, "Clicked item at index: " + position, Toast.LENGTH_LONG).show();
@@ -129,6 +135,16 @@ public class RoomActivity extends Activity {
         fragmentTransaction.hide(curFragment);
         fragmentTransaction.commit();
         curFragment = searchFragment;
+    }
+
+    public void setUpViewQueueFragment(){
+        FragmentManager fragmentManager = this.getFragmentManager();
+        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+
+        fragmentTransaction.add(R.id.container,searchFragment,"ViewQueueFragment");
+        fragmentTransaction.hide(curFragment);
+        fragmentTransaction.commit();
+        curFragment = viewQueueFragment;
     }
 
     public void onSearchBtnClick(View v){
