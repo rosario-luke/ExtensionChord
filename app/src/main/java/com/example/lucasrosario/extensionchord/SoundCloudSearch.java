@@ -68,22 +68,14 @@ public class SoundCloudSearch extends AsyncTask<String, Void, ArrayList<ParseTra
                 }
                 tracks.add(new ParseTrack(entry, title, artist, album, trackID));
             }
-
-
         } catch(JSONException e) {
             Log.d("Error parsing json", e.getMessage());
             e.printStackTrace();
             return null;
         }
 
-
         return tracks;
-
-
     }
-
-
-
 
     static String executeHttpGet(String URL) throws Exception
     {

@@ -43,9 +43,6 @@ public class TrackDisplayItem extends LinearLayout{
 
         TextView album_view = (TextView)this.findViewById(R.id.album_name);
         album_view.setText(album);
-
-
-
     }
 
     public TrackDisplayItem(Context context, ParseTrack t) {
@@ -67,9 +64,6 @@ public class TrackDisplayItem extends LinearLayout{
 
         TextView album_view = (TextView)this.findViewById(R.id.album_name);
         album_view.setText(track.getTrackAlbum());
-
-
-
     }
 
     public String getTrackName(){
