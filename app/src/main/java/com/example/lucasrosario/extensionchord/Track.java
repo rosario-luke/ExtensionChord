@@ -13,13 +13,15 @@ public class Track {
     private String trackName;
     private String trackArtist;
     private String trackAlbum;
+    private int trackID;
 
 
-    public Track(JSONObject o, String tName, String tArtist, String tAlbum){
+    public Track(JSONObject o, String tName, String tArtist, String tAlbum, int tID){
         jsonObject = o;
         trackName = tName;
         trackArtist = tArtist;
         tAlbum = tAlbum;
+        trackID = tID;
     }
 
     static String getTrackFromJSON(JSONObject o){
@@ -53,6 +55,15 @@ public class Track {
         return album;
     }
 
+    static public int getTrackIDFromJSON(JSONObject o){
+        try{
+            return o.getInt("id");
+        }
+        catch(JSONException e){
+            return -1;
+        }
+    }
+
     public boolean hasAlbumArt(){
         try{
             jsonObject.getString("artwork_url");
@@ -62,10 +73,10 @@ public class Track {
         return true;
     }
 
-    public String getAlbumArtUrl(){
-        try{
+    public String getAlbumArtUrl() {
+        try {
             return jsonObject.getString("artwork_url");
-        } catch(JSONException e){
+        } catch (JSONException e) {
             return null;
         }
     }

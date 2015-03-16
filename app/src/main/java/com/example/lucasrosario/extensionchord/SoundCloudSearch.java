@@ -62,10 +62,11 @@ public class SoundCloudSearch extends AsyncTask<String, Void, ArrayList<Track>> 
                 String title = Track.getTrackFromJSON(entry);
                 String artist = Track.getArtistFromJSON(entry);
                 String album = Track.getAlbumFromJSON(entry);
+                int trackID = Track.getTrackIDFromJSON(entry);
                 if(title == null) {
                     continue;
                 }
-                tracks.add(new Track(entry, title, artist, album));
+                tracks.add(new Track(entry, title, artist, album, trackID));
             }
 
 
