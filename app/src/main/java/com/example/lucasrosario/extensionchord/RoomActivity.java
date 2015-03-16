@@ -55,6 +55,7 @@ public class RoomActivity extends Activity {
         fragmentTransaction.add(R.id.container,searchFragment,"SearchFragment");
         fragmentTransaction.commit();
         curFragment = searchFragment;
+
         //setUpSearchFragment();
 
     }
@@ -135,8 +136,8 @@ public class RoomActivity extends Activity {
         FragmentManager fragmentManager = this.getFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
 
-        fragmentTransaction.add(R.id.container,searchFragment,"SearchFragment");
-        fragmentTransaction.hide(curFragment);
+        fragmentTransaction.replace(R.id.container,searchFragment,"SearchFragment");
+//        fragmentTransaction.hide(curFragment);
         fragmentTransaction.commit();
         curFragment = searchFragment;
     }
@@ -145,8 +146,8 @@ public class RoomActivity extends Activity {
         FragmentManager fragmentManager = this.getFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
 
-        fragmentTransaction.add(R.id.container,viewQueueFragment,"ViewQueueFragment");
-        fragmentTransaction.hide(curFragment);
+        fragmentTransaction.replace(R.id.container,viewQueueFragment,"ViewQueueFragment");
+//        fragmentTransaction.hide(curFragment);
         fragmentTransaction.commit();
         curFragment = viewQueueFragment;
     }
