@@ -21,7 +21,7 @@ import java.util.List;
  */
 
 
-public class SoundCloudSearch extends AsyncTask<String, Void, ArrayList<Track>> {
+public class SoundCloudSearch extends AsyncTask<String, Void, ArrayList<ParseTrack>> {
 
     final static String client_id = "3fe96f34e369ae1ef5cf7e8fcc6c8eec";
     final static CharSequence spaceSeq = " ";
@@ -33,8 +33,8 @@ public class SoundCloudSearch extends AsyncTask<String, Void, ArrayList<Track>> 
         this.roomActivity = frag;
     }
     @Override
-    protected ArrayList<Track> doInBackground(String... searchString){
-        ArrayList<Track> tracks = new ArrayList<Track>();
+    protected ArrayList<ParseTrack> doInBackground(String... searchString){
+        ArrayList<ParseTrack> tracks = new ArrayList<ParseTrack>();
 
 
         String query = searchString[0].replace(spaceSeq, spaceReplace);
@@ -59,14 +59,14 @@ public class SoundCloudSearch extends AsyncTask<String, Void, ArrayList<Track>> 
 
             for (int i = 0 ; i < jsonArray.length(); i++ ) {
                 JSONObject entry = jsonArray.getJSONObject(i);
-                String title = Track.getTrackFromJSON(entry);
-                String artist = Track.getArtistFromJSON(entry);
-                String album = Track.getAlbumFromJSON(entry);
-                int trackID = Track.getTrackIDFromJSON(entry);
+                String title = ParseTrack.getTrackFromJSON(entry);
+                String artist = ParseTrack.getArtistFromJSON(entry);
+                String album = ParseTrack.getAlbumFromJSON(entry);
+                int trackID = ParseTrack.getTrackIDFromJSON(entry);
                 if(title == null) {
                     continue;
                 }
-                tracks.add(new Track(entry, title, artist, album, trackID));
+                tracks.add(new ParseTrack(entry, title, artist, album, trackID));
             }
 
 
@@ -109,7 +109,7 @@ public class SoundCloudSearch extends AsyncTask<String, Void, ArrayList<Track>> 
     }
 
     @Override
-    protected void onPostExecute(ArrayList<Track> tracks) {
+    protected void onPostExecute(ArrayList<ParseTrack> tracks) {
         //super.onPostExecute(events);
 
         roomActivity.addTracks(tracks);

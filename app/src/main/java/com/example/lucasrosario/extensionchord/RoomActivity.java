@@ -7,17 +7,13 @@ import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.support.v4.widget.DrawerLayout;
 import android.os.Bundle;
-import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.EditText;
-import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.parse.ParseUser;
 
@@ -155,7 +151,7 @@ public class RoomActivity extends Activity {
         searchFragment.onSearchBtnClick(v);
     }
 
-    public void addTracks(ArrayList<Track> tracks){
+    public void addTracks(ArrayList<ParseTrack> tracks){
         searchFragment.addTracks(tracks);
     }
 }

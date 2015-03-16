@@ -1,12 +1,15 @@
 package com.example.lucasrosario.extensionchord;
 
+import com.parse.ParseClassName;
+import com.parse.ParseObject;
+
 import org.json.JSONException;
 import org.json.JSONObject;
 
 /**
  * Created by lucas on 3/11/15.
  */
-public class Track {
+public class ParseTrack {
 
     private JSONObject jsonObject;
 
@@ -16,7 +19,7 @@ public class Track {
     private int trackID;
 
 
-    public Track(JSONObject o, String tName, String tArtist, String tAlbum, int tID){
+    public ParseTrack(JSONObject o, String tName, String tArtist, String tAlbum, int tID){
         jsonObject = o;
         trackName = tName;
         trackArtist = tArtist;

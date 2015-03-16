@@ -115,24 +115,24 @@ public class SearchFragment extends Fragment {
         EditText searchField = (EditText)getView().findViewById(R.id.searchField);
         String query = searchField.getText().toString();
 
-        ArrayList<Track> l = new ArrayList<Track>();
+        ArrayList<ParseTrack> l = new ArrayList<ParseTrack>();
         new SoundCloudSearch((RoomActivity)this.getActivity()).execute(query);
 
     }
 
-    public void addTracks(ArrayList<Track> tList){
+    public void addTracks(ArrayList<ParseTrack> tList){
 
         ArrayList<TrackDisplayItem> viewList = new ArrayList<TrackDisplayItem>();
         if(tList != null) {
-            for (Track t : tList) {
+            for (ParseTrack t : tList) {
                 TrackDisplayItem tempItem = new TrackDisplayItem(this.getActivity(), t);
-                final Track tempTrack = t;
+                final ParseTrack tempTrack = t;
                 tempItem.setBtnListener(new Button.OnClickListener() {
                     @Override
                     public void onClick(View v) {
                         String currRoom = ((RoomActivity)getActivity()).getRoomName();
                         RoomManager.addTrack(tempTrack.getTrackID(), currRoom);
-                        Toast.makeText(getActivity(), "Successfully Added Track " + tempTrack.getTrackID(), Toast.LENGTH_LONG).show();
+                        Toast.makeText(getActivity(), "Successfully Added ParseTrack " + tempTrack.getTrackID(), Toast.LENGTH_LONG).show();
                     }
                 });
                 viewList.add(tempItem);

@@ -16,7 +16,7 @@ import android.widget.TextView;
  */
 public class TrackDisplayItem extends LinearLayout{
 
-    private Track track;
+    private ParseTrack track;
 
     public TrackDisplayItem(Context context, AttributeSet attrs) {
         super(context, attrs);
@@ -48,7 +48,7 @@ public class TrackDisplayItem extends LinearLayout{
 
     }
 
-    public TrackDisplayItem(Context context, Track t) {
+    public TrackDisplayItem(Context context, ParseTrack t) {
         super(context);
 
         this.track = t;
@@ -81,7 +81,7 @@ public class TrackDisplayItem extends LinearLayout{
         addBtn.setOnClickListener(listener);
     }
 
-    public Track getTrack(){ return track;}
+    public ParseTrack getTrack(){ return track;}
 
     public void setAlbumArt(Bitmap map){
         ImageView image = (ImageView)findViewById(R.id.album_art);
