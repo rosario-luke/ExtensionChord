@@ -9,22 +9,39 @@ import org.json.JSONObject;
 /**
  * Created by lucas on 3/11/15.
  */
-public class ParseTrack {
+@ParseClassName("ParseTrack")
+public class ParseTrack extends ParseObject{
 
     private JSONObject jsonObject;
 
-    private String trackName;
-    private String trackArtist;
-    private String trackAlbum;
-    private int trackID;
+//    private String trackName;
+//    private String trackArtist;
+//    private String trackAlbum;
+//    private int trackID;
 
 
-    public ParseTrack(JSONObject o, String tName, String tArtist, String tAlbum, int tID){
+//    public ParseTrack(JSONObject o, String tName, String tArtist, String tAlbum, int tID){
+//        jsonObject = o;
+//        trackName = tName;
+//        trackArtist = tArtist;
+//        trackAlbum = tAlbum;
+//        trackID = tID;
+//    }
+
+    public void setTrackName(String trackName){
+        put("trackName",trackName);
+    }
+    public void setTrackArtist(String trackArtist){
+        put("trackArtist",trackArtist);
+    }
+    public void setTrackAlbum(String trackAlbum){
+        put("trackAlbum",trackAlbum);
+    }
+    public void setTrackID(int trackID){
+        put("trackID",trackID);
+    }
+    public void setJSONObject(JSONObject o){
         jsonObject = o;
-        trackName = tName;
-        trackArtist = tArtist;
-        trackAlbum = tAlbum;
-        trackID = tID;
     }
 
     static String getTrackFromJSON(JSONObject o){
@@ -84,18 +101,16 @@ public class ParseTrack {
         }
     }
 
-    public String getTrackName() {
-        return trackName;
-    }
+    public String getTrackName() { return getString("trackName"); }
 
     public String getTrackArtist() {
-        return trackArtist;
+        return getString("trackArtist");
     }
 
     public String getTrackAlbum() {
-        return trackAlbum;
+        return getString("trackAlbum");
     }
 
-    public int getTrackID() { return trackID; }
+    public int getTrackID() { return getInt("trackID"); }
 
 }
