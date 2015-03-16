@@ -23,7 +23,7 @@ public class ParseTrack {
         jsonObject = o;
         trackName = tName;
         trackArtist = tArtist;
-        tAlbum = tAlbum;
+        trackAlbum = tAlbum;
         trackID = tID;
     }
 
