@@ -21,7 +21,7 @@ import java.util.List;
  */
 
 
-public class SoundCloudSearch extends AsyncTask<String, Void, ArrayList<ParseTrack>> {
+public class SoundCloudSearch extends AsyncTask<String, Void, ArrayList<LocalTrack>> {
 
     final static String client_id = "3fe96f34e369ae1ef5cf7e8fcc6c8eec";
     final static CharSequence spaceSeq = " ";
@@ -33,8 +33,8 @@ public class SoundCloudSearch extends AsyncTask<String, Void, ArrayList<ParseTra
         this.roomActivity = frag;
     }
     @Override
-    protected ArrayList<ParseTrack> doInBackground(String... searchString){
-        ArrayList<ParseTrack> tracks = new ArrayList<ParseTrack>();
+    protected ArrayList<LocalTrack> doInBackground(String... searchString){
+        ArrayList<LocalTrack> tracks = new ArrayList<LocalTrack>();
 
 
         String query = searchString[0].replace(spaceSeq, spaceReplace);
@@ -59,14 +59,14 @@ public class SoundCloudSearch extends AsyncTask<String, Void, ArrayList<ParseTra
 
             for (int i = 0 ; i < jsonArray.length(); i++ ) {
                 JSONObject entry = jsonArray.getJSONObject(i);
-                String title = ParseTrack.getTrackFromJSON(entry);
-                String artist = ParseTrack.getArtistFromJSON(entry);
-                String album = ParseTrack.getAlbumFromJSON(entry);
-                int trackID = ParseTrack.getTrackIDFromJSON(entry);
+                String title = LocalTrack.getTrackFromJSON(entry);
+                String artist = LocalTrack.getArtistFromJSON(entry);
+                String album = LocalTrack.getAlbumFromJSON(entry);
+                int trackID = LocalTrack.getTrackIDFromJSON(entry);
                 if(title == null) {
                     continue;
                 }
-                tracks.add(new ParseTrack(entry, title, artist, album, trackID));
+                tracks.add(new LocalTrack(entry, title, artist, album, trackID));
             }
         } catch(JSONException e) {
             Log.d("Error parsing json", e.getMessage());
@@ -101,7 +101,7 @@ public class SoundCloudSearch extends AsyncTask<String, Void, ArrayList<ParseTra
     }
 
     @Override
-    protected void onPostExecute(ArrayList<ParseTrack> tracks) {
+    protected void onPostExecute(ArrayList<LocalTrack> tracks) {
         //super.onPostExecute(events);
 
         roomActivity.addTracks(tracks);

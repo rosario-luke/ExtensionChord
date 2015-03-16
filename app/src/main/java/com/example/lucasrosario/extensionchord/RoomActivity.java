@@ -152,7 +152,7 @@ public class RoomActivity extends Activity {
         searchFragment.onSearchBtnClick(v);
     }
 
-    public void addTracks(ArrayList<ParseTrack> tracks){
+    public void addTracks(ArrayList<LocalTrack> tracks){
         searchFragment.addTracks(tracks);
     }
 }

@@ -162,17 +162,35 @@ public class RoomManager {
         }
     }
 
-    public static void addTrack (ParseTrack track, String roomName){
+    public static void addTrack (LocalTrack track, String roomName){
         ParseQuery<ParseRoom> query = ParseRoom.getQuery();
         query.whereEqualTo("roomName", roomName);
 
         ParseMusicQueue currQueue;
         ParseRoom currRoom;
 
+        ParseTrack pTrack;
+        pTrack = new ParseTrack();
+        pTrack.setTrackAlbum(track.getTrackAlbum());
+        pTrack.setTrackArtist(track.getTrackArtist());
+        pTrack.setTrackID(track.getTrackID());
+        pTrack.setTrackName(track.getTrackName());
+
+        ParseACL acl = new ParseACL();
+        acl.setPublicReadAccess(true);
+        acl.setPublicWriteAccess(true);
+        pTrack.setACL(acl);
+
+        try {
+            pTrack.save();
+        }catch(ParseException e){
+            Log.d("RoomManager", "Failed to add parseTrack in : " + roomName);
+        }
+
         try{
             currRoom = query.find().get(0);
             currQueue = currRoom.getParseMusicQueue();
-            currQueue.addTrackToQueue(track);
+            currQueue.addTrackToQueue(pTrack);
             currQueue.saveInBackground();
         }catch (ParseException e){
             Log.d("RoomManager", e.toString());

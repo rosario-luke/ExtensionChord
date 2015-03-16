@@ -25,6 +25,8 @@ public class Application extends android.app.Application{
         ParseObject.registerSubclass(ParseRoom.class);
         ParseObject.registerSubclass(RoomUser.class);
         ParseObject.registerSubclass(ParseMusicQueue.class);
+        ParseObject.registerSubclass(ParseTrack.class);
+
         Parse.initialize(this, "f539HwpFiyK3DhDsOb7xYRNwCtr7vCeMihU776Vk", "tH1ktzEjhCBZSvMzVR9Thjqj6sDtrrb1gwUYIlh1");
     }
 }
