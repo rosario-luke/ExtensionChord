@@ -20,9 +20,9 @@ public class ViewTrackDisplayItem extends LinearLayout{
 
         TypedArray a = context.obtainStyledAttributes(attrs,
                 R.styleable.ViewTrackDisplayItem, 0, 0);
-        String track = a.getString(R.styleable.ViewTrackDisplayItem_track_name);
-        String artist = a.getString(R.styleable.ViewTrackDisplayItem_artist_name);
-        String album = a.getString(R.styleable.ViewTrackDisplayItem_album_name);
+        String track = a.getString(R.styleable.ViewTrackDisplayItem_view_track_name);
+        String artist = a.getString(R.styleable.ViewTrackDisplayItem_view_artist_name);
+        String album = a.getString(R.styleable.ViewTrackDisplayItem_view_album_name);
         a.recycle();
 
         setOrientation(LinearLayout.HORIZONTAL);
