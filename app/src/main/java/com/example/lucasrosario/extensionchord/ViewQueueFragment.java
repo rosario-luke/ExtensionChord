@@ -52,7 +52,6 @@ public class ViewQueueFragment extends Fragment {
         if (getArguments() != null) {
 
         }
-        buildTrackList();
     }
 
     public void buildTrackList(){
@@ -66,6 +65,7 @@ public class ViewQueueFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
+        buildTrackList();
         return inflater.inflate(R.layout.fragment_view_queue, container, false);
     }
     @Override
