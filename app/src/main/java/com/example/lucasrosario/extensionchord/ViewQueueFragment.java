@@ -68,14 +68,6 @@ public class ViewQueueFragment extends Fragment {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_view_queue, container, false);
     }
-
-    // TODO: Rename method, update argument and hook method into UI event
-    public void onButtonPressed(Uri uri) {
-        if (mListener != null) {
-            mListener.onFragmentInteraction(uri);
-        }
-    }
-
     @Override
     public void onAttach(Activity activity) {
         super.onAttach(activity);
@@ -117,7 +109,7 @@ public class ViewQueueFragment extends Fragment {
         }
 
         public void run() {
-            LinearLayout myLayout = (LinearLayout)fragment.getView().findViewById(R.id.track_list_layout);
+            LinearLayout myLayout = (LinearLayout)fragment.getView().findViewById(R.id.view_track_list_layout);
             myLayout.removeAllViews();
             for(ViewTrackDisplayItem v : tList){
                 myLayout.addView(v);
@@ -135,7 +127,7 @@ public class ViewQueueFragment extends Fragment {
             }
         }
 
-        new TrackItemAdder(viewList, this).run();
+        (new TrackItemAdder(viewList, this)).run();
     }
 
 }
