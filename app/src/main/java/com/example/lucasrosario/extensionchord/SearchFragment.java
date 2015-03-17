@@ -120,12 +120,16 @@ public class SearchFragment extends Fragment {
 
     }
 
+    public void addAlbumArt(Bitmap[] imageList){
+        new AlbumArtAdder(imageList).run();
+    }
+
     public void addTracks(ArrayList<LocalTrack> tList){
 
-        ArrayList<TrackDisplayItem> viewList = new ArrayList<TrackDisplayItem>();
+        ArrayList<SearchTrackDisplayItem> viewList = new ArrayList<SearchTrackDisplayItem>();
         if(tList != null) {
             for (LocalTrack t : tList) {
-                TrackDisplayItem tempItem = new TrackDisplayItem(this.getActivity(), t);
+                SearchTrackDisplayItem tempItem = new SearchTrackDisplayItem(this.getActivity(), t);
                 final LocalTrack tempTrack = t;
                 tempItem.setBtnListener(new Button.OnClickListener() {
                     @Override
@@ -142,14 +146,10 @@ public class SearchFragment extends Fragment {
         new TrackItemAdder(viewList, this).run();
     }
 
-    public void addAlbumArt(Bitmap[] imageList){
-        new AlbumArtAdder(imageList).run();
-    }
-
     public class TrackItemAdder implements Runnable {
-        private ArrayList<TrackDisplayItem> tList;
+        private ArrayList<SearchTrackDisplayItem> tList;
         private SearchFragment fragment;
-        public TrackItemAdder(ArrayList<TrackDisplayItem> l, SearchFragment frag) {
+        public TrackItemAdder(ArrayList<SearchTrackDisplayItem> l, SearchFragment frag) {
             this.tList = l;
             this.fragment = frag;
         }
@@ -157,7 +157,7 @@ public class SearchFragment extends Fragment {
         public void run() {
             LinearLayout myLayout = (LinearLayout)fragment.getView().findViewById(R.id.track_list_layout);
             myLayout.removeAllViews();
-            for(TrackDisplayItem v : tList){
+            for(SearchTrackDisplayItem v : tList){
                 myLayout.addView(v);
             }
             fragment.fetchAlbumArt();
@@ -180,7 +180,7 @@ public class SearchFragment extends Fragment {
             LinearLayout myLayout = (LinearLayout)getView().findViewById(R.id.track_list_layout);
             for(int i = 0; i < imageList.length; i++){
                 if(imageList[i] != null){
-                    ((TrackDisplayItem) myLayout.getChildAt(i)).setAlbumArt(imageList[i]);
+                    ((SearchTrackDisplayItem) myLayout.getChildAt(i)).setAlbumArt(imageList[i]);
                 }
             }
 

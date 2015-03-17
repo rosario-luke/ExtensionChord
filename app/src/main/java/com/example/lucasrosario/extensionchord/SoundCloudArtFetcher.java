@@ -28,7 +28,7 @@ public class SoundCloudArtFetcher extends AsyncTask<Void, Void, Bitmap[]> {
 
         Bitmap[] imageList = new Bitmap[myLayout.getChildCount()];
         for(int i = 0; i < myLayout.getChildCount(); i++){
-            TrackDisplayItem t = (TrackDisplayItem)myLayout.getChildAt(i);
+            SearchTrackDisplayItem t = (SearchTrackDisplayItem)myLayout.getChildAt(i);
             if(t != null && t.getTrack().hasAlbumArt()){
 
                 Bitmap image = getBitmapFromURL(t.getTrack().getAlbumArtUrl());

@@ -2,30 +2,27 @@ package com.example.lucasrosario.extensionchord;
 
 import android.content.Context;
 import android.content.res.TypedArray;
-import android.graphics.Bitmap;
 import android.util.AttributeSet;
 import android.view.Gravity;
 import android.view.LayoutInflater;
-import android.widget.Button;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
 /**
- * Created by lucas on 2/19/15.
+ * Created by Jakub on 3/17/2015.
  */
-public class TrackDisplayItem extends LinearLayout{
+public class ViewTrackDisplayItem extends LinearLayout{
 
-    private LocalTrack track;
+    private ParseTrack track;
 
-    public TrackDisplayItem(Context context, AttributeSet attrs) {
+    public ViewTrackDisplayItem(Context context, AttributeSet attrs) {
         super(context, attrs);
 
         TypedArray a = context.obtainStyledAttributes(attrs,
-                R.styleable.TrackDisplayItem, 0, 0);
-        String track = a.getString(R.styleable.TrackDisplayItem_track_name);
-        String artist = a.getString(R.styleable.TrackDisplayItem_artist_name);
-        String album = a.getString(R.styleable.TrackDisplayItem_album_name);
+                R.styleable.ViewTrackDisplayItem, 0, 0);
+        String track = a.getString(R.styleable.ViewTrackDisplayItem_track_name);
+        String artist = a.getString(R.styleable.ViewTrackDisplayItem_artist_name);
+        String album = a.getString(R.styleable.ViewTrackDisplayItem_album_name);
         a.recycle();
 
         setOrientation(LinearLayout.HORIZONTAL);
@@ -33,7 +30,7 @@ public class TrackDisplayItem extends LinearLayout{
 
         LayoutInflater inflater = (LayoutInflater) context
                 .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        inflater.inflate(R.layout.track_display_item, this, true);
+        inflater.inflate(R.layout.view_track_display_item, this, true);
 
         TextView track_view = (TextView)this.findViewById(R.id.track_name);
         track_view.setText(track);
@@ -45,7 +42,7 @@ public class TrackDisplayItem extends LinearLayout{
         album_view.setText(album);
     }
 
-    public TrackDisplayItem(Context context, LocalTrack t) {
+    public ViewTrackDisplayItem(Context context, ParseTrack t) {
         super(context);
 
         this.track = t;
@@ -54,7 +51,7 @@ public class TrackDisplayItem extends LinearLayout{
 
         LayoutInflater inflater = (LayoutInflater) context
                 .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        inflater.inflate(R.layout.track_display_item, this, true);
+        inflater.inflate(R.layout.view_track_display_item, this, true);
 
         TextView track_view = (TextView)this.findViewById(R.id.track_name);
         track_view.setText(track.getTrackName());
@@ -70,17 +67,5 @@ public class TrackDisplayItem extends LinearLayout{
         return ((TextView)this.findViewById(R.id.track_name)).getText().toString();
     }
 
-    public void setBtnListener(OnClickListener listener){
-        Button addBtn = (Button)this.findViewById(R.id.add_track_button);
-        addBtn.setOnClickListener(listener);
-    }
-
-    public LocalTrack getTrack(){ return track;}
-
-    public void setAlbumArt(Bitmap map){
-        ImageView image = (ImageView)findViewById(R.id.album_art);
-        image.setImageBitmap(map);
-    }
-
-
+    public ParseTrack getTrack(){ return track;}
 }

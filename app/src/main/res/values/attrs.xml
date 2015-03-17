@@ -3,7 +3,12 @@
     <declare-styleable name="RoomListOptions">
         <attr name="room_name" format="string"/>
     </declare-styleable>
-    <declare-styleable name="TrackDisplayItem">
+    <declare-styleable name="SearchTrackDisplayItem">
+        <attr name="track_name" format="string"/>
+        <attr name="artist_name" format="string"/>
+        <attr name="album_name" format="string"/>
+    </declare-styleable>
+    <declare-styleable name="ViewTrackDisplayItem">
         <attr name="track_name" format="string"/>
         <attr name="artist_name" format="string"/>
         <attr name="album_name" format="string"/>

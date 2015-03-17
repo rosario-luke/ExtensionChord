@@ -7,6 +7,12 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.LinearLayout;
+import android.widget.Toast;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by lucaspritz on 3/16/15.
@@ -46,8 +52,16 @@ public class ViewQueueFragment extends Fragment {
         if (getArguments() != null) {
 
         }
+        buildTrackList();
     }
 
+    public void buildTrackList(){
+        String roomName = ((RoomActivity)getActivity()).getRoomName();
+        ParseRoom currRoom = RoomManager.getParseRoom(roomName);
+        ParseMusicQueue currQueue = currRoom.getParseMusicQueue();
+
+        addTracks(currQueue.getTrackList());
+    }
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -93,4 +107,35 @@ public class ViewQueueFragment extends Fragment {
         // TODO: Update argument type and name
         public void onFragmentInteraction(Uri uri);
     }
+
+    public class TrackItemAdder implements Runnable {
+        private ArrayList<ViewTrackDisplayItem> tList;
+        private ViewQueueFragment fragment;
+        public TrackItemAdder(ArrayList<ViewTrackDisplayItem> l, ViewQueueFragment frag) {
+            this.tList = l;
+            this.fragment = frag;
+        }
+
+        public void run() {
+            LinearLayout myLayout = (LinearLayout)fragment.getView().findViewById(R.id.track_list_layout);
+            myLayout.removeAllViews();
+            for(ViewTrackDisplayItem v : tList){
+                myLayout.addView(v);
+            }
+        }
+    }
+
+    public void addTracks(List<ParseTrack> tList){
+
+        ArrayList<ViewTrackDisplayItem> viewList = new ArrayList<ViewTrackDisplayItem>();
+        if(tList != null) {
+            for (ParseTrack t : tList) {
+                ViewTrackDisplayItem tempItem = new ViewTrackDisplayItem(this.getActivity(), t);
+                viewList.add(tempItem);
+            }
+        }
+
+        new TrackItemAdder(viewList, this).run();
+    }
+
 }
