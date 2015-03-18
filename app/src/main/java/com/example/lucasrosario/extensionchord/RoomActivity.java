@@ -152,6 +152,10 @@ public class RoomActivity extends Activity {
         searchFragment.onSearchBtnClick(v);
     }
 
+    public void onRefreshClick(View v){
+        viewQueueFragment.onRefreshClick(v);
+    }
+
     public void addTracks(ArrayList<LocalTrack> tracks){
         searchFragment.addTracks(tracks);
     }

@@ -54,6 +54,14 @@ public class ViewQueueFragment extends Fragment {
         }
     }
 
+    public void refresh(){
+        buildTrackList();
+    }
+
+    public void onRefreshClick(View v){
+        refresh();
+    }
+
     public void buildTrackList(){
         String roomName = ((RoomActivity)getActivity()).getRoomName();
         ParseRoom currRoom = RoomManager.getParseRoom(roomName);
@@ -61,13 +69,14 @@ public class ViewQueueFragment extends Fragment {
 
         addTracks(currQueue.getTrackList());
     }
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        buildTrackList();
         return inflater.inflate(R.layout.fragment_view_queue, container, false);
     }
+
     @Override
     public void onAttach(Activity activity) {
         super.onAttach(activity);
