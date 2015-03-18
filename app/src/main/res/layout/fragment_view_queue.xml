@@ -7,12 +7,12 @@
 
     <Button
         android:id="@+id/viewRefreshBtn"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
         android:onClick="onRefreshClick"
         android:text="Refresh"
-        android:background="@color/button_background"
+        android:background="@drawable/button_states"
         android:textColor="#ffffff"/>
 
     <ScrollView

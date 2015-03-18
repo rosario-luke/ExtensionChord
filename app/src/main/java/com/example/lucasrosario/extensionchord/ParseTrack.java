@@ -2,6 +2,7 @@ package com.example.lucasrosario.extensionchord;
 
 import com.parse.ParseClassName;
 import com.parse.ParseObject;
+import com.parse.ParseQuery;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -34,5 +35,9 @@ public class ParseTrack extends ParseObject{
     }
 
     public int getTrackID() { return getInt("trackID"); }
+
+    public static ParseQuery<ParseTrack> getQuery() {
+        return ParseQuery.getQuery(ParseTrack.class);
+    }
 
 }

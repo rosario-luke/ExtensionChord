@@ -9,7 +9,12 @@
     <!-- The main content view -->
     <FrameLayout android:id="@+id/container" android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/default_background"/>
+        android:background="@color/default_background">
+        <Button android:id="@+id/testMediaPlayerButton"
+            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:text="Play"/>
+    </FrameLayout>
 
     <!-- The navigation drawer -->
     <LinearLayout
