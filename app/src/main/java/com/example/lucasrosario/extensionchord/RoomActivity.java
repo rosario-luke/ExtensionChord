@@ -26,6 +26,7 @@ public class RoomActivity extends Activity {
     private ListView mDrawerList;
     private SearchFragment searchFragment;
     private ViewQueueFragment viewQueueFragment;
+    private ViewRoomUsersFragment viewRoomUsersFragment;
     private Fragment curFragment;
     private String roomName;
 
@@ -43,6 +44,13 @@ public class RoomActivity extends Activity {
 
         searchFragment = new SearchFragment();
         viewQueueFragment = new ViewQueueFragment();
+        viewRoomUsersFragment = new ViewRoomUsersFragment();
+        Bundle bundle = getIntent().getExtras();
+        Bundle args = new Bundle();
+        args.putString("room_name",bundle.getString("roomName"));
+        viewRoomUsersFragment.setArguments(args);
+        viewRoomUsersFragment.newInstance();
+
 
         // Is this unnecessary? vvv
         FragmentManager fragmentManager = this.getFragmentManager();
@@ -81,6 +89,9 @@ public class RoomActivity extends Activity {
                 switch(position){
                     case 0:
                         setUpSearchFragment();
+                        break;
+                    case 1:
+                        setUpRoomUsersFragment();
                         break;
                     default:
 //                        Toast.makeText(RoomActivity.this, "Clicked item at index: " + position, Toast.LENGTH_LONG).show();
@@ -127,6 +138,17 @@ public class RoomActivity extends Activity {
 
         return super.onOptionsItemSelected(item);
     }
+
+    public void setUpRoomUsersFragment(){
+        FragmentManager fragmentManager = this.getFragmentManager();
+        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+
+        fragmentTransaction.replace(R.id.container,viewRoomUsersFragment,"ViewRoomUsersFragment");
+//        fragmentTransaction.hide(curFragment);
+        fragmentTransaction.commit();
+        curFragment = viewRoomUsersFragment;
+    }
+
 
     public void setUpSearchFragment(){
         FragmentManager fragmentManager = this.getFragmentManager();
