@@ -10,6 +10,7 @@
 
     <string-array name="navdrawer_array">
         <item>Search</item>
+        <item> Users List</item>
         <item>Music Queue</item>
     </string-array>
 

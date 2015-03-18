@@ -88,7 +88,6 @@ public class RoomManager {
         RoomUser newUser = new RoomUser();
         newUser.setUsername(ParseUser.getCurrentUser().getUsername());
         newUser.setCurrentRoom(roomName);
-
         ParseACL acl = new ParseACL();
         acl.setPublicReadAccess(true);
         acl.setPublicWriteAccess(true);
