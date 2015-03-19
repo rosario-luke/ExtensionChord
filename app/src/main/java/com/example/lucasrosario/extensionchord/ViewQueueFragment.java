@@ -127,11 +127,12 @@ public class ViewQueueFragment extends Fragment {
     }
 
     public void addTracks(List<ParseTrack> tList){
-
+        int count = 0;
         ArrayList<ViewTrackDisplayItem> viewList = new ArrayList<ViewTrackDisplayItem>();
         if(tList != null) {
             for (ParseTrack t : tList) {
-                ViewTrackDisplayItem tempItem = new ViewTrackDisplayItem(this.getActivity(), t);
+                count++;
+                ViewTrackDisplayItem tempItem = new ViewTrackDisplayItem(this.getActivity(), t, count);
                 viewList.add(tempItem);
             }
         }
