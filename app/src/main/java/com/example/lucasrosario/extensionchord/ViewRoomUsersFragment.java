@@ -199,6 +199,8 @@ public class ViewRoomUsersFragment extends Fragment {
             AdapterContextMenuInfo info = (AdapterContextMenuInfo) item.getMenuInfo();
             String userName =  values[info.position];
             RoomManager.removeUserFromRoom(userName);
+            //kill fragment, go back to main page if boot yourself
+            //need to delete room if no users left
         }
 
         else
