@@ -84,10 +84,10 @@ public class SeeUsersTest extends ActivityUnitTestCase<JoinRoomActivity> {
     }
 
     public void testAdmin() throws ParseException {
-        ParseUser testAdmin = new ParseUser();
-        assertTrue(testAdmin.isAdmin()== false);
-        testAdmin.setAdmin();
-        assertTrue(testAdmin.isAdmin()== true);
+        RoomUser testAdmin = new RoomUser();
+        assertTrue(testAdmin.isAdmin() == false);
+        testAdmin.setAdmin(true);
+        assertTrue(testAdmin.isAdmin() == true);
     }
 
 

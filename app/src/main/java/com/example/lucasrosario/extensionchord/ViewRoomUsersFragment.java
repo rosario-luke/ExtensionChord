@@ -5,14 +5,20 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.app.Fragment;
+import android.util.Log;
+import android.view.ContextMenu;
+import android.view.ContextMenu.ContextMenuInfo;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.AdapterView.AdapterContextMenuInfo;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.parse.ParseException;
 import com.parse.ParseQuery;
 import com.parse.ParseUser;
 
@@ -41,6 +47,8 @@ public class ViewRoomUsersFragment extends Fragment {
 
     private String roomName;
     private View rootView;
+
+    String[] values;
 
     private OnFragmentInteractionListener mListener;
 
@@ -132,14 +140,20 @@ public class ViewRoomUsersFragment extends Fragment {
     private void viewRoomList() {
         HashSet<String> set = new HashSet<>();
         List<String> users = new ArrayList<String>();
-        for(RoomUser user: RoomManager.getParseRoom(roomName).getRoomUsers()) {
+        ParseRoom currRoom = RoomManager.getParseRoom(roomName);
+        boolean currUserAdmin = (currRoom.getCreator().getUsername().equals(ParseUser.getCurrentUser().getUsername()));
+        for(RoomUser user: currRoom.getRoomUsers()) {
             if (!set.contains(user.getUsername())) {
                 users.add(user.getUsername());
                 set.add(user.getUsername());
             }
+            if(currUserAdmin == false && user.getUsername().equals(ParseUser.getCurrentUser().getUsername()))
+            {
+                currUserAdmin = user.isAdmin();
+            }
         }
 
-        String[] values = new String[users.size()];
+        values = new String[users.size()];
         for (int i = 0; i < users.size(); i++) {
             values[i] = users.get(i);
         }
@@ -148,7 +162,41 @@ public class ViewRoomUsersFragment extends Fragment {
         ListView lv = (ListView) rootView.findViewById(R.id.roomUsers);
 
         lv.setAdapter(adapter);
+
+        if(currUserAdmin) {
+            registerForContextMenu(lv);
+        }
     }
 
+    @Override
+    public void onCreateContextMenu(ContextMenu menu, View v, ContextMenuInfo menuInfo) {
+        super.onCreateContextMenu(menu, v, menuInfo);
+        menu.setHeaderTitle("User Actions");
+        menu.add(0, v.getId(), 0, "Promote User");
+    }
 
+    @Override
+    public boolean onContextItemSelected(MenuItem item) {
+        if(item.getTitle()=="Promote User"){
+            AdapterContextMenuInfo info = (AdapterContextMenuInfo) item.getMenuInfo();
+            String userName =  values[info.position];
+            for(RoomUser user: RoomManager.getParseRoom(roomName).getRoomUsers()) {
+                if(user.getUsername().equals(userName))
+                {
+                    user.setAdmin(true);
+                    try {
+                        user.save();
+                    } catch (ParseException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+
+        }
+        else
+        {
+            return false;
+        }
+        return true;
+    }
 }
