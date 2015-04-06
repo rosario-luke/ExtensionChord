@@ -5,6 +5,7 @@ import android.app.Activity;
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
+import android.content.Intent;
 import android.support.v4.widget.DrawerLayout;
 import android.os.Bundle;
 import android.view.Menu;
@@ -15,6 +16,7 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.google.android.gms.games.multiplayer.realtime.Room;
 import com.parse.ParseUser;
 
 import java.util.ArrayList;
@@ -93,12 +95,16 @@ public class RoomActivity extends Activity {
                     case 1:
                         setUpRoomUsersFragment();
                         break;
-                    default:
-//                        Toast.makeText(RoomActivity.this, "Clicked item at index: " + position, Toast.LENGTH_LONG).show();
+                    case 2:
                         setUpViewQueueFragment();
                         break;
+                    default:
+                        RoomManager.removeUserFromRoom(ParseUser.getCurrentUser().getUsername());
+                        Intent myIntent = new Intent(RoomActivity.this, JoinRoomActivity.class);
+                        startActivity(myIntent);
+                        finish();
+                        break;
                 }
-                //Toast.makeText(RoomActivity.this, "Clicked item at index: " + position, Toast.LENGTH_LONG).show();
             }
         });
     }

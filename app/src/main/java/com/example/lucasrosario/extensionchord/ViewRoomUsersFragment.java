@@ -173,6 +173,8 @@ public class ViewRoomUsersFragment extends Fragment {
         super.onCreateContextMenu(menu, v, menuInfo);
         menu.setHeaderTitle("User Actions");
         menu.add(0, v.getId(), 0, "Promote User");
+        menu.add(0, v.getId(), 0, "Boot User");
+
     }
 
     @Override
@@ -193,6 +195,7 @@ public class ViewRoomUsersFragment extends Fragment {
             }
 
         }
+
         else
         {
             return false;

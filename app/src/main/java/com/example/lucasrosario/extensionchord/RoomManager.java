@@ -121,13 +121,11 @@ public class RoomManager {
 
     public static void removeUserFromRoom(String username) {
         ParseQuery<RoomUser> query = RoomUser.getQuery();
-        query.whereEqualTo("username", ParseUser.getCurrentUser().getUsername());
-        RoomUser user;
+        query.whereEqualTo("username", username);
+        List<RoomUser> users;
 
         try {
-            user = query.getFirst();
-
-            user.delete();
+            RoomUser.deleteAll(query.find());
 
             Log.d("RoomManager", "Successfully removed " + username + " from the room");
         } catch (ParseException e) {
