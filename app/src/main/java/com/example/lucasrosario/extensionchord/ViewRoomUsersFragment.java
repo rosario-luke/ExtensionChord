@@ -195,6 +195,11 @@ public class ViewRoomUsersFragment extends Fragment {
             }
 
         }
+        else if(item.getTitle()=="Boot User"){
+            AdapterContextMenuInfo info = (AdapterContextMenuInfo) item.getMenuInfo();
+            String userName =  values[info.position];
+            RoomManager.removeUserFromRoom(userName);
+        }
 
         else
         {
