@@ -1,7 +1,10 @@
 package com.example.lucasrosario.extensionchord;
 
+import android.util.Log;
+
 import com.parse.ParseClassName;
 import com.parse.ParseObject;
+import com.parse.ParseQuery;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -14,6 +17,19 @@ public class ParseMusicQueue extends ParseObject {
     public void addTrackToQueue(ParseTrack track){ add("tracks", track);}
 
     public List<ParseTrack> getTrackList(){
+        List<ParseTrack> tracks = getList("tracks");
+        if (tracks != null)
+            for (ParseTrack track : tracks) {
+                try {
+                    ParseQuery<ParseTrack> query = ParseTrack.getQuery();
+                    query.whereEqualTo("objectId", track.getObjectId());
+                    ParseTrack mTrack = query.getFirst();
+                    Log.d("ParseMusicQueue", "Found track with track name: " + mTrack.getTrackName());
+                } catch (Exception e) {
+                    Log.d("ParseMusicQueue", "Error during ParseTrack query");
+                }
+            }
+
         return getList("tracks");
     }
 

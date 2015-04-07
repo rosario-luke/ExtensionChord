@@ -5,6 +5,7 @@ import android.app.Activity;
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
+import android.content.Intent;
 import android.support.v4.widget.DrawerLayout;
 import android.os.Bundle;
 import android.view.Menu;
@@ -15,6 +16,7 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.google.android.gms.games.multiplayer.realtime.Room;
 import com.parse.ParseUser;
 
 import java.util.ArrayList;
@@ -26,6 +28,7 @@ public class RoomActivity extends Activity {
     private ListView mDrawerList;
     private SearchFragment searchFragment;
     private ViewQueueFragment viewQueueFragment;
+    private ViewRoomUsersFragment viewRoomUsersFragment;
     private Fragment curFragment;
     private String roomName;
 
@@ -43,6 +46,13 @@ public class RoomActivity extends Activity {
 
         searchFragment = new SearchFragment();
         viewQueueFragment = new ViewQueueFragment();
+        viewRoomUsersFragment = new ViewRoomUsersFragment();
+        Bundle bundle = getIntent().getExtras();
+        Bundle args = new Bundle();
+        args.putString("room_name",bundle.getString("roomName"));
+        viewRoomUsersFragment.setArguments(args);
+        viewRoomUsersFragment.newInstance();
+
 
         // Is this unnecessary? vvv
         FragmentManager fragmentManager = this.getFragmentManager();
@@ -82,12 +92,19 @@ public class RoomActivity extends Activity {
                     case 0:
                         setUpSearchFragment();
                         break;
-                    default:
-//                        Toast.makeText(RoomActivity.this, "Clicked item at index: " + position, Toast.LENGTH_LONG).show();
+                    case 1:
+                        setUpRoomUsersFragment();
+                        break;
+                    case 2:
                         setUpViewQueueFragment();
                         break;
+                    default:
+                        RoomManager.removeUserFromRoom(ParseUser.getCurrentUser().getUsername());
+                        Intent myIntent = new Intent(RoomActivity.this, JoinRoomActivity.class);
+                        startActivity(myIntent);
+                        finish();
+                        break;
                 }
-                //Toast.makeText(RoomActivity.this, "Clicked item at index: " + position, Toast.LENGTH_LONG).show();
             }
         });
     }
@@ -127,6 +144,17 @@ public class RoomActivity extends Activity {
 
         return super.onOptionsItemSelected(item);
     }
+
+    public void setUpRoomUsersFragment(){
+        FragmentManager fragmentManager = this.getFragmentManager();
+        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+
+        fragmentTransaction.replace(R.id.container,viewRoomUsersFragment,"ViewRoomUsersFragment");
+//        fragmentTransaction.hide(curFragment);
+        fragmentTransaction.commit();
+        curFragment = viewRoomUsersFragment;
+    }
+
 
     public void setUpSearchFragment(){
         FragmentManager fragmentManager = this.getFragmentManager();

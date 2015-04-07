@@ -18,6 +18,12 @@ public class RoomUser extends ParseObject {
         put("currentRoom", roomName);
     }
 
+    public boolean isAdmin() { return getBoolean("isAdmin"); }
+
+    public void setAdmin(boolean isAdmin) {
+        put("isAdmin", isAdmin);
+    }
+
     public String getUsername() {
         return getString("username");
     }

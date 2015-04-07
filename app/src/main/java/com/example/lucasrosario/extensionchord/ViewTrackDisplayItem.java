@@ -42,7 +42,7 @@ public class ViewTrackDisplayItem extends LinearLayout{
         album_view.setText(album);
     }
 
-    public ViewTrackDisplayItem(Context context, ParseTrack t) {
+    public ViewTrackDisplayItem(Context context, ParseTrack t, int count) {
         super(context);
 
         this.track = t;
@@ -61,6 +61,9 @@ public class ViewTrackDisplayItem extends LinearLayout{
 
         TextView album_view = (TextView)this.findViewById(R.id.album_name);
         album_view.setText(track.getTrackAlbum());
+
+        TextView track_number = (TextView)this.findViewById(R.id.track_number);
+        track_number.setText(count + ".)");
     }
 
     public String getTrackName(){

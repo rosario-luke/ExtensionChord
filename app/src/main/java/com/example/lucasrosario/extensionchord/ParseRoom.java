@@ -1,6 +1,5 @@
 package com.example.lucasrosario.extensionchord;
 
-import android.util.Log;
 
 import com.parse.ParseClassName;
 import com.parse.ParseException;
