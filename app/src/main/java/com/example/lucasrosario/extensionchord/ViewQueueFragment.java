@@ -11,6 +11,8 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
+import com.parse.ParseUser;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -124,6 +126,15 @@ public class ViewQueueFragment extends Fragment {
             viewCurrentSongLayout.removeAllViews();
 
             if(currentSongItem != null) {
+                String roomName = ((RoomActivity)getActivity()).getRoomName();
+                ParseRoom currRoom = RoomManager.getParseRoom(roomName);
+                String creatorUserName = currRoom.getCreator().getUsername();
+
+                //If I am NOT the creator, Hide the buttons
+                if(!creatorUserName.equals(ParseUser.getCurrentUser().getUsername())){
+                    currentSongItem.hideButtons();
+                }
+
                 viewCurrentSongLayout.addView(currentSongItem);
             }
 

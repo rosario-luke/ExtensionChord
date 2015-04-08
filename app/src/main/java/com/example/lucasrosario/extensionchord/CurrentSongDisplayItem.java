@@ -6,6 +6,7 @@ import android.media.MediaPlayer;
 import android.util.AttributeSet;
 import android.view.Gravity;
 import android.view.LayoutInflater;
+import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -81,4 +82,11 @@ public class CurrentSongDisplayItem extends LinearLayout{
         pause_button.setOnClickListener(listener);
     }
 
+    public void hideButtons(){
+        Button pause_button = (Button)this.findViewById(R.id.pause_button);
+        Button play_button = (Button)this.findViewById(R.id.play_button);
+
+        pause_button.setVisibility(View.GONE);
+        play_button.setVisibility(View.GONE);
+    }
 }

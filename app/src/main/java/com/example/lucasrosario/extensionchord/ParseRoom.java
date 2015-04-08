@@ -63,4 +63,13 @@ public class ParseRoom extends ParseObject {
     public ParseMusicQueue getParseMusicQueue() { return (ParseMusicQueue)getParseObject("musicQueue");}
 
     public void setParseMusicQueue() { put("musicQueue", new ParseMusicQueue());}
+
+    public void deleteMusicQueue() throws Exception{
+        ParseMusicQueue queue = getParseMusicQueue();
+        List<ParseTrack> tracks = queue.getTrackList();
+        for(ParseTrack t : tracks){
+            t.delete();
+        }
+        queue.delete();
+    }
 }
