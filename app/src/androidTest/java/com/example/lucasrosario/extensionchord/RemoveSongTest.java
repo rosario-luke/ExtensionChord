@@ -119,6 +119,107 @@ public class RemoveSongTest extends ActivityUnitTestCase<RoomActivity> implement
         }
 
 
+
+    }
+
+
+
+
+
+    public void testDeleteEmptySong() throws Exception{
+
+        ParseQuery<ParseObject> query = ParseQuery.getQuery("ParseRoom");
+        query.whereEqualTo("roomName", "[Tester] TestRoom");
+        List<ParseObject> objs;
+
+        Log.d("Clean up", "Going to Clean Up Objects");
+        try {
+            objs = query.find();
+            ParseRoom c = (ParseRoom)objs.get(0);
+            c.fetchIfNeeded();
+            ParseMusicQueue mq = c.getParseMusicQueue().fetchIfNeeded();
+            List<ParseTrack> cList = mq.getTrackList();
+
+            ParseTrack empty = new ParseTrack();
+
+            RoomManager.deleteTrack(empty, "[Tester] TestRoom", true);
+
+            mq = c.getParseMusicQueue().fetch();
+            List<ParseTrack> nList = mq.getTrackList();
+            for(ParseTrack t: cList){
+                assertTrue(nList.contains(t));
+            }
+
+
+        } catch(ParseException e) {
+            Log.d("Parse Exception", e.getMessage());
+        }
+
+
+    }
+
+    public void testDeleteNullSong() throws Exception{
+
+        ParseQuery<ParseObject> query = ParseQuery.getQuery("ParseRoom");
+        query.whereEqualTo("roomName", "[Tester] TestRoom");
+        List<ParseObject> objs;
+
+        Log.d("Clean up", "Going to Clean Up Objects");
+        try {
+            objs = query.find();
+            ParseRoom c = (ParseRoom)objs.get(0);
+            c.fetchIfNeeded();
+            ParseMusicQueue mq = c.getParseMusicQueue().fetchIfNeeded();
+            List<ParseTrack> cList = mq.getTrackList();
+
+
+
+            RoomManager.deleteTrack(null, "[Tester] TestRoom", true);
+
+            mq = c.getParseMusicQueue().fetch();
+            List<ParseTrack> nList = mq.getTrackList();
+            for(ParseTrack t: cList){
+                assertTrue(nList.contains(t));
+            }
+
+
+        } catch(ParseException e) {
+            Log.d("Parse Exception", e.getMessage());
+        }
+
+
+    }
+
+    public void testDeleteSongNonAdmin() throws Exception{
+
+        ParseQuery<ParseObject> query = ParseQuery.getQuery("ParseRoom");
+        query.whereEqualTo("roomName", "[Tester] TestRoom");
+        List<ParseObject> objs;
+
+        Log.d("Clean up", "Going to Clean Up Objects");
+        try {
+            objs = query.find();
+            ParseRoom c = (ParseRoom)objs.get(0);
+            c.fetchIfNeeded();
+            ParseMusicQueue mq = c.getParseMusicQueue().fetchIfNeeded();
+            List<ParseTrack> cList = mq.getTrackList();
+            for(ParseTrack t: cList){
+                Log.d("Track", t.getTrackName());
+            }
+            ParseTrack first = cList.get(0);
+            RoomManager.deleteTrack(first, "[Tester] TestRoom", false);
+            mq = c.getParseMusicQueue().fetch();
+            List<ParseTrack> nList = mq.getTrackList();
+            for(ParseTrack t: cList){
+                assertTrue(nList.contains(t));
+            }
+            //ParseObject.deleteAll(objs);
+
+        } catch(ParseException e) {
+            Log.d("Parse Exception", e.getMessage());
+        }
+
+
     }
 
 
