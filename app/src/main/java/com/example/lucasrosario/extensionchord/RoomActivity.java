@@ -19,6 +19,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.google.android.gms.games.multiplayer.realtime.Room;
+import com.parse.Parse;
 import com.parse.ParseUser;
 
 import java.util.ArrayList;
@@ -89,6 +90,8 @@ public class RoomActivity extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        Parse.initialize(this, "f539HwpFiyK3DhDsOb7xYRNwCtr7vCeMihU776Vk", "tH1ktzEjhCBZSvMzVR9Thjqj6sDtrrb1gwUYIlh1");
         currentMediaPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
         setMediaPlayerOnCompletionListener();
 
@@ -101,7 +104,12 @@ public class RoomActivity extends Activity {
         viewRoomUsersFragment = new ViewRoomUsersFragment();
         Bundle bundle = getIntent().getExtras();
         Bundle args = new Bundle();
-        args.putString("room_name",bundle.getString("roomName"));
+        try{
+            args.putString("room_name",bundle.getString("roomName"));
+        }catch(NullPointerException e){
+            args.putString("room_name", "[Tester] TestRoom");
+        }
+
         viewRoomUsersFragment.setArguments(args);
         viewRoomUsersFragment.newInstance();
 
