@@ -85,11 +85,7 @@ public class ViewTrackDisplayItem extends LinearLayout{
         return ((TextView)this.findViewById(R.id.track_name)).getText().toString();
     }
 
-
-
     public ParseTrack getTrack(){ return track;}
-
-    public String getSubmitter(){ return track.getSubmitter(); }
 
     static class TrackDisplayContextMenu implements ContextMenu.ContextMenuInfo {
         protected ViewTrackDisplayItem  trackDisplayItem = null;
