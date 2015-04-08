@@ -52,7 +52,7 @@ public class SearchTest extends ActivityUnitTestCase<RoomActivity> implements On
 
         roomManager.createRoom("TestRoom", new ParseGeoPoint(0.0, 0.0));
         Thread.sleep(1000);
-
+        searchCompleted = false;
         //roomManager.addUserToRoom("[Tester] TestRoom");
         Thread.sleep(1000);
 
@@ -84,19 +84,34 @@ public class SearchTest extends ActivityUnitTestCase<RoomActivity> implements On
         }
     }
 
-    public void testSearchFunction() throws Exception{
+    public void testSearchFunctionBasic() throws Exception{
 
-        /*roomActivity.setTestFlag(true);
 
-        View emptyView = new View(roomActivity);
-        roomActivity.onSearchBtnClick(emptyView);
-
-        // Wait for SearchFragment to populate
-        Thread.sleep(1000);*/
 
         new SoundCloudSearch(this).execute("kayne");
         Thread.sleep(1500);
         assertTrue(searchCompleted);
+
+
+    }
+
+    public void testSearchFunctionWithSpaces() throws Exception{
+
+
+        new SoundCloudSearch(this).execute("kayne west");
+        Thread.sleep(1500);
+        assertTrue(searchCompleted);
+
+
+    }
+
+    public void testSearchFunctionBlank() throws Exception{
+
+
+        new SoundCloudSearch(this).execute("");
+        Thread.sleep(1500);
+        assertTrue(searchCompleted);
+
 
     }
 

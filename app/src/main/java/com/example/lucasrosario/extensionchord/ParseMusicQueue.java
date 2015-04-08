@@ -45,5 +45,14 @@ public class ParseMusicQueue extends ParseObject {
         }
     }
 
+    public void deleteTrack(ParseTrack toDelete){
+        List<ParseTrack> tracks = getList("tracks");
+        if(tracks.contains(toDelete)){
+            List<ParseTrack> dList = new ArrayList<>();
+            dList.add(toDelete);
+            removeAll("tracks", dList);
+        }
+    }
+
     public Integer getCurrentTrack(){ return (int)getList("tracks").get(0); }
 }

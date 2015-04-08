@@ -184,6 +184,12 @@ public class ViewRoomUsersFragment extends Fragment {
             AdapterContextMenuInfo info = (AdapterContextMenuInfo) item.getMenuInfo();
             String userName =  values[info.position];
             for(RoomUser user: RoomManager.getParseRoom(roomName).getRoomUsers()) {
+                // TODO: WRAP IN A RUNNABLE
+                try {
+                    user.fetchIfNeeded();
+                } catch(ParseException e){
+                    continue;
+                }
                 if(user.getUsername().equals(userName))
                 {
                     user.setAdmin(true);

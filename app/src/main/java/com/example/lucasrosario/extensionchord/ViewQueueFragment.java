@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.support.v4.app.Fragment;
 import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.ContextMenu;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
@@ -13,6 +14,8 @@ import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.Toast;
+
+import com.parse.ParseQuery;
 import com.parse.ParseUser;
 import com.parse.ParseException;
 
@@ -227,7 +230,12 @@ public class ViewQueueFragment extends Fragment {
             }
         }
         else if(item.getTitle()=="Delete Track"){
-            Toast.makeText(getActivity(), "Clicked Delete Track", Toast.LENGTH_SHORT).show();
+            //Toast.makeText(getActivity(), "Clicked Delete Track", Toast.LENGTH_SHORT).show();
+            ViewTrackDisplayItem.TrackDisplayContextMenu c = (ViewTrackDisplayItem.TrackDisplayContextMenu)item.getMenuInfo();
+            ParseTrack toDelete = c.trackDisplayItem.getTrack();
+
+            String roomName = ((RoomActivity)getActivity()).getRoomName();
+            RoomManager.deleteTrack(toDelete, roomName, false);
         }
 
         else
