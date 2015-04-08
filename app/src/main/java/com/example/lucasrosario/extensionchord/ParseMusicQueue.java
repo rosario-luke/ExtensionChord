@@ -7,6 +7,7 @@ import com.parse.ParseObject;
 import com.parse.ParseQuery;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 /**
@@ -31,6 +32,13 @@ public class ParseMusicQueue extends ParseObject {
             }
 
         return getList("tracks");
+    }
+
+    public void pop(){
+        List<ParseTrack> tracks = getList("tracks");
+        List<ParseTrack> first = new ArrayList<ParseTrack>();
+        first.add( tracks.get(0) );
+        removeAll("tracks", first);
     }
 
     public Integer getCurrentTrack(){ return (int)getList("tracks").get(0); }
