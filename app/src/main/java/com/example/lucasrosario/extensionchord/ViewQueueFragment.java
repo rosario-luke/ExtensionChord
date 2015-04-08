@@ -4,9 +4,12 @@ import android.app.Activity;
 import android.app.Fragment;
 import android.net.Uri;
 import android.os.Bundle;
+import android.view.ContextMenu;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.Toast;
@@ -142,6 +145,7 @@ public class ViewQueueFragment extends Fragment {
             viewTrackLayout.removeAllViews();
             for(ViewTrackDisplayItem v : tList){
                 viewTrackLayout.addView(v);
+                registerForContextMenu(v);
             }
         }
     }
@@ -179,6 +183,33 @@ public class ViewQueueFragment extends Fragment {
         }
 
         (new TrackItemAdder(currentSongItem, viewList, this)).run();
+    }
+
+    @Override
+    public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
+        super.onCreateContextMenu(menu, v, menuInfo);
+        menu.setHeaderTitle("Track Options");
+        menu.add(0, v.getId(), 0, "Track Info");
+        menu.add(0, v.getId(), 0, "Delete Track");
+
+    }
+
+    @Override
+    public boolean onContextItemSelected(MenuItem item) {
+        if(item.getTitle()=="Track Info"){
+               Toast.makeText(getActivity(), "Clicked Track Info", Toast.LENGTH_SHORT).show();
+
+        }
+        else if(item.getTitle()=="Delete Track"){
+            Toast.makeText(getActivity(), "Clicked Delete Track", Toast.LENGTH_SHORT).show();
+
+        }
+
+        else
+        {
+            return false;
+        }
+        return true;
     }
 
 }
