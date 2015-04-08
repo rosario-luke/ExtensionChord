@@ -200,4 +200,40 @@ public class RoomManager {
             Log.d("RoomManager", e.toString());
         }
     }
+
+    public static boolean deleteTrack(ParseTrack toDelete, String roomName, boolean testFlag){
+        ParseRoom currRoom;
+        ParseMusicQueue currQueue;
+        RoomUser roomUser;
+        ParseQuery<RoomUser> ruQuery = ParseQuery.getQuery("RoomUser");
+        ruQuery.whereEqualTo("username", ParseUser.getCurrentUser().getUsername());
+        Log.d("CurrentUser", ParseUser.getCurrentUser().getUsername());
+        try{
+            // TODO: Change this to be asynchronous
+            currRoom = RoomManager.getParseRoom(roomName).fetchIfNeeded();
+            currQueue = currRoom.getParseMusicQueue().fetchIfNeeded();
+            List<RoomUser> ruList = ruQuery.find();
+            roomUser = ruList.get(0);
+        } catch(ParseException e){
+
+            return false;
+        }
+        if(roomUser != null && (roomUser.isAdmin() || testFlag)) {
+            Log.d("Delete Track", "Deleted Track");
+            currQueue.deleteTrack(toDelete);
+            try {
+                currQueue.save();
+            } catch(ParseException e){
+                return false;
+            }
+            return true;
+        } else {
+            if(roomUser == null){
+                Log.d("Delete track", "roomUser was null");
+            } else {
+                Log.d("Delete track", "was not an admin");
+            }
+        }
+        return false;
+    }
 }

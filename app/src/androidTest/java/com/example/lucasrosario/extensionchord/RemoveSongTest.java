@@ -3,12 +3,7 @@ package com.example.lucasrosario.extensionchord;
 import android.content.Intent;
 import android.test.ActivityUnitTestCase;
 import android.util.Log;
-import android.view.View;
 
-import com.example.lucasrosario.extensionchord.OnSearchTaskCompleted;
-import com.example.lucasrosario.extensionchord.RoomActivity;
-import com.example.lucasrosario.extensionchord.RoomManager;
-import com.example.lucasrosario.extensionchord.SoundCloudSearch;
 import com.parse.Parse;
 import com.parse.ParseException;
 import com.parse.ParseGeoPoint;
@@ -16,20 +11,22 @@ import com.parse.ParseObject;
 import com.parse.ParseQuery;
 import com.parse.ParseUser;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
  * Created by lucas on 4/8/15.
  */
-public class SearchTest extends ActivityUnitTestCase<RoomActivity> implements OnSearchTaskCompleted {
+public class RemoveSongTest extends ActivityUnitTestCase<RoomActivity> implements OnSearchTaskCompleted {
 
-    public SearchTest() {
+    public RemoveSongTest() {
         super(RoomActivity.class);
     }
 
     RoomActivity roomActivity;
     RoomManager roomManager;
     boolean searchCompleted = false;
+    ArrayList<LocalTrack> newTracks;
 
     @Override
     public void setUp() throws Exception {
@@ -52,9 +49,16 @@ public class SearchTest extends ActivityUnitTestCase<RoomActivity> implements On
 
         roomManager.createRoom("TestRoom", new ParseGeoPoint(0.0, 0.0));
         Thread.sleep(1000);
+        RoomManager.addUserToRoom("TestRoom");
         searchCompleted = false;
+        new SoundCloudSearch(this).execute("kayne");
+        Thread.sleep(1500);
+        for(int i = 0; i<5; i++){
+            LocalTrack t = newTracks.get(i);
+            roomManager.addTrack(t, "[Tester] TestRoom");
+        }
         //roomManager.addUserToRoom("[Tester] TestRoom");
-        Thread.sleep(1000);
+
 
     }
 
@@ -84,41 +88,48 @@ public class SearchTest extends ActivityUnitTestCase<RoomActivity> implements On
         }
     }
 
-    public void testSearchFunctionBasic() throws Exception{
+    public void testDeleteSongBasic() throws Exception{
 
+        ParseQuery<ParseObject> query = ParseQuery.getQuery("ParseRoom");
+        query.whereEqualTo("roomName", "[Tester] TestRoom");
+        List<ParseObject> objs;
 
+        Log.d("Clean up", "Going to Clean Up Objects");
+        try {
+            objs = query.find();
+            ParseRoom c = (ParseRoom)objs.get(0);
+            c.fetchIfNeeded();
+            ParseMusicQueue mq = c.getParseMusicQueue().fetchIfNeeded();
+            List<ParseTrack> cList = mq.getTrackList();
+            for(ParseTrack t: cList){
+                Log.d("Track", t.getTrackName());
+            }
+            ParseTrack first = cList.get(0);
+            RoomManager.deleteTrack(first, "[Tester] TestRoom", true);
+            mq = c.getParseMusicQueue().fetch();
+            cList = mq.getTrackList();
+            for(ParseTrack t: cList){
+                Log.d("Track", t.getTrackName());
+            }
+            assertTrue(!mq.getTrackList().contains(first));
+            //ParseObject.deleteAll(objs);
 
-        new SoundCloudSearch(this).execute("kayne");
-        Thread.sleep(1500);
-        assertTrue(searchCompleted);
+        } catch(ParseException e) {
+            Log.d("Parse Exception", e.getMessage());
+        }
 
 
     }
 
-    public void testSearchFunctionWithSpaces() throws Exception{
 
 
-        new SoundCloudSearch(this).execute("kayne west");
-        Thread.sleep(1500);
-        assertTrue(searchCompleted);
-
-
-    }
-
-    public void testSearchFunctionBlank() throws Exception{
-
-
-        new SoundCloudSearch(this).execute("");
-        Thread.sleep(1500);
-        assertTrue(searchCompleted);
-
-
-    }
-
-    public void onTaskCompleted(Object c){
-        if(c != null){
+    public void onTaskCompleted(Object obj){
+        ArrayList<LocalTrack> tList = (ArrayList<LocalTrack>) obj;
+        if(tList != null){
+            newTracks = tList;
             searchCompleted = true;
         }
     }
 
 }
+

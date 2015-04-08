@@ -235,32 +235,7 @@ public class ViewQueueFragment extends Fragment {
             ParseTrack toDelete = c.trackDisplayItem.getTrack();
 
             String roomName = ((RoomActivity)getActivity()).getRoomName();
-            ParseRoom currRoom;
-            ParseMusicQueue currQueue;
-            RoomUser roomUser;
-            ParseQuery<RoomUser> ruQuery = ParseQuery.getQuery("RoomUser");
-            ruQuery.whereEqualTo("username", ParseUser.getCurrentUser().getUsername());
-
-            try{
-                // TODO: Change this to be asynchronous
-                currRoom = RoomManager.getParseRoom(roomName).fetchIfNeeded();
-                currQueue = currRoom.getParseMusicQueue().fetchIfNeeded();
-                List<RoomUser> ruList = ruQuery.find();
-                roomUser = ruList.get(0);
-            } catch(ParseException e){
-                Toast.makeText(getActivity(), "Error occured while fetching room info", Toast.LENGTH_SHORT);
-                return false;
-            }
-            if(roomUser != null && roomUser.isAdmin()) {
-                Log.d("Delete Track", "Deleted Track");
-                currQueue.deleteTrack(toDelete);
-            } else {
-                if(roomUser == null){
-                    Log.d("Delete track", "roomUser was null");
-                } else {
-                    Log.d("Delete track", "was not an admin");
-                }
-            }
+            RoomManager.deleteTrack(toDelete, roomName, false);
         }
 
         else
