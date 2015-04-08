@@ -120,9 +120,10 @@ public class ViewQueueFragment extends Fragment {
         }
 
         public void run() {
+            LinearLayout viewCurrentSongLayout = (LinearLayout) fragment.getView().findViewById(R.id.current_song);
+            viewCurrentSongLayout.removeAllViews();
+
             if(currentSongItem != null) {
-                LinearLayout viewCurrentSongLayout = (LinearLayout) fragment.getView().findViewById(R.id.current_song);
-                viewCurrentSongLayout.removeAllViews();
                 viewCurrentSongLayout.addView(currentSongItem);
             }
 
@@ -138,7 +139,7 @@ public class ViewQueueFragment extends Fragment {
         ArrayList<ViewTrackDisplayItem> viewList = new ArrayList<ViewTrackDisplayItem>();
         CurrentSongDisplayItem currentSongItem = null;
 
-        if(tList != null) {
+        if(!tList.isEmpty()) {
             int tListSize = tList.size();
             currentSongItem = new CurrentSongDisplayItem(this.getActivity(), tList.get(0));
 

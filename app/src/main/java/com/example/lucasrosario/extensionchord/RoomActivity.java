@@ -65,10 +65,27 @@ public class RoomActivity extends Activity {
         currentMediaPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
     }
 
+    public void setMediaPlayerOnCompletionListener(){
+        currentMediaPlayer.setOnCompletionListener (new MediaPlayer.OnCompletionListener(){
+
+            @Override
+            public void onCompletion(MediaPlayer mp) {
+                ParseRoom currRoom = RoomManager.getParseRoom(roomName);
+                currRoom.getParseMusicQueue().pop();
+                resetMediaPlayer();
+                viewQueueFragment.refresh();
+                setMediaPlayerOnCompletionListener();
+
+                startMediaPlayer();
+            }
+        });
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         currentMediaPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
+        setMediaPlayerOnCompletionListener();
 
         setContentView(R.layout.activity_room);
 
