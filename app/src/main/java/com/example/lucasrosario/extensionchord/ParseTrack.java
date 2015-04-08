@@ -24,6 +24,9 @@ public class ParseTrack extends ParseObject{
     public void setTrackID(int trackID){
         put("trackID",trackID);
     }
+    public void setSubmitter(String submitter) {
+        put("submitter", submitter);
+    }
 
     public String getTrackName() { return getString("trackName"); }
 
@@ -36,6 +39,10 @@ public class ParseTrack extends ParseObject{
     }
 
     public int getTrackID() { return getInt("trackID"); }
+
+    public String getSubmitter() {
+        return getString("submitter");
+    }
 
     public static ParseQuery<ParseTrack> getQuery() {
         return ParseQuery.getQuery(ParseTrack.class);

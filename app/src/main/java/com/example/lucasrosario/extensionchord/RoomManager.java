@@ -173,6 +173,7 @@ public class RoomManager {
         pTrack.setTrackArtist(track.getTrackArtist());
         pTrack.setTrackID(track.getTrackID());
         pTrack.setTrackName(track.getTrackName());
+        pTrack.setSubmitter(ParseUser.getCurrentUser().getUsername());
 
         ParseACL acl = new ParseACL();
         acl.setPublicReadAccess(true);
