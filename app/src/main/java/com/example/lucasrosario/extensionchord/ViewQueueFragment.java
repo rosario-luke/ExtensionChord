@@ -10,8 +10,8 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.Toast;
-
 import com.parse.ParseUser;
+import com.parse.ParseException;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -66,8 +66,17 @@ public class ViewQueueFragment extends Fragment {
 
     public void buildTrackList(){
         String roomName = ((RoomActivity)getActivity()).getRoomName();
-        ParseRoom currRoom = RoomManager.getParseRoom(roomName);
-        ParseMusicQueue currQueue = currRoom.getParseMusicQueue();
+        ParseRoom currRoom;
+        ParseMusicQueue currQueue;
+        try{
+            // TODO: Change this to be asynchronous
+            currRoom = RoomManager.getParseRoom(roomName).fetchIfNeeded();
+            currQueue = currRoom.getParseMusicQueue().fetchIfNeeded();
+        } catch(ParseException e){
+            Toast.makeText(getActivity(), "Error occured while fetching room info", Toast.LENGTH_SHORT);
+            return;
+        }
+
 
         addTracks(currQueue.getTrackList());
     }

@@ -31,7 +31,6 @@ public class JoinRoomActivity extends Activity implements GoogleApiClient.Connec
     private Location mLastLocation;
     private RoomManager roomManager;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -92,7 +91,19 @@ public class JoinRoomActivity extends Activity implements GoogleApiClient.Connec
         }
     }
 
+    public void refreshLocation(){
+        mLastLocation = LocationServices.FusedLocationApi.getLastLocation(mGoogleApiClient);
+
+        if (mLastLocation != null) {
+            Log.d("Got Location", "Location is" + mLastLocation.toString());
+            geoPoint = new ParseGeoPoint(mLastLocation.getLatitude(), mLastLocation.getLongitude());
+        } else {
+            Log.d("Location", "mLastLocation was null");
+        }
+    }
+
     private void viewRoomList() {
+        refreshLocation();
         List<ParseRoom> rooms = roomManager.getNearbyRooms(0.5, geoPoint);
         String[] values = new String[rooms.size()];
 

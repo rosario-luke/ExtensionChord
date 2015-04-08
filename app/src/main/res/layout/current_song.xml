@@ -81,7 +81,7 @@
                         android:background="@drawable/roundedbutton"
                         android:layout_gravity="center"
                         android:layout_marginLeft="10dp"
-                        android:text="▶"
+                        android:text="►"
                         android:textColor="#ffffff"
                         android:id="@+id/play_button"
                         />
@@ -91,7 +91,8 @@
                         android:background="@drawable/roundedbutton"
                         android:layout_gravity="center"
                         android:layout_marginLeft="10dp"
-                        android:text="▐▐ "
+                        android:text="||"
+                        android:textStyle="bold"
                         android:textColor="#ffffff"
                         android:id="@+id/pause_button"
                         />

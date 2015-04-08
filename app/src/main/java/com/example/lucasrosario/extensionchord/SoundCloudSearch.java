@@ -27,10 +27,10 @@ public class SoundCloudSearch extends AsyncTask<String, Void, ArrayList<LocalTra
     final static CharSequence spaceSeq = " ";
     final static CharSequence spaceReplace = "%20";
     List<String> str;
-    private RoomActivity roomActivity;
+    private OnSearchTaskCompleted listener;
 
-    public SoundCloudSearch (RoomActivity frag){
-        this.roomActivity = frag;
+    public SoundCloudSearch (OnSearchTaskCompleted l){
+        this.listener = l;
     }
     @Override
     protected ArrayList<LocalTrack> doInBackground(String... searchString){
@@ -103,8 +103,8 @@ public class SoundCloudSearch extends AsyncTask<String, Void, ArrayList<LocalTra
     @Override
     protected void onPostExecute(ArrayList<LocalTrack> tracks) {
         //super.onPostExecute(events);
-
-        roomActivity.addTracks(tracks);
+        listener.onTaskCompleted(tracks);
+        //roomActivity.addTracks(tracks);
     }
 
 
