@@ -232,6 +232,8 @@ public class RoomActivity extends Activity {
     }
 
     public void addTracks(ArrayList<LocalTrack> tracks){
-        searchFragment.addTracks(tracks);
+        if(curFragment.equals(searchFragment)) {
+            searchFragment.addTracks(tracks);
+        }
     }
 }
