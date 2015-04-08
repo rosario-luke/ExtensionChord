@@ -34,6 +34,7 @@ public class RoomActivity extends Activity {
     private Fragment curFragment;
     private String roomName;
     private MediaPlayer currentMediaPlayer = new MediaPlayer();
+    private boolean testFlag = false;
 
     public String getRoomName(){
         return roomName;
@@ -46,6 +47,10 @@ public class RoomActivity extends Activity {
         }catch(Exception e){
             e.printStackTrace();
         }
+    }
+
+    public void setTestFlag(boolean b){
+        testFlag = b;
     }
 
     public void startMediaPlayer(){
@@ -224,16 +229,17 @@ public class RoomActivity extends Activity {
     }
 
     public void onSearchBtnClick(View v){
-        searchFragment.onSearchBtnClick(v);
+        searchFragment.onSearchBtnClick(v, testFlag);
+
     }
 
     public void onRefreshClick(View v) throws Exception{
         viewQueueFragment.onRefreshClick(v);
     }
 
-    public void addTracks(ArrayList<LocalTrack> tracks){
+    /*public void addTracks(ArrayList<LocalTrack> tracks){
         if(curFragment.equals(searchFragment)) {
             searchFragment.addTracks(tracks);
         }
-    }
+    }*/
 }

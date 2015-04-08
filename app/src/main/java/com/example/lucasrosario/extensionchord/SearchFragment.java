@@ -24,7 +24,7 @@ import java.util.ArrayList;
  * Use the {@link SearchFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class SearchFragment extends Fragment {
+public class SearchFragment extends Fragment implements OnSearchTaskCompleted {
 
 
     // TODO: Rename and change types of parameters
@@ -108,7 +108,7 @@ public class SearchFragment extends Fragment {
         public void onFragmentInteraction(Uri uri);
     }
 
-    public void onSearchBtnClick(View v){
+    public void onSearchBtnClick(View v, boolean testFlag){
 
         LinearLayout myLayout = (LinearLayout)getView().findViewById(R.id.search_layout);
 
@@ -116,12 +116,23 @@ public class SearchFragment extends Fragment {
         String query = searchField.getText().toString();
 
         ArrayList<LocalTrack> l = new ArrayList<LocalTrack>();
-        new SoundCloudSearch((RoomActivity)this.getActivity()).execute(query);
+        if(!testFlag) {
+            //new SoundCloudSearch((RoomActivity) this.getActivity()).execute(query);
+            new SoundCloudSearch(this).execute(query);
+        } else {
+            //new SoundCloudSearch((RoomActivity) this.getActivity()).execute("Kanye");
+            new SoundCloudSearch(this).execute(query);
+        }
 
     }
 
     public void addAlbumArt(Bitmap[] imageList){
         new AlbumArtAdder(imageList).run();
+    }
+
+    public void onTaskCompleted(Object c){
+        ArrayList<LocalTrack> tList = (ArrayList<LocalTrack>)(c);
+        addTracks(tList);
     }
 
     public void addTracks(ArrayList<LocalTrack> tList){
