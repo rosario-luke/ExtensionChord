@@ -4,7 +4,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
-import android.app.Fragment;
+import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.ContextMenu;
 import android.view.ContextMenu.ContextMenuInfo;
@@ -184,6 +184,12 @@ public class ViewRoomUsersFragment extends Fragment {
             AdapterContextMenuInfo info = (AdapterContextMenuInfo) item.getMenuInfo();
             String userName =  values[info.position];
             for(RoomUser user: RoomManager.getParseRoom(roomName).getRoomUsers()) {
+                // TODO: WRAP IN A RUNNABLE
+                try {
+                    user.fetchIfNeeded();
+                } catch(ParseException e){
+                    continue;
+                }
                 if(user.getUsername().equals(userName))
                 {
                     user.setAdmin(true);

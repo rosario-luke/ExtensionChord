@@ -2,13 +2,14 @@ package com.example.lucasrosario.extensionchord;
 
 import android.app.Activity;
 
-import android.app.Fragment;
-import android.app.FragmentManager;
-import android.app.FragmentTransaction;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.content.Context;
 import android.content.Intent;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
+import android.support.v4.app.FragmentActivity;
 import android.support.v4.widget.DrawerLayout;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -21,6 +22,7 @@ import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.android.gms.games.multiplayer.realtime.Room;
 import com.parse.Parse;
@@ -29,7 +31,7 @@ import com.parse.ParseUser;
 import java.util.ArrayList;
 
 
-public class RoomActivity extends Activity {
+public class RoomActivity extends FragmentActivity {
     private String[] mDrawerStrings;
     private DrawerLayout mDrawerLayout;
     private ActionBarDrawerToggle mDrawerToggle;
@@ -44,6 +46,21 @@ public class RoomActivity extends Activity {
 
     public String getRoomName(){
         return roomName;
+    }
+
+    public void showEditDialog(String trackName, String albumName, String artistName, String submitter) {
+        FragmentManager fm = getSupportFragmentManager();
+        TrackInfoDialogFragment trackInfoDialogFragment = new TrackInfoDialogFragment();
+        Bundle dialogBundle = new Bundle();
+
+        dialogBundle.putString("albumName", albumName);
+        dialogBundle.putString("artistName", artistName);
+        dialogBundle.putString("trackName", trackName);
+        dialogBundle.putString("submitter", submitter);
+
+        trackInfoDialogFragment.setArguments(dialogBundle);
+
+        trackInfoDialogFragment.show(fm, "fragment_track_info");
     }
 
     public void setCurrentMediaPlayerURL(String url){
@@ -120,7 +137,7 @@ public class RoomActivity extends Activity {
 
 
         // Is this unnecessary? vvv
-        FragmentManager fragmentManager = this.getFragmentManager();
+        FragmentManager fragmentManager = this.getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
 
         fragmentTransaction.add(R.id.container,searchFragment,"SearchFragment");
@@ -128,7 +145,6 @@ public class RoomActivity extends Activity {
         curFragment = searchFragment;
 
         //setUpSearchFragment();
-
     }
 
     private void createNavigationDrawer() {
@@ -156,7 +172,7 @@ public class RoomActivity extends Activity {
             public void onDrawerSlide(View drawerView, float slideOffset) {
                 EditText myEditText = (EditText) findViewById(R.id.searchField);
                 if (myEditText != null) {
-                    InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
+                    InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
                     imm.hideSoftInputFromWindow(myEditText.getWindowToken(), 0);
                 }
             }
@@ -236,7 +252,7 @@ public class RoomActivity extends Activity {
     }
 
     public void setUpRoomUsersFragment(){
-        FragmentManager fragmentManager = this.getFragmentManager();
+        FragmentManager fragmentManager = this.getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
 
         fragmentTransaction.replace(R.id.container,viewRoomUsersFragment,"ViewRoomUsersFragment");
@@ -247,7 +263,7 @@ public class RoomActivity extends Activity {
 
 
     public void setUpSearchFragment(){
-        FragmentManager fragmentManager = this.getFragmentManager();
+        FragmentManager fragmentManager = this.getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
 
         fragmentTransaction.replace(R.id.container,searchFragment,"SearchFragment");
@@ -257,7 +273,7 @@ public class RoomActivity extends Activity {
     }
 
     public void setUpViewQueueFragment(){
-        FragmentManager fragmentManager = this.getFragmentManager();
+        FragmentManager fragmentManager = this.getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
 
         fragmentTransaction.replace(R.id.container,viewQueueFragment,"ViewQueueFragment");
