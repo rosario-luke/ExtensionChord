@@ -5,16 +5,20 @@ import android.app.Activity;
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
+import android.content.Context;
 import android.content.Intent;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.support.v4.widget.DrawerLayout;
 import android.os.Bundle;
+import android.support.v7.app.ActionBarDrawerToggle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -28,6 +32,7 @@ import java.util.ArrayList;
 public class RoomActivity extends Activity {
     private String[] mDrawerStrings;
     private DrawerLayout mDrawerLayout;
+    private ActionBarDrawerToggle mDrawerToggle;
     private ListView mDrawerList;
     private SearchFragment searchFragment;
     private ViewQueueFragment viewQueueFragment;
@@ -146,6 +151,31 @@ public class RoomActivity extends Activity {
         mDrawerStrings = getResources().getStringArray(R.array.navdrawer_array);
         mDrawerList.setAdapter(new ArrayAdapter<String>(this, R.layout.generic_list_item, mDrawerStrings));
 
+        mDrawerLayout.setDrawerListener(new DrawerLayout.DrawerListener() {
+            @Override
+            public void onDrawerSlide(View drawerView, float slideOffset) {
+                EditText myEditText = (EditText) findViewById(R.id.searchField);
+                if (myEditText != null) {
+                    InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
+                    imm.hideSoftInputFromWindow(myEditText.getWindowToken(), 0);
+                }
+            }
+
+            @Override
+            public void onDrawerOpened(View drawerView) {
+
+            }
+
+            @Override
+            public void onDrawerClosed(View drawerView) {
+
+            }
+
+            @Override
+            public void onDrawerStateChanged(int newState) {
+            }
+        });
+
         mDrawerList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 switch(position){
@@ -158,11 +188,8 @@ public class RoomActivity extends Activity {
                     case 2:
                         setUpViewQueueFragment();
                         break;
-                    default:
-                        RoomManager.removeUserFromRoom(ParseUser.getCurrentUser().getUsername());
-                        Intent myIntent = new Intent(RoomActivity.this, JoinRoomActivity.class);
-                        startActivity(myIntent);
-                        finish();
+                    case 3:
+                        onBackPressed();
                         break;
                 }
                 mDrawerLayout.closeDrawers();
