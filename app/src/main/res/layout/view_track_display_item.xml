@@ -3,9 +3,21 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+
     <TableLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+        <View
+            android:layout_width="1000dp"
+            android:layout_height="1dp"
+            android:background="@color/primary_dark_material_light" />
+
+        </TableRow>
 
         <TableRow
             android:layout_width="match_parent"
@@ -26,7 +38,7 @@
                         android:layout_column="1"
                         android:layout_gravity="left"
                         android:text="1."
-                        android:textSize="12pt"
+                        android:textSize="8pt"
                         android:textStyle="bold"
                         android:id="@+id/track_number"
                         />
@@ -35,6 +47,7 @@
             </TableLayout>
 
             <TableLayout
+
                 android:layout_width="0dip"
                 android:layout_height="fill_parent"
                 android:layout_weight="2"
@@ -92,6 +105,5 @@
                 </TableRow>
             </TableLayout>
         </TableRow>
-
     </TableLayout>
 </merge>

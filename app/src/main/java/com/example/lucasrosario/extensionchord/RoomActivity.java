@@ -6,6 +6,8 @@ import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.content.Intent;
+import android.media.AudioManager;
+import android.media.MediaPlayer;
 import android.support.v4.widget.DrawerLayout;
 import android.os.Bundle;
 import android.view.Menu;
@@ -31,14 +33,42 @@ public class RoomActivity extends Activity {
     private ViewRoomUsersFragment viewRoomUsersFragment;
     private Fragment curFragment;
     private String roomName;
+    private MediaPlayer currentMediaPlayer = new MediaPlayer();
 
     public String getRoomName(){
         return roomName;
     }
 
+    public void setCurrentMediaPlayerURL(String url){
+        try {
+            currentMediaPlayer.setDataSource(url);
+            currentMediaPlayer.prepare();
+        }catch(Exception e){
+            e.printStackTrace();
+        }
+    }
+
+    public void startMediaPlayer(){
+        try {
+            currentMediaPlayer.start();
+        }catch(Exception e){
+            e.printStackTrace();
+        }
+    }
+
+    public void stopMediaPlayer(){
+        currentMediaPlayer.pause();
+    }
+
+    public void resetMediaPlayer(){
+        currentMediaPlayer.reset();
+        currentMediaPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        currentMediaPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
 
         setContentView(R.layout.activity_room);
 
@@ -180,7 +210,7 @@ public class RoomActivity extends Activity {
         searchFragment.onSearchBtnClick(v);
     }
 
-    public void onRefreshClick(View v){
+    public void onRefreshClick(View v) throws Exception{
         viewQueueFragment.onRefreshClick(v);
     }
 
