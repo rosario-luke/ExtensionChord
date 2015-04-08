@@ -13,6 +13,8 @@ import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.Toast;
+
+import com.parse.ParseQuery;
 import com.parse.ParseUser;
 import com.parse.ParseException;
 
@@ -222,7 +224,29 @@ public class ViewQueueFragment extends Fragment {
 
         }
         else if(item.getTitle()=="Delete Track"){
-            Toast.makeText(getActivity(), "Clicked Delete Track", Toast.LENGTH_SHORT).show();
+            //Toast.makeText(getActivity(), "Clicked Delete Track", Toast.LENGTH_SHORT).show();
+            ViewTrackDisplayItem.TrackDisplayContextMenu c = (ViewTrackDisplayItem.TrackDisplayContextMenu)item.getMenuInfo();
+            ParseTrack toDelete = c.trackDisplayItem.getTrack();
+
+            String roomName = ((RoomActivity)getActivity()).getRoomName();
+            ParseRoom currRoom;
+            ParseMusicQueue currQueue;
+            RoomUser roomUser;
+            ParseQuery<RoomUser> ruQuery = ParseQuery.getQuery("RoomUser");
+            ruQuery.whereEqualTo("user", ParseUser.getCurrentUser());
+
+            try{
+                // TODO: Change this to be asynchronous
+                currRoom = RoomManager.getParseRoom(roomName).fetchIfNeeded();
+                currQueue = currRoom.getParseMusicQueue().fetchIfNeeded();
+                roomUser = ruQuery.getFirst();
+            } catch(ParseException e){
+                Toast.makeText(getActivity(), "Error occured while fetching room info", Toast.LENGTH_SHORT);
+                return false;
+            }
+            if(roomUser != null && roomUser.isAdmin()) {
+                currQueue.deleteTrack(toDelete);
+            }
 
         }
 
