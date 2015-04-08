@@ -140,7 +140,12 @@ public class ViewQueueFragment extends Fragment {
             if(currentSongItem != null) {
                 String roomName = ((RoomActivity)getActivity()).getRoomName();
                 ParseRoom currRoom = RoomManager.getParseRoom(roomName);
-                String creatorUserName = currRoom.getCreator().getUsername();
+                String creatorUserName = "";
+                try{
+                    creatorUserName = currRoom.getCreator().fetchIfNeeded().getUsername();
+                } catch (ParseException e ){
+                    return;
+                }
 
                 //If I am NOT the creator, Hide the buttons
                 if(!creatorUserName.equals(ParseUser.getCurrentUser().getUsername())){
@@ -206,7 +211,14 @@ public class ViewQueueFragment extends Fragment {
     @Override
     public boolean onContextItemSelected(MenuItem item) {
         if(item.getTitle()=="Track Info"){
-               Toast.makeText(getActivity(), "Clicked Track Info", Toast.LENGTH_SHORT).show();
+               //Toast.makeText(getActivity(), "Clicked Track Info", Toast.LENGTH_SHORT).show();
+            ViewTrackDisplayItem.TrackDisplayContextMenu c = (ViewTrackDisplayItem.TrackDisplayContextMenu)item.getMenuInfo();
+            if(c != null){
+                Toast.makeText(getActivity(), c.trackDisplayItem.getSubmitter(), Toast.LENGTH_SHORT).show();
+            } else {
+                Toast.makeText(getActivity(), "Was Null", Toast.LENGTH_SHORT).show();
+
+            }
 
         }
         else if(item.getTitle()=="Delete Track"){

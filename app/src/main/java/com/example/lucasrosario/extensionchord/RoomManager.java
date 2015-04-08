@@ -187,6 +187,11 @@ public class RoomManager {
         }
 
         try{
+            List<ParseRoom> rList = query.find();
+            if(rList.isEmpty()){
+                Log.d("Adding Track", "Could not find room");
+                return;
+            }
             currRoom = query.find().get(0);
             currQueue = currRoom.getParseMusicQueue();
             currQueue.addTrackToQueue(pTrack);

@@ -179,6 +179,7 @@ public class ViewRoomUsersFragment extends Fragment {
 
     @Override
     public boolean onContextItemSelected(MenuItem item) {
+
         if(item.getTitle()=="Promote User"){
             AdapterContextMenuInfo info = (AdapterContextMenuInfo) item.getMenuInfo();
             String userName =  values[info.position];

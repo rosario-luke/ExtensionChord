@@ -3,8 +3,10 @@ package com.example.lucasrosario.extensionchord;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.util.AttributeSet;
+import android.view.ContextMenu;
 import android.view.Gravity;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -14,7 +16,7 @@ import android.widget.TextView;
 public class ViewTrackDisplayItem extends LinearLayout{
 
     private ParseTrack track;
-
+    private TrackDisplayContextMenu cMenu;
     public ViewTrackDisplayItem(Context context, AttributeSet attrs) {
         super(context, attrs);
 
@@ -40,6 +42,8 @@ public class ViewTrackDisplayItem extends LinearLayout{
 
         TextView album_view = (TextView)this.findViewById(R.id.album_name);
         album_view.setText(album);
+
+        cMenu = new TrackDisplayContextMenu(this);
     }
 
     public ViewTrackDisplayItem(Context context, ParseTrack t, int count) {
@@ -64,11 +68,36 @@ public class ViewTrackDisplayItem extends LinearLayout{
 
         TextView track_number = (TextView)this.findViewById(R.id.track_number);
         track_number.setText(count + ".)");
+
+        cMenu = new TrackDisplayContextMenu(this);
+
+    }
+
+    protected ContextMenu.ContextMenuInfo getContextMenuInfo() {
+        return cMenu;
+    }
+
+    public boolean isContextView(ContextMenu.ContextMenuInfo menuInfo) {
+        return menuInfo == (ContextMenu.ContextMenuInfo)cMenu;
     }
 
     public String getTrackName(){
         return ((TextView)this.findViewById(R.id.track_name)).getText().toString();
     }
 
+
+
     public ParseTrack getTrack(){ return track;}
+
+    public String getSubmitter(){ return track.getSubmitter(); }
+
+    static class TrackDisplayContextMenu implements ContextMenu.ContextMenuInfo {
+        protected ViewTrackDisplayItem  trackDisplayItem = null;
+
+        protected TrackDisplayContextMenu (ViewTrackDisplayItem vt) {
+            trackDisplayItem = vt;
+        }
+    }
+
+
 }
