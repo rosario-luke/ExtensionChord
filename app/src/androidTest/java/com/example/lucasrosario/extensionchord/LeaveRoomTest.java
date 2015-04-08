@@ -71,6 +71,8 @@ public class LeaveRoomTest extends ActivityUnitTestCase<JoinRoomActivity> {
         test.setPassword("123");
         room.setCreator(test);
         room.setRoomName("SUTestRoom");
+        List<RoomUser> preUsers = room.getRoomUsers();
+        assertEquals(2, preUsers.size());
         RoomManager.removeUserFromRoom("ATester1");
         RoomManager.removeUserFromRoom("ATester2");
         List<RoomUser> users = room.getRoomUsers();
