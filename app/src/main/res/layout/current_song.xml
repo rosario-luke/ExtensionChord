@@ -82,7 +82,6 @@
                         android:layout_gravity="center"
                         android:layout_marginLeft="10dp"
                         android:text="►"
-                        android:textAlignment="center"
                         android:textColor="#ffffff"
                         android:id="@+id/play_button"
                         />
@@ -93,7 +92,6 @@
                         android:layout_gravity="center"
                         android:layout_marginLeft="10dp"
                         android:text="❚❚"
-                        android:textAlignment="center"
                         android:textStyle="bold"
                         android:textColor="#ffffff"
                         android:id="@+id/pause_button"
