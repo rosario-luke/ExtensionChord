@@ -165,6 +165,7 @@ public class RoomActivity extends Activity {
                         finish();
                         break;
                 }
+                mDrawerLayout.closeDrawers();
             }
         });
     }
