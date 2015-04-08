@@ -198,7 +198,7 @@ public class RoomActivity extends Activity {
     }
 
     @Override
-    public void onBackPressed() {
+    protected void onDestroy(){
         RoomManager.removeUserFromRoom(ParseUser.getCurrentUser().getUsername());
         ParseRoom room = RoomManager.getParseRoom(roomName);
 
@@ -206,9 +206,11 @@ public class RoomActivity extends Activity {
         String currentUsername = ParseUser.getCurrentUser().getUsername();
         if (creatorUsername.equals(currentUsername)) {
             RoomManager.deleteRoom(roomName);
+            stopMediaPlayer();
         }
 
-        super.onBackPressed();
+        super.onDestroy();
+
     }
 
     @Override
