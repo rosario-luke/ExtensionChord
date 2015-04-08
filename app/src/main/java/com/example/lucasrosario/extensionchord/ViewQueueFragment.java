@@ -112,32 +112,41 @@ public class ViewQueueFragment extends Fragment {
     public class TrackItemAdder implements Runnable {
         private ArrayList<ViewTrackDisplayItem> tList;
         private ViewQueueFragment fragment;
-        public TrackItemAdder(ArrayList<ViewTrackDisplayItem> l, ViewQueueFragment frag) {
+        private CurrentSongDisplayItem currentSongItem;
+        public TrackItemAdder(CurrentSongDisplayItem currentSongItem, ArrayList<ViewTrackDisplayItem> l, ViewQueueFragment frag) {
+            this.currentSongItem = currentSongItem;
             this.tList = l;
             this.fragment = frag;
         }
 
         public void run() {
-            LinearLayout myLayout = (LinearLayout)fragment.getView().findViewById(R.id.view_track_list_layout);
-            myLayout.removeAllViews();
+            LinearLayout viewCurrentSongLayout = (LinearLayout)fragment.getView().findViewById(R.id.current_song);
+            viewCurrentSongLayout.removeAllViews();
+            viewCurrentSongLayout.addView(currentSongItem);
+
+
+
+            LinearLayout viewTrackLayout = (LinearLayout)fragment.getView().findViewById(R.id.view_track_list_layout);
+            viewTrackLayout.removeAllViews();
             for(ViewTrackDisplayItem v : tList){
-                myLayout.addView(v);
+                viewTrackLayout.addView(v);
             }
         }
     }
 
     public void addTracks(List<ParseTrack> tList){
-        int count = 0;
         ArrayList<ViewTrackDisplayItem> viewList = new ArrayList<ViewTrackDisplayItem>();
+        CurrentSongDisplayItem currentSongItem = null;
         if(tList != null) {
-            for (ParseTrack t : tList) {
-                count++;
-                ViewTrackDisplayItem tempItem = new ViewTrackDisplayItem(this.getActivity(), t, count);
+            int tListSize = tList.size();
+            currentSongItem = new CurrentSongDisplayItem(this.getActivity(), tList.get(0));
+            for (int count = 1; count < tListSize; count++) {
+                ViewTrackDisplayItem tempItem = new ViewTrackDisplayItem(this.getActivity(), tList.get(count), count);
                 viewList.add(tempItem);
             }
         }
 
-        (new TrackItemAdder(viewList, this)).run();
+        (new TrackItemAdder(currentSongItem, viewList, this)).run();
     }
 
 }
