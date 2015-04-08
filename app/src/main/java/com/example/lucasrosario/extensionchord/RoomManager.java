@@ -137,8 +137,8 @@ public class RoomManager {
         ParseRoom room = getParseRoom(roomName);
 
         try {
+            room.deleteMusicQueue();
             room.delete();
-
             Log.d("RoomManager", "Successfully deleted room: " + roomName);
         } catch (Exception e) {
             e.printStackTrace();
