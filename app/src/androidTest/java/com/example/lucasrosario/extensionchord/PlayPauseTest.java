@@ -24,7 +24,7 @@ public class PlayPauseTest extends ActivityUnitTestCase<RoomActivity> {
     public void setUp() throws Exception{
         super.setUp();
 
-        Intent testIntent = new Intent(getInstrumentation().getTargetContext(), JoinRoomActivity.class);
+        Intent testIntent = new Intent(getInstrumentation().getTargetContext(), RoomActivity.class);
         startActivity(testIntent, null, null);
 
         roomActivity = getActivity();
@@ -63,12 +63,20 @@ public class PlayPauseTest extends ActivityUnitTestCase<RoomActivity> {
     }
 
     public void testPlayMusic(){
+        ParseTrack currSong = testRoom.getParseMusicQueue().getTrackList().get(0);
+        String currURL = "http://api.soundcloud.com/tracks/" + currSong.getTrackID() + "/stream?client_id=3fe96f34e369ae1ef5cf7e8fcc6c8eec";
+        roomActivity.setCurrentMediaPlayerURL(currURL);
+
         assertFalse(roomActivity.getMediaPlayer().isPlaying());
         roomActivity.startMediaPlayer();
         assertTrue(roomActivity.getMediaPlayer().isPlaying());
     }
 
     public void testPauseMusic(){
+        ParseTrack currSong = testRoom.getParseMusicQueue().getTrackList().get(0);
+        String currURL = "http://api.soundcloud.com/tracks/" + currSong.getTrackID() + "/stream?client_id=3fe96f34e369ae1ef5cf7e8fcc6c8eec";
+        roomActivity.setCurrentMediaPlayerURL(currURL);
+
         assertFalse(roomActivity.getMediaPlayer().isPlaying());
         roomActivity.startMediaPlayer();
         assertTrue(roomActivity.getMediaPlayer().isPlaying());
@@ -87,6 +95,27 @@ public class PlayPauseTest extends ActivityUnitTestCase<RoomActivity> {
     }
 
     public void testAutoPlay(){
+        ParseTrack currSong = testRoom.getParseMusicQueue().getTrackList().get(0);
+        String currURL = "http://api.soundcloud.com/tracks/" + currSong.getTrackID() + "/stream?client_id=3fe96f34e369ae1ef5cf7e8fcc6c8eec";
+        roomActivity.setCurrentMediaPlayerURL(currURL);
+        roomActivity.setMediaPlayerOnCompletionListener();
+
+        assertFalse(roomActivity.getMediaPlayer().isPlaying());
+        roomActivity.startMediaPlayer();
+        assertTrue(roomActivity.getMediaPlayer().isPlaying());
+
+        int initialDuration = roomActivity.getMediaPlayer().getDuration();
+        int desiredEnd = initialDuration - 100;
+
+        roomActivity.getMediaPlayer().seekTo(desiredEnd);
+        try {
+            Thread.sleep(200);
+        }catch(InterruptedException e){
+            fail();
+        }
+
+        assertTrue(roomActivity.getMediaPlayer().isPlaying());
+        assertFalse(initialDuration == roomActivity.getMediaPlayer().getDuration());
 
     }
 }
