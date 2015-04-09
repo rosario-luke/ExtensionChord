@@ -63,11 +63,17 @@ public class PlayPauseTest extends ActivityUnitTestCase<RoomActivity> {
     }
 
     public void testPlayMusic(){
-
+        assertFalse(roomActivity.getMediaPlayer().isPlaying());
+        roomActivity.startMediaPlayer();
+        assertTrue(roomActivity.getMediaPlayer().isPlaying());
     }
 
     public void testPauseMusic(){
-
+        assertFalse(roomActivity.getMediaPlayer().isPlaying());
+        roomActivity.startMediaPlayer();
+        assertTrue(roomActivity.getMediaPlayer().isPlaying());
+        roomActivity.stopMediaPlayer();
+        assertFalse(roomActivity.getMediaPlayer().isPlaying());
     }
 
     public void testPopQueue(){
