@@ -36,13 +36,16 @@ public class ParseMusicQueue extends ParseObject {
         return getList("tracks");
     }
 
-    public void pop(){
+    public ParseTrack pop(){
         List<ParseTrack> tracks = getList("tracks");
+        ParseTrack first = null;
         if(!tracks.isEmpty()) {
-            List<ParseTrack> first = new ArrayList<ParseTrack>();
-            first.add(tracks.get(0));
-            removeAll("tracks", first);
+            first = tracks.get(0);
+            List<ParseTrack> firstList = new ArrayList<ParseTrack>();
+            firstList.add(first);
+            removeAll("tracks", firstList);
         }
+        return first;
     }
 
     public void deleteTrack(ParseTrack toDelete){
