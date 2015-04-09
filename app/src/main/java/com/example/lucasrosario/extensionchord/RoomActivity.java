@@ -63,6 +63,10 @@ public class RoomActivity extends FragmentActivity {
         trackInfoDialogFragment.show(fm, "fragment_track_info");
     }
 
+    public MediaPlayer getMediaPlayer(){
+        return currentMediaPlayer;
+    }
+
     public void setCurrentMediaPlayerURL(String url){
         try {
             currentMediaPlayer.setDataSource(url);
