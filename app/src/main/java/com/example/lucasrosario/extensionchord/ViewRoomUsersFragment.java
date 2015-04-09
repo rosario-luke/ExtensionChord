@@ -141,7 +141,14 @@ public class ViewRoomUsersFragment extends Fragment {
         HashSet<String> set = new HashSet<>();
         List<String> users = new ArrayList<String>();
         ParseRoom currRoom = RoomManager.getParseRoom(roomName);
-        boolean currUserAdmin = (currRoom.getCreator().getUsername().equals(ParseUser.getCurrentUser().getUsername()));
+        boolean currUserAdmin;
+        try {
+            currUserAdmin = (currRoom.getCreator().getUsername().equals(ParseUser.getCurrentUser().getUsername()));
+        }
+        catch(IllegalStateException e)
+        {
+            currUserAdmin = false;
+        }
         for(RoomUser user: currRoom.getRoomUsers()) {
             if (!set.contains(user.getUsername())) {
                 users.add(user.getUsername());
@@ -209,7 +216,6 @@ public class ViewRoomUsersFragment extends Fragment {
             //kill fragment, go back to main page if boot yourself
             //need to delete room if no users left
         }
-
         else
         {
             return false;
