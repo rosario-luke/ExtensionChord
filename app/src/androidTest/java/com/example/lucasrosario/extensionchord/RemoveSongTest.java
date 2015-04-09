@@ -1,6 +1,7 @@
 package com.example.lucasrosario.extensionchord;
 
 import android.content.Intent;
+import android.test.ActivityInstrumentationTestCase2;
 import android.test.ActivityUnitTestCase;
 import android.util.Log;
 
@@ -17,7 +18,7 @@ import java.util.List;
 /**
  * Created by lucas on 4/8/15.
  */
-public class RemoveSongTest extends ActivityUnitTestCase<RoomActivity> implements OnSearchTaskCompleted {
+public class RemoveSongTest extends ActivityInstrumentationTestCase2<RoomActivity> implements OnSearchTaskCompleted {
 
     public RemoveSongTest() {
         super(RoomActivity.class);
@@ -32,13 +33,8 @@ public class RemoveSongTest extends ActivityUnitTestCase<RoomActivity> implement
     public void setUp() throws Exception {
         super.setUp();
 
-        Intent testIntent = new Intent(getInstrumentation().getTargetContext(), RoomActivity.class);
-        startActivity(testIntent, null, null);
-
         roomActivity = getActivity();
         roomManager = new RoomManager(roomActivity);
-
-        Parse.initialize(roomActivity, "f539HwpFiyK3DhDsOb7xYRNwCtr7vCeMihU776Vk", "tH1ktzEjhCBZSvMzVR9Thjqj6sDtrrb1gwUYIlh1");
 
         System.out.println("Got past initialize");
         //Testing if the user can login given correct details.

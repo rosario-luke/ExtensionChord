@@ -1,6 +1,7 @@
 package com.example.lucasrosario.extensionchord;
 
 import android.content.Intent;
+import android.test.ActivityInstrumentationTestCase2;
 import android.test.ActivityUnitTestCase;
 import android.util.Log;
 
@@ -15,25 +16,19 @@ import java.util.List;
 /**
  * Created by Evan on 18/03/2015.
  */
-public class LeaveRoomTest extends ActivityUnitTestCase<JoinRoomActivity> {
+public class LeaveRoomTest extends ActivityInstrumentationTestCase2<JoinRoomActivity> {
 
     public LeaveRoomTest() {
         super(JoinRoomActivity.class);
     }
 
-    RoomManager roomManager;
     JoinRoomActivity joinRoomActivity;
 
     @Override
     public void setUp() throws Exception{
         super.setUp();
 
-        Intent testIntent = new Intent(getInstrumentation().getTargetContext(), JoinRoomActivity.class);
-        startActivity(testIntent, null, null);
-
         joinRoomActivity = getActivity();
-
-        Parse.initialize(joinRoomActivity, "f539HwpFiyK3DhDsOb7xYRNwCtr7vCeMihU776Vk", "tH1ktzEjhCBZSvMzVR9Thjqj6sDtrrb1gwUYIlh1");
 
         RoomUser currUser = new RoomUser();
         currUser.setUsername("ATester1");

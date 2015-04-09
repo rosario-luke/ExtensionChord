@@ -1,6 +1,7 @@
 package com.example.lucasrosario.extensionchord;
 
 import android.content.Intent;
+import android.test.ActivityInstrumentationTestCase2;
 import android.test.ActivityUnitTestCase;
 import android.util.Log;
 
@@ -12,7 +13,7 @@ import com.parse.ParseException;
  *  Login logic tests.
  *  Tests LoginManager.java
  */
-public class LoginTest extends ActivityUnitTestCase<MainActivity> {
+public class LoginTest extends ActivityInstrumentationTestCase2<MainActivity> {
     LoginManager userManager;
     MainActivity testActivity;
 
@@ -24,14 +25,10 @@ public class LoginTest extends ActivityUnitTestCase<MainActivity> {
     public void setUp() throws Exception {
         super.setUp();
 
-        Intent testIntent = new Intent(getInstrumentation().getTargetContext(), MainActivity.class);
-        startActivity(testIntent, null, null);
-
         testActivity = getActivity();
         userManager = new LoginManager(testActivity);
         userManager.setTestFlag();
 
-        Parse.initialize(testActivity, "f539HwpFiyK3DhDsOb7xYRNwCtr7vCeMihU776Vk", "tH1ktzEjhCBZSvMzVR9Thjqj6sDtrrb1gwUYIlh1");
         try {
             ParseUser.logIn("Tester", "Banana");
             ParseUser.getCurrentUser().delete();
@@ -68,7 +65,13 @@ public class LoginTest extends ActivityUnitTestCase<MainActivity> {
 
     public void testSignUp() throws Exception {
         //Testing if user gets signed up and then logged in.
-        userManager.signup("Tester", "Banana");
+
+        // Needs be run on the UI thread or else it throws an exception
+        testActivity.runOnUiThread(new Runnable() {
+            public void run() {
+                userManager.signup("Tester", "Banana");
+            }
+        });
         Thread.sleep(1000);
         assertNotNull(ParseUser.getCurrentUser());
     }

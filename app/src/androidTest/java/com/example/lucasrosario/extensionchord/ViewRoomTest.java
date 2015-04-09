@@ -2,8 +2,11 @@ package com.example.lucasrosario.extensionchord;
 
 import android.content.Intent;
 import android.location.Location;
+import android.test.ActivityInstrumentationTestCase2;
 import android.test.ActivityUnitTestCase;
+import android.util.Log;
 
+import com.parse.ParseException;
 import com.parse.ParseGeoPoint;
 import com.parse.ParseUser;
 
@@ -12,27 +15,36 @@ import java.util.List;
 /**
  * Created by Jakub on 2/27/2015.
  */
-public class ViewRoomTest extends ActivityUnitTestCase<MainActivity>{
+public class ViewRoomTest extends ActivityInstrumentationTestCase2<MainActivity> {
     RoomManager manager;
 
     public ViewRoomTest(){
         super(MainActivity.class);
     }
 
+    List<ParseRoom> results;
+    ParseGeoPoint testPoint;
+
     @Override
     public void setUp() throws Exception {
         super.setUp();
 
-        Intent testIntent = new Intent(getInstrumentation().getTargetContext(), MainActivity.class);
-        startActivity(testIntent, null, null);
-
         manager = new RoomManager(getActivity());
+
+        try {
+            ParseUser.logIn("Tester", "Banana");
+            ParseUser.getCurrentUser().delete();
+        } catch(ParseException e) {
+            Log.i("Login Test", "User not found.");
+        }
 
         //Testing if the user can login given correct details.
         ParseUser currUser = new ParseUser();
         currUser.setPassword("Banana");
         currUser.setUsername("Tester");
         currUser.signUp();
+
+        testPoint = new ParseGeoPoint(0, 90);
     }
 
     @Override
@@ -45,19 +57,18 @@ public class ViewRoomTest extends ActivityUnitTestCase<MainActivity>{
                 e.printStackTrace();
             }
         }
+
+        if (results != null)
+            for(ParseRoom room : results) {
+                room.delete();
+            }
     }
 
     public void testGetRooms() throws Exception {
-        ParseGeoPoint testPoint = new ParseGeoPoint(0, 90);
         manager.createRoom("Test Room", testPoint);
-
-        List<ParseRoom> results;
 
         results = manager.getNearbyRooms(0.5, testPoint);
 
         assertTrue(results.size() > 0);
-        for(ParseRoom room : results) {
-            room.delete();
-        }
     }
 }
