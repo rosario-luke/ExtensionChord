@@ -15,7 +15,6 @@ import java.util.List;
 
 public class SoundCloudArtFetcher extends AsyncTask<Void, Void, Bitmap[]> {
 
-    final static String client_id = "3fe96f34e369ae1ef5cf7e8fcc6c8eec";
     List<String> str;
     private SearchFragment fragment;
 
