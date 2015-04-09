@@ -48,10 +48,18 @@ public class PlayPauseTest extends ActivityUnitTestCase<RoomActivity> {
             fail();
         }
 
-        //Lets add 2 songs to the queue.
-      //  LocalTrack testTrack = new LocalTrack(null, );
+        // Lets add 2 songs to the queue.
+        LocalTrack sputnikBeep = new LocalTrack(null, "Sputnik: Beep", "NASA", null, 172374813);
+        LocalTrack finalCountdown = new LocalTrack(null, "The final Countdown", "AT1996", null, 29098443);
+        RoomManager.addTrack(sputnikBeep,"[Tester] TestRoom");
+        RoomManager.addTrack(finalCountdown,"[Tester] TestRoom");
 
+    }
 
+    @Override
+    public void tearDown() throws Exception{
+        RoomManager.deleteRoom("[Tester] TestRoom");
+        ParseUser.getCurrentUser().delete();
     }
 
     public void testPlayMusic(){
@@ -69,7 +77,7 @@ public class PlayPauseTest extends ActivityUnitTestCase<RoomActivity> {
         assertTrue(!testQueue.getTrackList().isEmpty());
 
         testQueue.pop();
-        assertTrue(initListLen > testQueue.getTrackList().size());
+        assertTrue(initListLen == testQueue.getTrackList().size() + 1);
     }
 
     public void testAutoPlay(){
