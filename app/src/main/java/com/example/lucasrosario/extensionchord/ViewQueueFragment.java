@@ -177,7 +177,7 @@ public class ViewQueueFragment extends Fragment {
         if(currSong != null) {
             currentSongItem = new CurrentSongDisplayItem(this.getActivity(), currSong);
 
-            String currURL = "http://api.soundcloud.com/tracks/" + currSong.getTrackID() + "/stream?client_id=3fe96f34e369ae1ef5cf7e8fcc6c8eec";
+            String currURL = "http://api.soundcloud.com/tracks/" + currSong.getTrackID() + "/stream?client_id="+Constants.API_KEY;
 
             currentSongItem.setPlayListener(new Button.OnClickListener(){
                 @Override

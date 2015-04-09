@@ -23,7 +23,6 @@ import java.util.List;
 
 public class SoundCloudSearch extends AsyncTask<String, Void, ArrayList<LocalTrack>> {
 
-    final static String client_id = "3fe96f34e369ae1ef5cf7e8fcc6c8eec";
     final static CharSequence spaceSeq = " ";
     final static CharSequence spaceReplace = "%20";
     List<String> str;
@@ -39,7 +38,7 @@ public class SoundCloudSearch extends AsyncTask<String, Void, ArrayList<LocalTra
 
         String query = searchString[0].replace(spaceSeq, spaceReplace);
 
-        String url = "http://api.soundcloud.com/tracks.json?client_id=" + client_id + "&q=" + query + "&limit=50";
+        String url = "http://api.soundcloud.com/tracks.json?client_id=" + Constants.API_KEY + "&q=" + query + "&limit=50";
         String page = null;
         Log.d("request", url);
         try {
