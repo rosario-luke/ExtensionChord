@@ -134,5 +134,5 @@ public class EspressoSignupTest extends ActivityInstrumentationTestCase2<MainAct
                 .check(matches(isDisplayed()));
     }
 
-    
+
 }

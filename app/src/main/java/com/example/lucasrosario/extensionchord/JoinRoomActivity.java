@@ -41,6 +41,7 @@ public class JoinRoomActivity extends Activity implements GoogleApiClient.Connec
         Button makeRoom = (Button) findViewById(R.id.submitCreateRoomButton);
         makeRoom.setOnClickListener(new Button.OnClickListener(){
             public void onClick(View v) {
+
                 EditText ed = (EditText) findViewById(R.id.roomNameField);
                 roomManager.createRoom(ed.getText().toString(),geoPoint);
             }
