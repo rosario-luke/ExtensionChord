@@ -18,7 +18,7 @@ public class SignUpActivity extends ActionBarActivity {
         setContentView(R.layout.activity_sign_up);
 
         final LoginManager loginManager = new LoginManager(this);
-        final Button signUpButton = (Button) findViewById(R.id.signUp);
+        final Button signUpButton = (Button) findViewById(R.id.signUpCreate);
 
         signUpButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
