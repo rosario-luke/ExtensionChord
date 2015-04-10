@@ -11,24 +11,24 @@ import com.parse.ParseUser;
 
 import java.util.List;
 
-import static android.support.test.espresso.Espresso.onData;
 import static android.support.test.espresso.Espresso.onView;
 import static android.support.test.espresso.action.ViewActions.click;
 import static android.support.test.espresso.action.ViewActions.closeSoftKeyboard;
 import static android.support.test.espresso.action.ViewActions.typeText;
+import static android.support.test.espresso.action.ViewActions.typeTextIntoFocusedView;
 import static android.support.test.espresso.assertion.ViewAssertions.matches;
 import static android.support.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static android.support.test.espresso.matcher.ViewMatchers.withId;
 import static android.support.test.espresso.matcher.ViewMatchers.withText;
 
 /**
- * Created by lucas on 4/9/15.
+ * Created by lucas on 4/10/15.
  */
-public class EspressoCreateRoomTest extends ActivityInstrumentationTestCase2<MainActivity> {
+public class EspressoSearchSongTest extends ActivityInstrumentationTestCase2<MainActivity> {
 
     MainActivity mActivity;
 
-    public EspressoCreateRoomTest() { super(MainActivity.class); }
+    public EspressoSearchSongTest() { super( MainActivity.class); }
 
     @Override
     public void setUp() throws Exception {
@@ -85,7 +85,7 @@ public class EspressoCreateRoomTest extends ActivityInstrumentationTestCase2<Mai
         onView(withId(R.id.login)).perform(click());
 
         // Wait for the activity to load
-        Thread.sleep(500);
+        Thread.sleep(1000);
 
         // JoinRoomActivity should now be loaded so we check that something
         // from is displayed on the screen (Reload button in this case)
@@ -106,7 +106,7 @@ public class EspressoCreateRoomTest extends ActivityInstrumentationTestCase2<Mai
                 .perform(click());
 
         // Wait for new ParseRoom to be created
-        Thread.sleep(1000);
+        Thread.sleep(500);
 
         onView(withId(R.id.createRoomReload))
                 .perform(click());
@@ -114,10 +114,31 @@ public class EspressoCreateRoomTest extends ActivityInstrumentationTestCase2<Mai
         // Wait for RoomList to be populated
         Thread.sleep(1000);
 
-        Espresso.onView(withText("[Tester] testCreateRoom")).check(matches(isDisplayed()));
+        Espresso.onView(withText("[Tester] testCreateRoom"))
+                .perform(click());
 
+        // Wait for RoomActivity to launch
+        Thread.sleep(1000);
 
+        // Test to see if RoomActivity has loaded
+        onView(withId(R.id.container))
+                .check(matches(isDisplayed()));
+
+        onView(withId(R.id.searchField))
+                .check(matches(isDisplayed()));
+
+        onView(withId(R.id.searchField))
+                .perform(typeText("Kanye West"), closeSoftKeyboard());
+
+        onView(withId(R.id.searchBtn))
+                .perform(click());
+
+        // Wait for Search Result To Populate
+
+        //
 
 
     }
+
+
 }
