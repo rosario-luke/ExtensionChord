@@ -1,8 +1,7 @@
 package com.example.lucasrosario.extensionchord;
 
 import android.content.Intent;
-import android.test.ActivityUnitTestCase;
-
+import android.test.ActivityInstrumentationTestCase2;
 import com.parse.Parse;
 import com.parse.ParseGeoPoint;
 import com.parse.ParseUser;
@@ -10,7 +9,7 @@ import com.parse.ParseUser;
 /**
  * Created by Jakub on 4/9/2015.
  */
-public class PlayPauseTest extends ActivityUnitTestCase<RoomActivity> {
+public class PlayPauseTest extends ActivityInstrumentationTestCase2<RoomActivity> {
 
     public PlayPauseTest() {
         super(RoomActivity.class);
@@ -23,13 +22,14 @@ public class PlayPauseTest extends ActivityUnitTestCase<RoomActivity> {
     @Override
     public void setUp() throws Exception{
         super.setUp();
-
-        Intent testIntent = new Intent(getInstrumentation().getTargetContext(), RoomActivity.class);
-        startActivity(testIntent, null, null);
-
         roomActivity = getActivity();
         roomManager = new RoomManager(roomActivity);
-
+        try{
+            ParseUser.logIn("Tester", "Banana");
+            ParseUser.getCurrentUser().delete();
+        }catch(Exception e){
+            e.printStackTrace();
+        }
         Parse.initialize(roomActivity, "f539HwpFiyK3DhDsOb7xYRNwCtr7vCeMihU776Vk", "tH1ktzEjhCBZSvMzVR9Thjqj6sDtrrb1gwUYIlh1");
 
         //Testing if the user can login given correct details.
@@ -40,7 +40,6 @@ public class PlayPauseTest extends ActivityUnitTestCase<RoomActivity> {
 
         ParseGeoPoint geoPoint = new ParseGeoPoint(40.126126, -88.225247);
         roomManager.createRoom("TestRoom",geoPoint);
-        testRoom = RoomManager.getParseRoom("[Tester] TestRoom");
 
         try {
             Thread.sleep(1000);
@@ -48,9 +47,15 @@ public class PlayPauseTest extends ActivityUnitTestCase<RoomActivity> {
             fail();
         }
 
+        testRoom = RoomManager.getParseRoom("[Tester] TestRoom");
+        RoomManager.addUserToRoom("[Tester] TestRoom");
+        getActivity().setRoomName("[Tester] TestRoom");
+//        testRoom.setParseMusicQueue();
+  //      testRoom.save();
+
         // Lets add 2 songs to the queue.
-        LocalTrack sputnikBeep = new LocalTrack(null, "Sputnik: Beep", "NASA", null, 172374813);
-        LocalTrack finalCountdown = new LocalTrack(null, "The final Countdown", "AT1996", null, 29098443);
+        LocalTrack sputnikBeep = new LocalTrack(null, "Sputnik: Beep", "NASA", "null", 172374813);
+        LocalTrack finalCountdown = new LocalTrack(null, "The final Countdown", "AT1996", "null", 29098443);
         RoomManager.addTrack(sputnikBeep,"[Tester] TestRoom");
         RoomManager.addTrack(finalCountdown,"[Tester] TestRoom");
 
@@ -58,6 +63,7 @@ public class PlayPauseTest extends ActivityUnitTestCase<RoomActivity> {
 
     @Override
     public void tearDown() throws Exception{
+        super.tearDown();
         RoomManager.deleteRoom("[Tester] TestRoom");
         ParseUser.getCurrentUser().delete();
     }
@@ -70,6 +76,7 @@ public class PlayPauseTest extends ActivityUnitTestCase<RoomActivity> {
         assertFalse(roomActivity.getMediaPlayer().isPlaying());
         roomActivity.startMediaPlayer();
         assertTrue(roomActivity.getMediaPlayer().isPlaying());
+        roomActivity.getMediaPlayer().stop();
     }
 
     public void testPauseMusic(){
@@ -105,11 +112,11 @@ public class PlayPauseTest extends ActivityUnitTestCase<RoomActivity> {
         assertTrue(roomActivity.getMediaPlayer().isPlaying());
 
         int initialDuration = roomActivity.getMediaPlayer().getDuration();
-        int desiredEnd = initialDuration - 100;
+        int desiredEnd = initialDuration - 1000;
 
         roomActivity.getMediaPlayer().seekTo(desiredEnd);
         try {
-            Thread.sleep(200);
+            Thread.sleep(4000);
         }catch(InterruptedException e){
             fail();
         }
@@ -117,5 +124,6 @@ public class PlayPauseTest extends ActivityUnitTestCase<RoomActivity> {
         assertTrue(roomActivity.getMediaPlayer().isPlaying());
         assertFalse(initialDuration == roomActivity.getMediaPlayer().getDuration());
 
+        roomActivity.getMediaPlayer().stop();
     }
 }

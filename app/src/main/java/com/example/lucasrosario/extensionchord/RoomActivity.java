@@ -44,6 +44,7 @@ public class RoomActivity extends FragmentActivity {
     private MediaPlayer currentMediaPlayer = new MediaPlayer();
     private boolean testFlag = false;
 
+    public void setRoomName(String name) { roomName = name; }
     public String getRoomName(){
         return roomName;
     }
@@ -103,9 +104,15 @@ public class RoomActivity extends FragmentActivity {
             @Override
             public void onCompletion(MediaPlayer mp) {
                 ParseRoom currRoom = RoomManager.getParseRoom(roomName);
-                currRoom.getParseMusicQueue().pop();
+                ParseMusicQueue queue = currRoom.getParseMusicQueue();
+                queue.pop();
                 resetMediaPlayer();
-                viewQueueFragment.refresh();
+                try {
+                    viewQueueFragment.refresh();
+                }catch(Exception e){
+                    if(!queue.getTrackList().isEmpty())
+                        setCurrentMediaPlayerURL("http://api.soundcloud.com/tracks/" + queue.getTrackList().get(0).getTrackID() + "/stream?client_id="+Constants.API_KEY);
+                }
                 setMediaPlayerOnCompletionListener();
 
                 startMediaPlayer();
