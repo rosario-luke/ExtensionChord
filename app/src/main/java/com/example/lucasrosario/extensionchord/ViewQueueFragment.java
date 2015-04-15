@@ -171,7 +171,7 @@ public class ViewQueueFragment extends Fragment {
         ArrayList<ViewTrackDisplayItem> viewList = new ArrayList<ViewTrackDisplayItem>();
         CurrentSongDisplayItem currentSongItem = null;
 
-        ParseTrack currSong = currQueue.pop();
+        ParseTrack currSong = currQueue.getTrackList().get(0);
 
         // Add the current song to the Fragment as a CurrentSongDisplayItem
         if(currSong != null) {
@@ -198,7 +198,7 @@ public class ViewQueueFragment extends Fragment {
             // Add the rest of the music queue to the Fragment as ViewTrackDisplayItems
             List<ParseTrack> tList = currQueue.getTrackList();
             int tListSize = tList.size();
-            for (int count = 0; count < tListSize; count++) {
+            for (int count = 1; count < tListSize; count++) {
                 ViewTrackDisplayItem tempItem = new ViewTrackDisplayItem(this.getActivity(), tList.get(count), count);
                 viewList.add(tempItem);
             }
