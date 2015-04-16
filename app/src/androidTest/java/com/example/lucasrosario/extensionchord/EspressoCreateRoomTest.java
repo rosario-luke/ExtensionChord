@@ -33,10 +33,11 @@ public class EspressoCreateRoomTest extends ActivityInstrumentationTestCase2<Mai
     @Override
     public void setUp() throws Exception {
         super.setUp();
+        ParseUser.logOut();
         injectInstrumentation(InstrumentationRegistry.getInstrumentation());
         mActivity = getActivity();
 
-        ParseUser.logOut();
+
 
         try {
             ParseUser.logIn("Tester", "Banana");
