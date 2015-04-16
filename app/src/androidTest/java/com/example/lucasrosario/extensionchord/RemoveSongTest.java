@@ -64,10 +64,8 @@ public class RemoveSongTest extends ActivityInstrumentationTestCase2<RoomActivit
         query.whereEqualTo("roomName", "[Tester] TestRoom");
         List<ParseObject> objs;
 
-        Log.d("Clean up", "Going to Clean Up Objects");
         try {
             objs = query.find();
-            Log.d("Clean up", "Found " + objs.size() + " objects to delete");
             roomManager.deleteRoom("[Tester] TestRoom");
             //ParseObject.deleteAll(objs);
 

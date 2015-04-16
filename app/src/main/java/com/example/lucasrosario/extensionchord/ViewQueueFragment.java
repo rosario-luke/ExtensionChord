@@ -21,6 +21,7 @@ import com.parse.ParseQuery;
 import com.parse.ParseUser;
 import com.parse.ParseException;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -73,6 +74,7 @@ public class ViewQueueFragment extends Fragment {
     }
 
     public void buildTrackList(){
+        ((RoomActivity) getActivity()).showProgressDialog();
         String roomName = ((RoomActivity)getActivity()).getRoomName();
 
             RoomManager.getParseRoom(roomName).fetchIfNeededInBackground(new GetCallback<ParseRoom>() {
@@ -85,11 +87,13 @@ public class ViewQueueFragment extends Fragment {
 
                                     addTracks(queue);
                                 } else {
+                                    ((RoomActivity) getActivity()).dismissProgressDialog();
                                     Toast.makeText(getActivity(), "Error occured while fetching room info", Toast.LENGTH_SHORT);
                                 }
                             }
                         });
                     } else {
+                        ((RoomActivity) getActivity()).dismissProgressDialog();
                         Toast.makeText(getActivity(), "Error occured while fetching room info", Toast.LENGTH_SHORT);
                     }
                 }
@@ -157,6 +161,7 @@ public class ViewQueueFragment extends Fragment {
                 try{
                     creatorUserName = currRoom.getCreator().fetchIfNeeded().getUsername();
                 } catch (ParseException e ){
+                    ((RoomActivity) getActivity()).dismissProgressDialog();
                     return;
                 }
 
@@ -174,6 +179,8 @@ public class ViewQueueFragment extends Fragment {
                 viewTrackLayout.addView(v);
                 registerForContextMenu(v);
             }
+            ((RoomActivity) getActivity()).dismissProgressDialog();
+
         }
     }
 
@@ -207,7 +214,9 @@ public class ViewQueueFragment extends Fragment {
                 }
             });
 
-            ((RoomActivity)getActivity()).setCurrentMediaPlayerURL(currURL);
+
+            ((RoomActivity) getActivity()).setCurrentMediaPlayerURL(currURL);
+
 
             // Add the rest of the music queue to the Fragment as ViewTrackDisplayItems
             List<ParseTrack> tList = currQueue.getTrackList();

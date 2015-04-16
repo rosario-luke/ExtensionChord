@@ -127,7 +127,6 @@ public class RoomManager {
         try {
             RoomUser.deleteAll(query.find());
 
-            Log.d("RoomManager", "Successfully removed " + username + " from the room");
         } catch (ParseException e) {
             Log.d("RoomManager", "Failed to remove " + username + " from the room");
         }
@@ -139,7 +138,6 @@ public class RoomManager {
         try {
             room.deleteMusicQueue();
             room.delete();
-            Log.d("RoomManager", "Successfully deleted room: " + roomName);
         } catch (Exception e) {
             e.printStackTrace();
             Log.d("RoomManager", "Failed to delete room: " + roomName);
@@ -154,7 +152,6 @@ public class RoomManager {
 
         try {
             RoomUser.deleteAll(query.find());
-            Log.d("RoomManager", "Deleted all RoomUsers from room: " + roomName);
         } catch (ParseException e) {
             Log.d("RoomManager", "Failed to delete RoomUsers from room: " + roomName);
         }
@@ -207,7 +204,6 @@ public class RoomManager {
         RoomUser roomUser;
         ParseQuery<RoomUser> ruQuery = ParseQuery.getQuery("RoomUser");
         ruQuery.whereEqualTo("username", ParseUser.getCurrentUser().getUsername());
-        Log.d("CurrentUser", ParseUser.getCurrentUser().getUsername());
         try{
             // TODO: Change this to be asynchronous
             currRoom = RoomManager.getParseRoom(roomName).fetchIfNeeded();
@@ -219,7 +215,6 @@ public class RoomManager {
             return false;
         }
         if(roomUser != null && (roomUser.isAdmin() || testFlag)) {
-            Log.d("Delete Track", "Deleted Track");
             currQueue.deleteTrack(toDelete);
             try {
                 currQueue.save();

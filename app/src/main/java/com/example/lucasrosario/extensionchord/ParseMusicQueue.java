@@ -27,7 +27,6 @@ public class ParseMusicQueue extends ParseObject {
                     ParseQuery<ParseTrack> query = ParseTrack.getQuery();
                     query.whereEqualTo("objectId", track.getObjectId());
                     ParseTrack mTrack = query.getFirst();
-                    Log.d("ParseMusicQueue", "Found track with track name: " + mTrack.getTrackName());
                 } catch (Exception e) {
                     Log.d("ParseMusicQueue", "Error during ParseTrack query");
                 }
@@ -39,7 +38,7 @@ public class ParseMusicQueue extends ParseObject {
     public ParseTrack pop(){
         List<ParseTrack> tracks = getList("tracks");
         ParseTrack first = null;
-        if(!tracks.isEmpty()) {
+        if(tracks == null ||!tracks.isEmpty()) {
             first = tracks.get(0);
             List<ParseTrack> firstList = new ArrayList<ParseTrack>();
             firstList.add(first);

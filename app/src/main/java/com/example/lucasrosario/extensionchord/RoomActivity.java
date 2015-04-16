@@ -2,6 +2,7 @@ package com.example.lucasrosario.extensionchord;
 
 import android.app.Activity;
 
+import android.app.ProgressDialog;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
@@ -43,6 +44,7 @@ public class RoomActivity extends FragmentActivity {
     private String roomName;
     private MediaPlayer currentMediaPlayer = new MediaPlayer();
     private boolean testFlag = false;
+    private ProgressDialog progressDialog;
 
     public void setRoomName(String name) { roomName = name; }
     public String getRoomName(){
@@ -73,6 +75,7 @@ public class RoomActivity extends FragmentActivity {
             currentMediaPlayer.setDataSource(url);
             currentMediaPlayer.prepare();
         }catch(Exception e){
+            dismissProgressDialog();
             e.printStackTrace();
         }
     }
@@ -155,6 +158,10 @@ public class RoomActivity extends FragmentActivity {
         fragmentTransaction.commit();
         curFragment = searchFragment;
 
+        progressDialog = new ProgressDialog(this);
+        progressDialog.setTitle("Loading");
+        progressDialog.setMessage("Wait while loading...");
+
         //setUpSearchFragment();
     }
 
@@ -220,6 +227,7 @@ public class RoomActivity extends FragmentActivity {
                         break;
                 }
                 mDrawerLayout.closeDrawers();
+                dismissProgressDialog();
             }
         });
     }
@@ -294,12 +302,29 @@ public class RoomActivity extends FragmentActivity {
     }
 
     public void onSearchBtnClick(View v){
+
+        InputMethodManager imm = (InputMethodManager)getSystemService(
+                Context.INPUT_METHOD_SERVICE);
+        imm.hideSoftInputFromWindow(v.getWindowToken(), 0);
+        showProgressDialog();
         searchFragment.onSearchBtnClick(v, testFlag);
 
     }
 
     public void onRefreshClick(View v) throws Exception{
         viewQueueFragment.onRefreshClick(v);
+    }
+
+    public void showProgressDialog(){
+        if(!progressDialog.isShowing()){
+            progressDialog.show();
+        }
+    }
+
+    public void dismissProgressDialog(){
+        if(progressDialog.isShowing()){
+            progressDialog.dismiss();
+        }
     }
 
     /*public void addTracks(ArrayList<LocalTrack> tracks){

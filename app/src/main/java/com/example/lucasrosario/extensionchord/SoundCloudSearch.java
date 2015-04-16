@@ -40,7 +40,6 @@ public class SoundCloudSearch extends AsyncTask<String, Void, ArrayList<LocalTra
 
         String url = "http://api.soundcloud.com/tracks.json?client_id=" + Constants.API_KEY + "&q=" + query + "&limit=50";
         String page = null;
-        Log.d("request", url);
         try {
             page = executeHttpGet(url);
         } catch(Exception e) {

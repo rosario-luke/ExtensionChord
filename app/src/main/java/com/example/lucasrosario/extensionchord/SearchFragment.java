@@ -191,6 +191,7 @@ public class SearchFragment extends Fragment implements OnSearchTaskCompleted {
             for(SearchTrackDisplayItem v : tList){
                 myLayout.addView(v);
             }
+            ((RoomActivity) getActivity()).dismissProgressDialog();
             fragment.fetchAlbumArt();
         }
     }
