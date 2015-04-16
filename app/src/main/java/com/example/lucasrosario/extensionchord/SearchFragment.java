@@ -133,6 +133,7 @@ public class SearchFragment extends Fragment implements OnSearchTaskCompleted {
 
     public void addAlbumArt(Bitmap[] imageList){
         new AlbumArtAdder(imageList).run();
+        soundCloudArtFetcher = null;
     }
 
     public void onTaskCompleted(Object c){
@@ -141,6 +142,17 @@ public class SearchFragment extends Fragment implements OnSearchTaskCompleted {
         addTracks(tList);
 
         soundCloudSearch = null;
+    }
+
+    @Override
+    public void onPause(){
+        super.onPause();
+        if(soundCloudSearch != null){
+            soundCloudSearch.cancel(true);
+        }
+        if(soundCloudArtFetcher != null){
+            soundCloudArtFetcher.cancel(true);
+        }
     }
 
     public void addTracks(ArrayList<LocalTrack> tList){
@@ -184,7 +196,10 @@ public class SearchFragment extends Fragment implements OnSearchTaskCompleted {
     }
 
     public void fetchAlbumArt(){
-        new SoundCloudArtFetcher(this).execute();
+        if(soundCloudArtFetcher == null) {
+            soundCloudArtFetcher = new SoundCloudArtFetcher(this);
+            soundCloudArtFetcher.execute();
+        }
     }
 
     public class AlbumArtAdder implements Runnable {

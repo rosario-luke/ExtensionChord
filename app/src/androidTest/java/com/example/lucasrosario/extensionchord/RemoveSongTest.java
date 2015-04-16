@@ -86,32 +86,17 @@ public class RemoveSongTest extends ActivityInstrumentationTestCase2<RoomActivit
 
     public void testDeleteSongBasic() throws Exception{
 
-        ParseQuery<ParseObject> query = ParseQuery.getQuery("ParseRoom");
-        query.whereEqualTo("roomName", "[Tester] TestRoom");
-        List<ParseObject> objs;
 
-        Log.d("Clean up", "Going to Clean Up Objects");
         try {
-            objs = query.find();
-            ParseRoom c = (ParseRoom)objs.get(0);
-            c.fetchIfNeeded();
-            ParseMusicQueue mq = c.getParseMusicQueue().fetchIfNeeded();
-            List<ParseTrack> cList = mq.getTrackList();
-            for(ParseTrack t: cList){
-                Log.d("Track", t.getTrackName());
-            }
+
+            List<ParseTrack> cList = fetchRoomTracks("[Tester] TestRoom");
             ParseTrack first = cList.get(0);
-            RoomManager.deleteTrack(first, "[Tester] TestRoom", true);
-            mq = c.getParseMusicQueue().fetch();
-            cList = mq.getTrackList();
-            for(ParseTrack t: cList){
-                Log.d("Track", t.getTrackName());
-            }
-            assertTrue(!mq.getTrackList().contains(first));
-            //ParseObject.deleteAll(objs);
+            cList = deleteAndGetTracks(first, "[Tester] TestRoom", true);
+            assertTrue(!cList.contains(first));
+
 
         } catch(ParseException e) {
-            Log.d("Parse Exception", e.getMessage());
+            fail("Could not connect to parse: " + e.getMessage());
         }
 
 
@@ -124,31 +109,19 @@ public class RemoveSongTest extends ActivityInstrumentationTestCase2<RoomActivit
 
     public void testDeleteEmptySong() throws Exception{
 
-        ParseQuery<ParseObject> query = ParseQuery.getQuery("ParseRoom");
-        query.whereEqualTo("roomName", "[Tester] TestRoom");
-        List<ParseObject> objs;
-
-        Log.d("Clean up", "Going to Clean Up Objects");
         try {
-            objs = query.find();
-            ParseRoom c = (ParseRoom)objs.get(0);
-            c.fetchIfNeeded();
-            ParseMusicQueue mq = c.getParseMusicQueue().fetchIfNeeded();
-            List<ParseTrack> cList = mq.getTrackList();
 
+            List<ParseTrack> cList = fetchRoomTracks("[Tester] TestRoom");
             ParseTrack empty = new ParseTrack();
-
-            RoomManager.deleteTrack(empty, "[Tester] TestRoom", true);
-
-            mq = c.getParseMusicQueue().fetch();
-            List<ParseTrack> nList = mq.getTrackList();
+            List<ParseTrack> nList = deleteAndGetTracks(empty, "[Tester] TestRoom", true);
             for(ParseTrack t: cList){
                 assertTrue(nList.contains(t));
             }
 
 
         } catch(ParseException e) {
-            Log.d("Parse Exception", e.getMessage());
+            fail("Could not connect to parse: " + e.getMessage());
+
         }
 
 
@@ -156,31 +129,18 @@ public class RemoveSongTest extends ActivityInstrumentationTestCase2<RoomActivit
 
     public void testDeleteNullSong() throws Exception{
 
-        ParseQuery<ParseObject> query = ParseQuery.getQuery("ParseRoom");
-        query.whereEqualTo("roomName", "[Tester] TestRoom");
-        List<ParseObject> objs;
-
-        Log.d("Clean up", "Going to Clean Up Objects");
         try {
-            objs = query.find();
-            ParseRoom c = (ParseRoom)objs.get(0);
-            c.fetchIfNeeded();
-            ParseMusicQueue mq = c.getParseMusicQueue().fetchIfNeeded();
-            List<ParseTrack> cList = mq.getTrackList();
 
-
-
-            RoomManager.deleteTrack(null, "[Tester] TestRoom", true);
-
-            mq = c.getParseMusicQueue().fetch();
-            List<ParseTrack> nList = mq.getTrackList();
+            List<ParseTrack> cList = fetchRoomTracks("[Tester] TestRoom");
+            List<ParseTrack> nList = deleteAndGetTracks(null, "[Tester] TestRoom", true);
             for(ParseTrack t: cList){
                 assertTrue(nList.contains(t));
             }
 
 
         } catch(ParseException e) {
-            Log.d("Parse Exception", e.getMessage());
+            fail("Could not connect to parse: " + e.getMessage());
+
         }
 
 
@@ -188,34 +148,49 @@ public class RemoveSongTest extends ActivityInstrumentationTestCase2<RoomActivit
 
     public void testDeleteSongNonAdmin() throws Exception{
 
-        ParseQuery<ParseObject> query = ParseQuery.getQuery("ParseRoom");
-        query.whereEqualTo("roomName", "[Tester] TestRoom");
-        List<ParseObject> objs;
-
-        Log.d("Clean up", "Going to Clean Up Objects");
         try {
-            objs = query.find();
-            ParseRoom c = (ParseRoom)objs.get(0);
-            c.fetchIfNeeded();
-            ParseMusicQueue mq = c.getParseMusicQueue().fetchIfNeeded();
-            List<ParseTrack> cList = mq.getTrackList();
-            for(ParseTrack t: cList){
-                Log.d("Track", t.getTrackName());
-            }
-            ParseTrack first = cList.get(0);
-            RoomManager.deleteTrack(first, "[Tester] TestRoom", false);
-            mq = c.getParseMusicQueue().fetch();
-            List<ParseTrack> nList = mq.getTrackList();
+
+            List<ParseTrack> cList = fetchRoomTracks("[Tester] TestRoom");
+            List<ParseTrack> nList = deleteAndGetTracks(cList.get(0), "[Tester] TestRoom", false);
             for(ParseTrack t: cList){
                 assertTrue(nList.contains(t));
             }
-            //ParseObject.deleteAll(objs);
+
 
         } catch(ParseException e) {
-            Log.d("Parse Exception", e.getMessage());
+            fail("Could not connect to parse: " + e.getMessage());
         }
 
 
+    }
+
+    public List<ParseTrack> fetchRoomTracks(String roomName) throws Exception{
+        ParseQuery<ParseObject> query = ParseQuery.getQuery("ParseRoom");
+        query.whereEqualTo("roomName", roomName);
+        List<ParseObject> objs;
+
+        objs = query.find();
+        ParseRoom c = (ParseRoom)objs.get(0).fetchIfNeeded();
+
+        ParseMusicQueue mq = c.getParseMusicQueue().fetchIfNeeded();
+        return mq.getTrackList();
+
+
+    }
+
+    public List<ParseTrack> deleteAndGetTracks(ParseTrack toDelete, String roomName, boolean isAdmin) throws Exception{
+        ParseQuery<ParseObject> query = ParseQuery.getQuery("ParseRoom");
+        query.whereEqualTo("roomName", roomName);
+        List<ParseObject> objs;
+        ParseMusicQueue mq;
+
+        objs = query.find();
+        ParseRoom c = (ParseRoom)objs.get(0).fetchIfNeeded();
+
+
+        RoomManager.deleteTrack(toDelete, "[Tester] TestRoom", isAdmin);
+        mq = c.getParseMusicQueue().fetch();
+        return  mq.getTrackList();
     }
 
 
