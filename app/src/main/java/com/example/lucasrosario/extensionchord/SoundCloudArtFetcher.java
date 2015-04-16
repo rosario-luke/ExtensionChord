@@ -23,6 +23,7 @@ public class SoundCloudArtFetcher extends AsyncTask<Void, Void, Bitmap[]> {
     }
     @Override
     protected Bitmap[] doInBackground(Void... params){
+
         LinearLayout myLayout = (LinearLayout) fragment.getView().findViewById(R.id.track_list_layout);
 
         Bitmap[] imageList = new Bitmap[myLayout.getChildCount()];

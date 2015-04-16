@@ -30,7 +30,8 @@ public class SearchFragment extends Fragment implements OnSearchTaskCompleted {
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
-
+    private SoundCloudSearch soundCloudSearch;
+    private SoundCloudArtFetcher soundCloudArtFetcher;
     private OnFragmentInteractionListener mListener;
 
     /**
@@ -116,12 +117,16 @@ public class SearchFragment extends Fragment implements OnSearchTaskCompleted {
         String query = searchField.getText().toString();
 
         ArrayList<LocalTrack> l = new ArrayList<LocalTrack>();
-        if(!testFlag) {
-            //new SoundCloudSearch((RoomActivity) this.getActivity()).execute(query);
-            new SoundCloudSearch(this).execute(query);
-        } else {
-            //new SoundCloudSearch((RoomActivity) this.getActivity()).execute("Kanye");
-            new SoundCloudSearch(this).execute(query);
+        if(soundCloudSearch == null) {
+            if (!testFlag) {
+                //new SoundCloudSearch((RoomActivity) this.getActivity()).execute(query);
+                soundCloudSearch = new SoundCloudSearch(this);
+                soundCloudSearch.execute(query);
+            } else {
+                //new SoundCloudSearch((RoomActivity) this.getActivity()).execute("Kanye");
+                soundCloudSearch = new SoundCloudSearch(this);
+                soundCloudSearch.execute(query);
+            }
         }
 
     }
@@ -131,8 +136,11 @@ public class SearchFragment extends Fragment implements OnSearchTaskCompleted {
     }
 
     public void onTaskCompleted(Object c){
+
         ArrayList<LocalTrack> tList = (ArrayList<LocalTrack>)(c);
         addTracks(tList);
+
+        soundCloudSearch = null;
     }
 
     public void addTracks(ArrayList<LocalTrack> tList){

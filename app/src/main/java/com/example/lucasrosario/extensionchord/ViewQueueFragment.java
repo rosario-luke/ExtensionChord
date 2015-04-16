@@ -15,6 +15,8 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
+import com.parse.GetCallback;
+import com.parse.ParseObject;
 import com.parse.ParseQuery;
 import com.parse.ParseUser;
 import com.parse.ParseException;
@@ -72,22 +74,27 @@ public class ViewQueueFragment extends Fragment {
 
     public void buildTrackList(){
         String roomName = ((RoomActivity)getActivity()).getRoomName();
-        ParseRoom currRoom;
-        ParseMusicQueue currQueue;
-        try{
-            // TODO: Change this to be asynchronous
-            currRoom = RoomManager.getParseRoom(roomName).fetchIfNeeded();
-            currQueue = currRoom.getParseMusicQueue().fetchIfNeeded();
-        } catch(ParseException e){
-            Toast.makeText(getActivity(), "Error occured while fetching room info", Toast.LENGTH_SHORT);
-            return;
-        }
 
-        if(currQueue != null) {
-            addTracks(currQueue);
-        } else {
-            Toast.makeText(getActivity(), "Music Queue is Currently Empty", Toast.LENGTH_SHORT).show();
-        }
+            RoomManager.getParseRoom(roomName).fetchIfNeededInBackground(new GetCallback<ParseRoom>() {
+                public void done(ParseRoom room, ParseException e) {
+                    if (e == null) {
+
+                        room.getParseMusicQueue().fetchIfNeededInBackground(new GetCallback<ParseMusicQueue>() {
+                            public void done(ParseMusicQueue queue, ParseException e) {
+                                if (e == null) {
+
+                                    addTracks(queue);
+                                } else {
+                                    Toast.makeText(getActivity(), "Error occured while fetching room info", Toast.LENGTH_SHORT);
+                                }
+                            }
+                        });
+                    } else {
+                        Toast.makeText(getActivity(), "Error occured while fetching room info", Toast.LENGTH_SHORT);
+                    }
+                }
+            });
+
     }
 
     @Override
