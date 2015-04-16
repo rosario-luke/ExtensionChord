@@ -83,8 +83,11 @@ public class ViewQueueFragment extends Fragment {
             return;
         }
 
-
-        addTracks(currQueue);
+        if(currQueue != null) {
+            addTracks(currQueue);
+        } else {
+            Toast.makeText(getActivity(), "Music Queue is Currently Empty", Toast.LENGTH_SHORT).show();
+        }
     }
 
     @Override
@@ -171,6 +174,10 @@ public class ViewQueueFragment extends Fragment {
         ArrayList<ViewTrackDisplayItem> viewList = new ArrayList<ViewTrackDisplayItem>();
         CurrentSongDisplayItem currentSongItem = null;
 
+        if(currQueue.getTrackList() == null || currQueue.getTrackList().isEmpty()){
+            Toast.makeText(getActivity(), "Music Queue is Currently Empty", Toast.LENGTH_SHORT).show();
+            return;
+        }
         ParseTrack currSong = currQueue.getTrackList().get(0);
 
         // Add the current song to the Fragment as a CurrentSongDisplayItem
