@@ -25,6 +25,14 @@
         android:id="@+id/roomNameField"
         android:visibility="gone"/>
 
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:hint="Room Password"
+        android:inputType="textPassword"
+        android:id="@+id/roomPasswordField"
+        android:visibility="gone"/>
+
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -48,9 +56,5 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content" >
     </ListView>
-
-
-
-
 
 </LinearLayout>
