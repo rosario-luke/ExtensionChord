@@ -234,6 +234,7 @@ public class ViewQueueFragment extends Fragment {
     public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
         super.onCreateContextMenu(menu, v, menuInfo);
         menu.setHeaderTitle("Track Options");
+        menu.add(0, v.getId(), 0, "Vote to Skip");
         menu.add(0, v.getId(), 0, "Track Info");
         menu.add(0, v.getId(), 0, "Delete Track");
 
@@ -241,10 +242,11 @@ public class ViewQueueFragment extends Fragment {
 
     @Override
     public boolean onContextItemSelected(MenuItem item) {
-        if(item.getTitle()=="Track Info"){
+        CharSequence itemTitle = item.getTitle();
+        if (itemTitle == "Track Info") {
                //Toast.makeText(getActivity(), "Clicked Track Info", Toast.LENGTH_SHORT).show();
             ViewTrackDisplayItem.TrackDisplayContextMenu c = (ViewTrackDisplayItem.TrackDisplayContextMenu)item.getMenuInfo();
-            if(c != null) {
+            if (c != null) {
                 ParseTrack track = c.trackDisplayItem.getTrack();
 
                 String trackName = track.getTrackName();
@@ -256,18 +258,17 @@ public class ViewQueueFragment extends Fragment {
             } else {
                 Toast.makeText(getActivity(), "Was Null", Toast.LENGTH_SHORT).show();
             }
-        }
-        else if(item.getTitle()=="Delete Track"){
+        } else if (itemTitle == "Delete Track") {
             //Toast.makeText(getActivity(), "Clicked Delete Track", Toast.LENGTH_SHORT).show();
             ViewTrackDisplayItem.TrackDisplayContextMenu c = (ViewTrackDisplayItem.TrackDisplayContextMenu)item.getMenuInfo();
             ParseTrack toDelete = c.trackDisplayItem.getTrack();
 
             String roomName = ((RoomActivity)getActivity()).getRoomName();
             RoomManager.deleteTrack(toDelete, roomName, false);
-        }
-
-        else
-        {
+        } else if (itemTitle == "Vote to Skip") {
+            ViewTrackDisplayItem.TrackDisplayContextMenu c = (ViewTrackDisplayItem.TrackDisplayContextMenu)item.getMenuInfo();
+            ParseTrack toVote = c.trackDisplayItem.getTrack();
+        } else {
             return false;
         }
         return true;

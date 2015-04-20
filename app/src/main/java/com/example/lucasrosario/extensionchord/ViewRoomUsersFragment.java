@@ -138,7 +138,6 @@ public class ViewRoomUsersFragment extends Fragment {
     }
 
     private void viewRoomList() {
-        HashSet<String> set = new HashSet<>();
         List<String> users = new ArrayList<String>();
         ParseRoom currRoom = RoomManager.getParseRoom(roomName);
         boolean currUserAdmin;
@@ -150,12 +149,7 @@ public class ViewRoomUsersFragment extends Fragment {
             currUserAdmin = false;
         }
         for(RoomUser user: currRoom.getRoomUsers()) {
-            if (!set.contains(user.getUsername())) {
-                users.add(user.getUsername());
-                set.add(user.getUsername());
-            }
-            if(currUserAdmin == false && user.getUsername().equals(ParseUser.getCurrentUser().getUsername()))
-            {
+            if(currUserAdmin == false && user.getUsername().equals(ParseUser.getCurrentUser().getUsername())) {
                 currUserAdmin = user.isAdmin();
             }
         }

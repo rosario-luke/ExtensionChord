@@ -202,7 +202,7 @@ public class RoomManager {
         ParseRoom currRoom;
         ParseMusicQueue currQueue;
         RoomUser roomUser;
-        ParseQuery<RoomUser> ruQuery = ParseQuery.getQuery("RoomUser");
+        ParseQuery<RoomUser> ruQuery = RoomUser.getQuery();
         ruQuery.whereEqualTo("username", ParseUser.getCurrentUser().getUsername());
         try{
             // TODO: Change this to be asynchronous

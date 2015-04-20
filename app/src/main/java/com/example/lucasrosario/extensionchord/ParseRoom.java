@@ -9,6 +9,7 @@ import com.parse.ParseQuery;
 import com.parse.ParseUser;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 
 /**
@@ -33,6 +34,29 @@ public class ParseRoom extends ParseObject {
         put("creator", creator);
     }
 
+    /**
+     * Removes all duplicate RoomUsers from the List and returns the result.
+     *
+     * @param roomUsers = List to delete duplicates from
+     */
+    private List<RoomUser> getListWithoutDuplicates(List<RoomUser> roomUsers) {
+        HashSet<String> set = new HashSet<String>();
+        List<RoomUser> actualUsers = new ArrayList<RoomUser>();
+
+        // Construct a new list without duplicates
+        for (RoomUser user: roomUsers) {
+            if (!set.contains(user.getUsername())) {
+                actualUsers.add(user);
+                set.add(user.getUsername());
+            }
+        }
+
+        return actualUsers;
+    }
+
+    /**
+     * Gets a List of RoomUsers in the room.
+     */
     public List<RoomUser> getRoomUsers() {
         ParseQuery<RoomUser> query = RoomUser.getQuery();
         query.whereEqualTo("currentRoom", getRoomName());
@@ -45,7 +69,14 @@ public class ParseRoom extends ParseObject {
             e.printStackTrace();
         }
 
-        return roomUsers;
+        return getListWithoutDuplicates(roomUsers);
+    }
+
+    /**
+     * Gets the number of RoomUsers in the room.
+     */
+    public int getRoomUsersSize() {
+        return getRoomUsers().size();
     }
 
     public ParseGeoPoint getLocation() {
