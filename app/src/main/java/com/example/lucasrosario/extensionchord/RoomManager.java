@@ -198,6 +198,15 @@ public class RoomManager {
         }
     }
 
+    public static void checkTrack(ParseTrack track, String roomName)
+    {
+        ParseRoom currRoom = getParseRoom(roomName);
+        ParseMusicQueue queue = currRoom.getParseMusicQueue();
+        if(queue.checkTrackDownvotes(track, currRoom.getRoomUsersSize()))
+            deleteTrack(track, roomName, false);
+
+    }
+
     public static boolean deleteTrack(ParseTrack toDelete, String roomName, boolean testFlag){
         ParseRoom currRoom;
         ParseMusicQueue currQueue;

@@ -14,11 +14,13 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.location.LocationServices;
 import com.parse.ParseGeoPoint;
+import com.parse.ParseUser;
 
 import java.util.List;
 
@@ -48,11 +50,19 @@ public class JoinRoomActivity extends Activity implements GoogleApiClient.Connec
         });
 
         Button refreshList = (Button) findViewById(R.id.createRoomReload);
+        Button logoutButton = (Button) findViewById(R.id.createRoomLogout);
+
         refreshList.setOnClickListener(new Button.OnClickListener() {
             public void onClick(View v) {
                 viewRoomList();
             }
         });
+        logoutButton.setOnClickListener(new Button.OnClickListener() {
+            public void onClick(View v) {
+                logout();
+            }
+        });
+
 
         buildGoogleApiClient();
         mGoogleApiClient.connect();
@@ -101,6 +111,13 @@ public class JoinRoomActivity extends Activity implements GoogleApiClient.Connec
         } else {
             Log.d("Location", "mLastLocation was null");
         }
+    }
+
+    private void logout(){
+        ParseUser.getCurrentUser().logOut();
+        Intent intent = new Intent(this, MainActivity.class);
+        startActivity(intent);
+        finish();
     }
 
     private void viewRoomList() {

@@ -237,8 +237,7 @@ public class RoomActivity extends FragmentActivity {
         RoomManager.removeUserFromRoom(ParseUser.getCurrentUser().getUsername());
         ParseRoom room = RoomManager.getParseRoom(roomName);
 /*
-        String creatorUsername = room.getCreator().getUsername();
-        String currentUsername = ParseUser.getCurrentUser().getUsername();
+        String creatorUe = ParseUser.getCurrentUser().getUsername();
         if (creatorUsername.equals(currentUsername)) {
             RoomManager.deleteRoom(roomName);
             stopMediaPlayer();
