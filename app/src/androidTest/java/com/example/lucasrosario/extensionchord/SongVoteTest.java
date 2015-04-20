@@ -82,9 +82,7 @@ public class SongVoteTest extends ActivityInstrumentationTestCase2<RoomActivity>
         ParseRoom room = roomManager.getParseRoom("[Tester] TestRoom");
         ParseMusicQueue queue = room.getParseMusicQueue();
         List<ParseTrack> trackList = queue.getTrackList();
-        List<String> downvoteList = new ArrayList<String>();
-        downvoteList.add("User1");
-        trackList.get(0).setDownvoteList(downvoteList);
+        trackList.get(0).addDownvoteUser("User1");
         boolean skip = queue.checkTrackDownvotes(trackList.get(0).getTrackID(), 10, 0.6);
         Assert.assertEquals(false, skip);
 

@@ -17,8 +17,8 @@ public class ParseTrack extends ParseObject{
     public void setTrackName(String trackName){
         put("trackName",trackName);
     }
-    public void setDownvoteList(List<String> downvotes){
-        put("downvote",downvotes);
+    public void addDownvoteUser(String userName){
+        addUnique("downvote", userName);
     }
     public void setTrackArtist(String trackArtist){
         put("trackArtist",trackArtist);
