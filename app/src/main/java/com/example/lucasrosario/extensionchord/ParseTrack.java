@@ -7,6 +7,8 @@ import com.parse.ParseQuery;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.List;
+
 /**
  * Created by lucas on 3/11/15.
  */
@@ -14,6 +16,9 @@ import org.json.JSONObject;
 public class ParseTrack extends ParseObject{
     public void setTrackName(String trackName){
         put("trackName",trackName);
+    }
+    public void setDownvoteList(List<String> downvotes){
+        put("downvote",downvotes);
     }
     public void setTrackArtist(String trackArtist){
         put("trackArtist",trackArtist);
@@ -29,6 +34,8 @@ public class ParseTrack extends ParseObject{
     }
 
     public String getTrackName() { return getString("trackName"); }
+
+    public List<String> getDownvoteList() { return getList("downvote"); }
 
     public String getTrackArtist() {
         return getString("trackArtist");

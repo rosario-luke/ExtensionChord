@@ -56,5 +56,10 @@ public class ParseMusicQueue extends ParseObject {
         }
     }
 
+    public boolean checkTrackDownvotes(int trackId, int numUsers, double threshold)
+    {
+        return false;
+    }
+
     public Integer getCurrentTrack(){ return (int)getList("tracks").get(0); }
 }
