@@ -272,7 +272,15 @@ public class ViewQueueFragment extends Fragment {
             String roomName = ((RoomActivity)getActivity()).getRoomName();
 
             toVote.addDownvoteUser(ParseUser.getCurrentUser().getUsername());
-            RoomManager.checkTrack(toVote, roomName);
+            boolean deleted = RoomManager.checkTrack(toVote, roomName);
+            if(deleted)
+            {
+                Toast.makeText(getActivity(), "Deleted Track", Toast.LENGTH_LONG).show();
+            }
+            else
+            {
+                Toast.makeText(getActivity(), "Need More Downvotes", Toast.LENGTH_LONG).show();
+            }
         } else {
             return false;
         }
