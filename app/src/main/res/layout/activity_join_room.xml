@@ -11,6 +11,15 @@
     android:id="@+id/createRoomLayout"
     tools:context="com.example.lucasrosario.extensionchord.JoinRoomActivity">
 
+    <Button
+        android:layout_width="105dp"
+        android:layout_height="wrap_content"
+        android:id="@+id/createRoomLogout"
+        android:textColor="#ffffffff"
+        android:background="@drawable/button_states"
+        android:text="Logout"
+        android:layout_gravity="right" />
+
     <com.example.lucasrosario.extensionchord.RoomListItemView
         android:layout_height="wrap_content"
         android:layout_width="wrap_content"
@@ -50,6 +59,7 @@
         android:textColor="#ffffffff"
         android:background="@drawable/button_states"
         android:text="Reload"/>
+
 
     <ListView
         android:id="@+id/roomList"
