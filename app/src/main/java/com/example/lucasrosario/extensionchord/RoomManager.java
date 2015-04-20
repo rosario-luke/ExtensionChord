@@ -203,7 +203,7 @@ public class RoomManager {
         ParseRoom currRoom = getParseRoom(roomName);
         ParseMusicQueue queue = currRoom.getParseMusicQueue();
         if(queue.checkTrackDownvotes(track, currRoom.getRoomUsersSize())) {
-            deleteTrack(track, roomName, false);
+            deleteTrack(track, roomName, true);
             return true;
         }
         return false;

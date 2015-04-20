@@ -275,6 +275,7 @@ public class ViewQueueFragment extends Fragment {
             boolean deleted = RoomManager.checkTrack(toVote, roomName);
             if(deleted)
             {
+                buildTrackList();
                 Toast.makeText(getActivity(), "Deleted Track", Toast.LENGTH_LONG).show();
             }
             else

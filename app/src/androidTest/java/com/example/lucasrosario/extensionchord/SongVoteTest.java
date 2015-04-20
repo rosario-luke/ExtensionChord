@@ -27,7 +27,6 @@ public class SongVoteTest extends ActivityInstrumentationTestCase2<RoomActivity>
     boolean searchCompleted = false;
     ArrayList<LocalTrack> newTracks;
 
-
     @Override
     public void setUp() throws Exception {
         super.setUp();
