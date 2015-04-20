@@ -268,6 +268,11 @@ public class ViewQueueFragment extends Fragment {
         } else if (itemTitle == "Vote to Skip") {
             ViewTrackDisplayItem.TrackDisplayContextMenu c = (ViewTrackDisplayItem.TrackDisplayContextMenu)item.getMenuInfo();
             ParseTrack toVote = c.trackDisplayItem.getTrack();
+
+            String roomName = ((RoomActivity)getActivity()).getRoomName();
+
+            toVote.addDownvoteUser(ParseUser.getCurrentUser().getUsername());
+            RoomManager.checkTrack(toVote, roomName);
         } else {
             return false;
         }
