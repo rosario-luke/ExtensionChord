@@ -78,15 +78,13 @@ public class SongVoteTest extends ActivityInstrumentationTestCase2<RoomActivity>
         }
     }
 
-    public void skipSong() throws Exception {
+    public void testSkipSong() throws Exception {
         ParseRoom room = roomManager.getParseRoom("[Tester] TestRoom");
         ParseMusicQueue queue = room.getParseMusicQueue();
         List<ParseTrack> trackList = queue.getTrackList();
         trackList.get(0).addDownvoteUser("User1");
         boolean skip = queue.checkTrackDownvotes(trackList.get(0).getTrackID(), 10, 0.6);
-        Assert.assertEquals(false, skip);
-
-
+        assertEquals(false, skip);
     }
 
     public void onTaskCompleted(Object obj){
