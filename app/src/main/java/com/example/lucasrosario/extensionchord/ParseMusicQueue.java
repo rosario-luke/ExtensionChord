@@ -56,18 +56,9 @@ public class ParseMusicQueue extends ParseObject {
         }
     }
 
-    public boolean checkTrackDownvotes(int trackId, int numUsers, double threshold)
+    public boolean checkTrackDownvotes(ParseTrack track, int numUsers)
     {
-        ParseTrack actTrack = null;
-        for(ParseTrack track : getTrackList())
-        {
-            if(track.getTrackID() == trackId)
-            {
-                actTrack = track;
-                break;
-            }
-        }
-        if(actTrack != null && (double) (actTrack.getDownvoteList().size()) >= (threshold * numUsers))
+        if(track != null && (double) (track.getDownvoteList().size()) >= (Constants.SKIP_THRESHOLD * numUsers))
         {
             return true;
         }

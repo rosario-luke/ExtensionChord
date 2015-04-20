@@ -83,7 +83,7 @@ public class SongVoteTest extends ActivityInstrumentationTestCase2<RoomActivity>
         ParseMusicQueue queue = room.getParseMusicQueue();
         List<ParseTrack> trackList = queue.getTrackList();
         trackList.get(0).addDownvoteUser("User1");
-        boolean skip = queue.checkTrackDownvotes(trackList.get(0).getTrackID(), 10, 0.6);
+        boolean skip = queue.checkTrackDownvotes(trackList.get(0), 10);
         assertEquals(false, skip);
     }
 
