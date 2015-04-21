@@ -149,15 +149,13 @@ public class ViewRoomUsersFragment extends Fragment {
             currUserAdmin = false;
         }
         for(RoomUser user: currRoom.getRoomUsers()) {
+            users.add(user.getUsername());
             if(currUserAdmin == false && user.getUsername().equals(ParseUser.getCurrentUser().getUsername())) {
                 currUserAdmin = user.isAdmin();
             }
         }
 
-        values = new String[users.size()];
-        for (int i = 0; i < users.size(); i++) {
-            values[i] = users.get(i);
-        }
+        values = users.toArray(new String[users.size()]);
 
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(getActivity().getApplicationContext(),R.layout.generic_list_item, values);
         ListView lv = (ListView) rootView.findViewById(R.id.roomUsers);
