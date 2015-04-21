@@ -24,9 +24,10 @@ public class ParseMusicQueue extends ParseObject {
         if (tracks != null)
             for (ParseTrack track : tracks) {
                 try {
-                    ParseQuery<ParseTrack> query = ParseTrack.getQuery();
-                    query.whereEqualTo("objectId", track.getObjectId());
-                    ParseTrack mTrack = query.getFirst();
+                    //ParseQuery<ParseTrack> query = ParseTrack.getQuery();
+                    //query.whereEqualTo("objectId", track.getObjectId());
+                    //ParseTrack mTrack = query.getFirst();
+                    track.fetchIfNeeded();
                 } catch (Exception e) {
                     Log.d("ParseMusicQueue", "Error during ParseTrack query");
                 }
