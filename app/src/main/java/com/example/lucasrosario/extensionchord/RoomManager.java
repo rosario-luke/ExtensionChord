@@ -30,12 +30,13 @@ public class RoomManager {
         context = c;
     }
 
-    public void createRoom(String roomName, ParseGeoPoint geoPoint){
+    public void createRoom(String roomName, String roomPassword, ParseGeoPoint geoPoint){
         // 1
         ParseRoom room = new ParseRoom();
         room.setLocation(geoPoint);
         room.setCreator(ParseUser.getCurrentUser());
         room.setRoomName(roomName);
+        room.setPassword(roomPassword);
         room.setParseMusicQueue();
 
         // 2

@@ -87,6 +87,14 @@ public class ParseRoom extends ParseObject {
         put("location", value);
     }
 
+    public void setPassword(String pass){
+        put("password", pass);
+    }
+
+    public String getPassword(){
+        return getString("password");
+    }
+
     public static ParseQuery<ParseRoom> getQuery() {
         return ParseQuery.getQuery(ParseRoom.class);
     }

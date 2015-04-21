@@ -1,9 +1,12 @@
 package com.example.lucasrosario.extensionchord;
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.location.Location;
 import android.os.Bundle;
+import android.text.InputType;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -44,8 +47,12 @@ public class JoinRoomActivity extends Activity implements GoogleApiClient.Connec
         makeRoom.setOnClickListener(new Button.OnClickListener(){
             public void onClick(View v) {
 
-                EditText ed = (EditText) findViewById(R.id.roomNameField);
-                roomManager.createRoom(ed.getText().toString(),geoPoint);
+                EditText edName = (EditText) findViewById(R.id.roomNameField);
+                EditText edPass = (EditText) findViewById(R.id.roomPasswordField);
+
+                roomManager.createRoom(edName.getText().toString(), edPass.getText().toString(), geoPoint);
+                //@TODO This should be uncommented its commented for testing atm.
+                //joinRoom(edName.getText().toString());
             }
         });
 
@@ -71,8 +78,10 @@ public class JoinRoomActivity extends Activity implements GoogleApiClient.Connec
             public void onClick(View v) {
                 Button makeRoom = (Button) findViewById(R.id.submitCreateRoomButton);
                 makeRoom.setVisibility(View.VISIBLE);
-                EditText ed = (EditText) findViewById(R.id.roomNameField);
-                ed.setVisibility(View.VISIBLE);
+                EditText edName = (EditText) findViewById(R.id.roomNameField);
+                EditText edPassword = (EditText) findViewById(R.id.roomPasswordField);
+                edName.setVisibility(View.VISIBLE);
+                edPassword.setVisibility(View.VISIBLE);
                 viewRoomList();
             }
         });
@@ -138,17 +147,57 @@ public class JoinRoomActivity extends Activity implements GoogleApiClient.Connec
         lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 // When clicked, show a toast with the TextView text or do whatever you need.
-                String roomName = ((TextView) view).getText().toString();
-                RoomManager.addUserToRoom(roomName);
+                final String roomName = ((TextView) view).getText().toString();
+                String pass = RoomManager.getParseRoom(roomName).getPassword();
+                if(pass == null || pass.equals("")){
+                    joinRoom(roomName);
+                }
+                else {
+                    //Ask user for password.
+                    AlertDialog.Builder builder = new AlertDialog.Builder(JoinRoomActivity.this);
+                    builder.setTitle("Please Enter Room Password.");
 
-                Intent myIntent = new Intent(JoinRoomActivity.this, RoomActivity.class);
-                myIntent.putExtra("roomName", roomName);
+                    // Set up the input
+                    final EditText input = new EditText(JoinRoomActivity.this);
+                    // Specify the type of input expected; this, for example, sets the input as a password, and will mask the text
+                    input.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
+                    builder.setView(input);
 
-                JoinRoomActivity.this.startActivity(myIntent);
+                    // Set up the buttons
+                    builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            String givenPass = input.getText().toString();
+                            String realPass = RoomManager.getParseRoom(roomName).getPassword();
+                            if (givenPass.equals(realPass)) {
+                                joinRoom(roomName);
+                            } else {
+                                Toast.makeText(JoinRoomActivity.this, "Error Incorrect Password.", Toast.LENGTH_LONG).show();
+                                dialog.cancel();
+                            }
+                        }
+                    });
+                    builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            dialog.cancel();
+                        }
+                    });
+
+                    builder.show();
+                }
             }
         });
     }
 
+    public void joinRoom(String roomName){
+        RoomManager.addUserToRoom(roomName);
+
+        Intent myIntent = new Intent(JoinRoomActivity.this, RoomActivity.class);
+        myIntent.putExtra("roomName", roomName);
+
+        JoinRoomActivity.this.startActivity(myIntent);
+    }
 
     public void onConnectionSuspended(int cs) {
         Log.d("Location", "Could not find location");
