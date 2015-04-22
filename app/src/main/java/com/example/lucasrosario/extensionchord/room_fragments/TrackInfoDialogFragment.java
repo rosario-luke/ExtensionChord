@@ -1,4 +1,4 @@
-package com.example.lucasrosario.extensionchord;
+package com.example.lucasrosario.extensionchord.room_fragments;
 
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
@@ -10,6 +10,8 @@ import android.view.WindowManager;
 import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
 import android.widget.TextView;
+
+import com.example.lucasrosario.extensionchord.R;
 
 public class TrackInfoDialogFragment extends DialogFragment {
     public TrackInfoDialogFragment() {

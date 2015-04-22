@@ -5,13 +5,13 @@ import android.support.test.espresso.Espresso;
 import android.test.ActivityInstrumentationTestCase2;
 import android.util.Log;
 
+import com.example.lucasrosario.extensionchord.parse_objects.ParseRoom;
 import com.parse.ParseException;
 import com.parse.ParseQuery;
 import com.parse.ParseUser;
 
 import java.util.List;
 
-import static android.support.test.espresso.Espresso.onData;
 import static android.support.test.espresso.Espresso.onView;
 import static android.support.test.espresso.action.ViewActions.click;
 import static android.support.test.espresso.action.ViewActions.closeSoftKeyboard;

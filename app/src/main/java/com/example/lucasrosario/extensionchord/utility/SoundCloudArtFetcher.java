@@ -6,8 +6,8 @@ import android.os.AsyncTask;
 import android.widget.LinearLayout;
 
 import com.example.lucasrosario.extensionchord.R;
-import com.example.lucasrosario.extensionchord.SearchFragment;
-import com.example.lucasrosario.extensionchord.SearchTrackDisplayItem;
+import com.example.lucasrosario.extensionchord.room_fragments.SearchFragment;
+import com.example.lucasrosario.extensionchord.custom_views.SearchTrackDisplayItem;
 
 import java.io.InputStream;
 import java.util.List;

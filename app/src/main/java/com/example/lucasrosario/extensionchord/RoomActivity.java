@@ -1,13 +1,10 @@
 package com.example.lucasrosario.extensionchord;
 
-import android.app.Activity;
-
 import android.app.ProgressDialog;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.content.Context;
-import android.content.Intent;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.support.v4.app.FragmentActivity;
@@ -23,13 +20,15 @@ import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.google.android.gms.games.multiplayer.realtime.Room;
+import com.example.lucasrosario.extensionchord.parse_objects.ParseMusicQueue;
+import com.example.lucasrosario.extensionchord.parse_objects.ParseRoom;
+import com.example.lucasrosario.extensionchord.room_fragments.SearchFragment;
+import com.example.lucasrosario.extensionchord.room_fragments.TrackInfoDialogFragment;
+import com.example.lucasrosario.extensionchord.room_fragments.ViewQueueFragment;
+import com.example.lucasrosario.extensionchord.room_fragments.ViewRoomUsersFragment;
 import com.parse.Parse;
 import com.parse.ParseUser;
-
-import java.util.ArrayList;
 
 
 public class RoomActivity extends FragmentActivity {

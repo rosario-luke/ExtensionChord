@@ -1,4 +1,4 @@
-package com.example.lucasrosario.extensionchord;
+package com.example.lucasrosario.extensionchord.parse_objects;
 
 
 import com.parse.ParseClassName;

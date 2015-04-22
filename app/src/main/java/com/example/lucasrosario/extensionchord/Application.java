@@ -1,5 +1,9 @@
 package com.example.lucasrosario.extensionchord;
 
+import com.example.lucasrosario.extensionchord.parse_objects.ParseMusicQueue;
+import com.example.lucasrosario.extensionchord.parse_objects.ParseRoom;
+import com.example.lucasrosario.extensionchord.parse_objects.ParseTrack;
+import com.example.lucasrosario.extensionchord.parse_objects.RoomUser;
 import com.parse.Parse;
 import com.parse.ParseObject;
 

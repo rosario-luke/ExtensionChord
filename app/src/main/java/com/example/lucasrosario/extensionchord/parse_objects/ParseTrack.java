@@ -1,11 +1,8 @@
-package com.example.lucasrosario.extensionchord;
+package com.example.lucasrosario.extensionchord.parse_objects;
 
 import com.parse.ParseClassName;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
-
-import org.json.JSONException;
-import org.json.JSONObject;
 
 import java.util.List;
 

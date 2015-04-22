@@ -1,24 +1,25 @@
-package com.example.lucasrosario.extensionchord;
+package com.example.lucasrosario.extensionchord.custom_views;
 
 import android.content.Context;
 import android.content.res.TypedArray;
-import android.media.MediaPlayer;
 import android.util.AttributeSet;
+import android.view.ContextMenu;
 import android.view.Gravity;
 import android.view.LayoutInflater;
-import android.view.View;
-import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.example.lucasrosario.extensionchord.parse_objects.ParseTrack;
+import com.example.lucasrosario.extensionchord.R;
+
 /**
- * Created by lucaspritz on 4/7/15.
+ * Created by Jakub on 3/17/2015.
  */
-public class CurrentSongDisplayItem extends LinearLayout{
+public class ViewTrackDisplayItem extends LinearLayout{
 
     private ParseTrack track;
-
-    public CurrentSongDisplayItem(Context context, AttributeSet attrs) {
+    private TrackDisplayContextMenu cMenu;
+    public ViewTrackDisplayItem(Context context, AttributeSet attrs) {
         super(context, attrs);
 
         TypedArray a = context.obtainStyledAttributes(attrs,
@@ -43,9 +44,11 @@ public class CurrentSongDisplayItem extends LinearLayout{
 
         TextView album_view = (TextView)this.findViewById(R.id.album_name);
         album_view.setText(album);
+
+        cMenu = new TrackDisplayContextMenu(this);
     }
 
-    public CurrentSongDisplayItem(Context context, ParseTrack t) {
+    public ViewTrackDisplayItem(Context context, ParseTrack t, int count) {
         super(context);
 
         this.track = t;
@@ -54,7 +57,7 @@ public class CurrentSongDisplayItem extends LinearLayout{
 
         LayoutInflater inflater = (LayoutInflater) context
                 .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        inflater.inflate(R.layout.current_song, this, true);
+        inflater.inflate(R.layout.view_track_display_item, this, true);
 
         TextView track_view = (TextView)this.findViewById(R.id.track_name);
         track_view.setText(track.getTrackName());
@@ -64,6 +67,20 @@ public class CurrentSongDisplayItem extends LinearLayout{
 
         TextView album_view = (TextView)this.findViewById(R.id.album_name);
         album_view.setText(track.getTrackAlbum());
+
+        TextView track_number = (TextView)this.findViewById(R.id.track_number);
+        track_number.setText(count + ".)");
+
+        cMenu = new TrackDisplayContextMenu(this);
+
+    }
+
+    public ContextMenu.ContextMenuInfo getContextMenuInfo() {
+        return cMenu;
+    }
+
+    public boolean isContextView(ContextMenu.ContextMenuInfo menuInfo) {
+        return menuInfo == (ContextMenu.ContextMenuInfo)cMenu;
     }
 
     public String getTrackName(){
@@ -72,21 +89,13 @@ public class CurrentSongDisplayItem extends LinearLayout{
 
     public ParseTrack getTrack(){ return track;}
 
-    public void setPlayListener(OnClickListener listener){
-        Button play_button = (Button)this.findViewById(R.id.play_button);
-        play_button.setOnClickListener(listener);
+    public static class TrackDisplayContextMenu implements ContextMenu.ContextMenuInfo {
+        public ViewTrackDisplayItem  trackDisplayItem = null;
+
+        public TrackDisplayContextMenu (ViewTrackDisplayItem vt) {
+            trackDisplayItem = vt;
+        }
     }
 
-    public void setPauseListener(OnClickListener listener){
-        Button pause_button = (Button)this.findViewById(R.id.pause_button);
-        pause_button.setOnClickListener(listener);
-    }
 
-    public void hideButtons(){
-        Button pause_button = (Button)this.findViewById(R.id.pause_button);
-        Button play_button = (Button)this.findViewById(R.id.play_button);
-
-        pause_button.setVisibility(View.GONE);
-        play_button.setVisibility(View.GONE);
-    }
 }

@@ -1,27 +1,31 @@
-package com.example.lucasrosario.extensionchord;
+package com.example.lucasrosario.extensionchord.room_fragments;
 
 import android.app.Activity;
 import android.support.v4.app.Fragment;
 import android.net.Uri;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.ContextMenu;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
+import com.example.lucasrosario.extensionchord.Constants;
+import com.example.lucasrosario.extensionchord.R;
+import com.example.lucasrosario.extensionchord.RoomActivity;
+import com.example.lucasrosario.extensionchord.RoomManager;
+import com.example.lucasrosario.extensionchord.custom_views.CurrentSongDisplayItem;
+import com.example.lucasrosario.extensionchord.custom_views.ViewTrackDisplayItem;
+import com.example.lucasrosario.extensionchord.parse_objects.ParseMusicQueue;
+import com.example.lucasrosario.extensionchord.parse_objects.ParseRoom;
+import com.example.lucasrosario.extensionchord.parse_objects.ParseTrack;
 import com.parse.GetCallback;
-import com.parse.ParseObject;
-import com.parse.ParseQuery;
 import com.parse.ParseUser;
 import com.parse.ParseException;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -198,7 +202,7 @@ public class ViewQueueFragment extends Fragment {
         if(currSong != null) {
             currentSongItem = new CurrentSongDisplayItem(this.getActivity(), currSong);
 
-            String currURL = "http://api.soundcloud.com/tracks/" + currSong.getTrackID() + "/stream?client_id="+Constants.API_KEY;
+            String currURL = "http://api.soundcloud.com/tracks/" + currSong.getTrackID() + "/stream?client_id="+ Constants.API_KEY;
 
             currentSongItem.setPlayListener(new Button.OnClickListener(){
                 @Override

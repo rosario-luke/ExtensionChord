@@ -1,9 +1,9 @@
-package com.example.lucasrosario.extensionchord;
+package com.example.lucasrosario.extensionchord.parse_objects;
 
+import com.example.lucasrosario.extensionchord.RoomManager;
 import com.parse.ParseClassName;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
-import com.parse.ParseUser;
 
 /**
  * Created by Brett on 3/3/2015.

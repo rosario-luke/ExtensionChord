@@ -1,21 +1,19 @@
 package com.example.lucasrosario.extensionchord;
 
 import android.content.Context;
-import android.location.Location;
 import android.util.Log;
 import android.widget.Toast;
 
-import com.parse.FindCallback;
-import com.parse.Parse;
+import com.example.lucasrosario.extensionchord.parse_objects.ParseMusicQueue;
+import com.example.lucasrosario.extensionchord.parse_objects.ParseRoom;
+import com.example.lucasrosario.extensionchord.parse_objects.ParseTrack;
+import com.example.lucasrosario.extensionchord.parse_objects.RoomUser;
 import com.parse.ParseACL;
 import com.parse.ParseException;
 import com.parse.ParseGeoPoint;
-import com.parse.ParseObject;
 import com.parse.ParseQuery;
 import com.parse.ParseUser;
 import com.parse.SaveCallback;
-
-import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;

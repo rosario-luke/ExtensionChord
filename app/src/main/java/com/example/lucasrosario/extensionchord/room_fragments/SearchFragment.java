@@ -1,4 +1,4 @@
-package com.example.lucasrosario.extensionchord;
+package com.example.lucasrosario.extensionchord.room_fragments;
 
 import android.app.Activity;
 import android.graphics.Bitmap;
@@ -13,6 +13,12 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
+import com.example.lucasrosario.extensionchord.LocalTrack;
+import com.example.lucasrosario.extensionchord.OnSearchTaskCompleted;
+import com.example.lucasrosario.extensionchord.R;
+import com.example.lucasrosario.extensionchord.RoomActivity;
+import com.example.lucasrosario.extensionchord.RoomManager;
+import com.example.lucasrosario.extensionchord.custom_views.SearchTrackDisplayItem;
 import com.example.lucasrosario.extensionchord.utility.SoundCloudArtFetcher;
 import com.example.lucasrosario.extensionchord.utility.SoundCloudSearch;
 

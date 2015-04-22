@@ -1,29 +1,27 @@
-package com.example.lucasrosario.extensionchord;
+package com.example.lucasrosario.extensionchord.room_fragments;
 
 import android.app.Activity;
-import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.ContextMenu;
 import android.view.ContextMenu.ContextMenuInfo;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.AdapterView.AdapterContextMenuInfo;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
-import android.widget.TextView;
 
+import com.example.lucasrosario.extensionchord.R;
+import com.example.lucasrosario.extensionchord.RoomManager;
+import com.example.lucasrosario.extensionchord.parse_objects.RoomUser;
+import com.example.lucasrosario.extensionchord.parse_objects.ParseRoom;
 import com.parse.ParseException;
-import com.parse.ParseQuery;
 import com.parse.ParseUser;
 
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
 
 

@@ -1,13 +1,12 @@
-package com.example.lucasrosario.extensionchord;
+package com.example.lucasrosario.extensionchord.parse_objects;
 
 import android.util.Log;
 
+import com.example.lucasrosario.extensionchord.Constants;
 import com.parse.ParseClassName;
 import com.parse.ParseObject;
-import com.parse.ParseQuery;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 
 /**

@@ -19,6 +19,8 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.lucasrosario.extensionchord.custom_views.RoomListItemView;
+import com.example.lucasrosario.extensionchord.parse_objects.ParseRoom;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.location.LocationServices;
