@@ -61,18 +61,9 @@ public class RemoveSongTest extends ActivityInstrumentationTestCase2<RoomActivit
 
     public void tearDown() throws Exception {
 
-        ParseQuery<ParseObject> query = ParseQuery.getQuery("ParseRoom");
-        query.whereEqualTo("roomName", "[Tester] TestRoom");
-        List<ParseObject> objs;
 
-        try {
-            objs = query.find();
-            roomManager.deleteRoom("[Tester] TestRoom");
-            //ParseObject.deleteAll(objs);
+        roomManager.deleteRoom("[Tester] TestRoom");
 
-        } catch(ParseException e) {
-            Log.d("Parse Exception", e.getMessage());
-        }
 
         if (ParseUser.getCurrentUser() != null) {
             try {
