@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.ContextMenu;
 import android.view.ContextMenu.ContextMenuInfo;
 import android.view.LayoutInflater;
@@ -192,6 +193,7 @@ public class ViewRoomUsersFragment extends Fragment {
                 {
 
                     user.setAdmin(true);
+                    Toast.makeText(getActivity(), "Promoted User " + user.getUsername(), Toast.LENGTH_SHORT).show();
                     try {
                         user.save();
                     } catch (ParseException e) {
@@ -204,8 +206,9 @@ public class ViewRoomUsersFragment extends Fragment {
         else if(item.getTitle()=="Boot User"){
             AdapterContextMenuInfo info = (AdapterContextMenuInfo) item.getMenuInfo();
             String userName =  values[info.position];
+
             if(ParseUser.getCurrentUser().getUsername().equals(userName)){
-                Toast.makeText(getActivity(), "Cannot Boot Yourself", Toast.LENGTH_SHORT);
+                Toast.makeText(getActivity(), "Cannot Boot Yourself", Toast.LENGTH_SHORT).show();
                 return true;
             }
             RoomManager.removeUserFromRoom(userName);
