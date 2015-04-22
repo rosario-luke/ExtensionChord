@@ -156,7 +156,7 @@ public class ViewQueueFragment extends Fragment {
 
         public void run() {
             LinearLayout viewCurrentSongLayout = (LinearLayout) fragment.getView().findViewById(R.id.current_song);
-            //viewCurrentSongLayout.removeAllViews();
+            viewCurrentSongLayout.removeAllViews();
 
             if(currentSongItem != null) {
                 String roomName = ((RoomActivity)getActivity()).getRoomName();
