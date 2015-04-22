@@ -1,6 +1,7 @@
 package com.example.lucasrosario.extensionchord;
 
 import android.app.ProgressDialog;
+import android.graphics.Point;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
@@ -10,7 +11,10 @@ import android.media.MediaPlayer;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.widget.DrawerLayout;
 import android.os.Bundle;
+import android.support.v4.widget.ViewDragHelper;
 import android.support.v7.app.ActionBarDrawerToggle;
+import android.util.Log;
+import android.view.Display;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -31,6 +35,7 @@ import com.example.lucasrosario.extensionchord.room_fragments.ViewRoomUsersFragm
 import com.parse.Parse;
 import com.parse.ParseUser;
 
+import java.lang.reflect.Field;
 import java.util.List;
 
 
@@ -244,6 +249,25 @@ public class RoomActivity extends FragmentActivity {
                 dismissProgressDialog();
             }
         });
+
+        // Makes the drawer a lot easier to open
+        try {
+            Field mDragger = mDrawerLayout.getClass().getDeclaredField("mLeftDragger");
+            mDragger.setAccessible(true);
+            ViewDragHelper draggerObj = (ViewDragHelper) mDragger.get(mDrawerLayout);
+
+            Field mEdgeSize = draggerObj.getClass().getDeclaredField("mEdgeSize");
+            mEdgeSize.setAccessible(true);
+
+            Display display = getWindowManager().getDefaultDisplay();
+            Point size = new Point();
+            display.getSize(size);
+
+            // Setting the drag margin to be equal to the screen's width
+            mEdgeSize.setInt(draggerObj, size.x);
+        } catch (Exception e) {
+            Log.d("Navigation Drawer", "Navigation drawer drag margin setting failed");
+        }
     }
 
     @Override
@@ -258,7 +282,6 @@ public class RoomActivity extends FragmentActivity {
         }*/
 
         super.onDestroy();
-
     }
 
     @Override
