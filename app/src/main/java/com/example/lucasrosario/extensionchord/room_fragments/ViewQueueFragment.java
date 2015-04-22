@@ -193,6 +193,7 @@ public class ViewQueueFragment extends Fragment {
         CurrentSongDisplayItem currentSongItem = null;
 
         if(currQueue.getTrackList() == null || currQueue.getTrackList().isEmpty()){
+            ((RoomActivity) getActivity()).dismissProgressDialog();
             Toast.makeText(getActivity(), "Music Queue is Currently Empty", Toast.LENGTH_SHORT).show();
             return;
         }
