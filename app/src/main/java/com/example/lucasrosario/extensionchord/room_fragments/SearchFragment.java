@@ -175,7 +175,6 @@ public class SearchFragment extends Fragment implements OnSearchTaskCompleted {
                     public void onClick(View v) {
                         String currRoom = ((RoomActivity)getActivity()).getRoomName();
                         RoomManager.addTrack(tempTrack, currRoom);
-                        Toast.makeText(getActivity(), "Successfully Added LocalTrack " + tempTrack.getTrackID(), Toast.LENGTH_LONG).show();
                     }
                 });
                 viewList.add(tempItem);

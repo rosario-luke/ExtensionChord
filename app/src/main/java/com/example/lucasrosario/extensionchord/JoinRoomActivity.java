@@ -53,7 +53,8 @@ public class JoinRoomActivity extends Activity implements GoogleApiClient.Connec
                 EditText edPass = (EditText) findViewById(R.id.roomPasswordField);
 
                 roomManager.createRoom(edName.getText().toString(), edPass.getText().toString(), geoPoint);
-                joinRoom(edName.getText().toString());
+                //@TODO WONKY ALERT
+//                joinRoom(edName.getText().toString());
             }
         });
 
