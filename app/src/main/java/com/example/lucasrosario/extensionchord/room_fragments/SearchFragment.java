@@ -195,7 +195,7 @@ public class SearchFragment extends Fragment implements OnSearchTaskCompleted {
 
         public void run() {
             LinearLayout myLayout = (LinearLayout)fragment.getView().findViewById(R.id.track_list_layout);
-            //myLayout.removeAllViews();
+            myLayout.removeAllViews();
             for(SearchTrackDisplayItem v : tList){
                 myLayout.addView(v);
             }
