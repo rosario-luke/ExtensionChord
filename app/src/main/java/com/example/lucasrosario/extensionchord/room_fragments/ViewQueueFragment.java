@@ -92,13 +92,13 @@ public class ViewQueueFragment extends Fragment {
                                     addTracks(queue);
                                 } else {
                                     ((RoomActivity) getActivity()).dismissProgressDialog();
-                                    Toast.makeText(getActivity(), "Error occured while fetching room info", Toast.LENGTH_SHORT);
+                                    Toast.makeText(getActivity(), "Error occured while fetching room info", Toast.LENGTH_SHORT).show();
                                 }
                             }
                         });
                     } else {
                         ((RoomActivity) getActivity()).dismissProgressDialog();
-                        Toast.makeText(getActivity(), "Error occured while fetching room info", Toast.LENGTH_SHORT);
+                        Toast.makeText(getActivity(), "Error occured while fetching room info", Toast.LENGTH_SHORT).show();
                     }
                 }
             });
@@ -265,7 +265,9 @@ public class ViewQueueFragment extends Fragment {
             ParseTrack toDelete = c.trackDisplayItem.getTrack();
 
             String roomName = ((RoomActivity)getActivity()).getRoomName();
-            RoomManager.deleteTrack(toDelete, roomName, false);
+            boolean songDeleted = RoomManager.deleteTrack(toDelete, roomName, false);
+            if (songDeleted)
+                refresh();
         } else if (itemTitle == "Vote to Skip") {
             ViewTrackDisplayItem.TrackDisplayContextMenu c = (ViewTrackDisplayItem.TrackDisplayContextMenu)item.getMenuInfo();
             ParseTrack toVote = c.trackDisplayItem.getTrack();
