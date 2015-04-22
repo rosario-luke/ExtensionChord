@@ -13,6 +13,7 @@ import android.view.ViewGroup;
 import android.widget.AdapterView.AdapterContextMenuInfo;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import com.example.lucasrosario.extensionchord.R;
 import com.example.lucasrosario.extensionchord.RoomManager;
@@ -189,6 +190,7 @@ public class ViewRoomUsersFragment extends Fragment {
                 }
                 if(user.getUsername().equals(userName))
                 {
+
                     user.setAdmin(true);
                     try {
                         user.save();
@@ -202,6 +204,10 @@ public class ViewRoomUsersFragment extends Fragment {
         else if(item.getTitle()=="Boot User"){
             AdapterContextMenuInfo info = (AdapterContextMenuInfo) item.getMenuInfo();
             String userName =  values[info.position];
+            if(ParseUser.getCurrentUser().getUsername().equals(userName)){
+                Toast.makeText(getActivity(), "Cannot Boot Yourself", Toast.LENGTH_SHORT);
+                return true;
+            }
             RoomManager.removeUserFromRoom(userName);
             //kill fragment, go back to main page if boot yourself
             //need to delete room if no users left
