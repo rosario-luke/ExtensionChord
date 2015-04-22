@@ -1,7 +1,12 @@
-package com.example.lucasrosario.extensionchord;
+package com.example.lucasrosario.extensionchord.utility;
 
 import android.os.AsyncTask;
 import android.util.Log;
+
+import com.example.lucasrosario.extensionchord.Constants;
+import com.example.lucasrosario.extensionchord.LocalTrack;
+import com.example.lucasrosario.extensionchord.OnSearchTaskCompleted;
+
 
 import org.apache.http.HttpResponse;
 import org.apache.http.client.methods.HttpGet;

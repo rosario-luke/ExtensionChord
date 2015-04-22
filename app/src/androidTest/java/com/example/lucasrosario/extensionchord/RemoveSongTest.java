@@ -1,11 +1,9 @@
 package com.example.lucasrosario.extensionchord;
 
-import android.content.Intent;
 import android.test.ActivityInstrumentationTestCase2;
-import android.test.ActivityUnitTestCase;
 import android.util.Log;
 
-import com.parse.Parse;
+import com.example.lucasrosario.extensionchord.utility.SoundCloudSearch;
 import com.parse.ParseException;
 import com.parse.ParseGeoPoint;
 import com.parse.ParseObject;
@@ -43,7 +41,7 @@ public class RemoveSongTest extends ActivityInstrumentationTestCase2<RoomActivit
         currUser.setUsername("Tester");
         currUser.signUp();
 
-        roomManager.createRoom("TestRoom", new ParseGeoPoint(0.0, 0.0));
+        roomManager.createRoom("TestRoom","", new ParseGeoPoint(0.0, 0.0));
         Thread.sleep(1000);
         RoomManager.addUserToRoom("TestRoom");
         searchCompleted = false;

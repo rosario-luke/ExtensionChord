@@ -1,16 +1,9 @@
 package com.example.lucasrosario.extensionchord;
 
-import android.content.Intent;
 import android.test.ActivityInstrumentationTestCase2;
-import android.test.ActivityUnitTestCase;
 import android.util.Log;
-import android.view.View;
 
-import com.example.lucasrosario.extensionchord.OnSearchTaskCompleted;
-import com.example.lucasrosario.extensionchord.RoomActivity;
-import com.example.lucasrosario.extensionchord.RoomManager;
-import com.example.lucasrosario.extensionchord.SoundCloudSearch;
-import com.parse.Parse;
+import com.example.lucasrosario.extensionchord.utility.SoundCloudSearch;
 import com.parse.ParseException;
 import com.parse.ParseGeoPoint;
 import com.parse.ParseObject;
@@ -46,7 +39,7 @@ public class SearchTest extends ActivityInstrumentationTestCase2<RoomActivity> i
         currUser.setUsername("Tester");
         currUser.signUp();
 
-        roomManager.createRoom("TestRoom", new ParseGeoPoint(0.0, 0.0));
+        roomManager.createRoom("TestRoom", "", new ParseGeoPoint(0.0, 0.0));
         Thread.sleep(1000);
         searchCompleted = false;
         //roomManager.addUserToRoom("[Tester] TestRoom");

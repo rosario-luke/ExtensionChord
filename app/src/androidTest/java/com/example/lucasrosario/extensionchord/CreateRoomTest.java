@@ -66,7 +66,7 @@ public class CreateRoomTest extends ActivityInstrumentationTestCase2<JoinRoomAct
 
     public void testCreateRoom() {
         ParseGeoPoint geoPoint = new ParseGeoPoint(40.126126, -88.225247);
-        roomManager.createRoom("TestRoom",geoPoint);
+        roomManager.createRoom("TestRoom","",geoPoint);
 
         try {
             Thread.sleep(1000);

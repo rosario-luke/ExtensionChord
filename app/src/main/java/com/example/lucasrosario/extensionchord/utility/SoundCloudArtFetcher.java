@@ -1,9 +1,13 @@
-package com.example.lucasrosario.extensionchord;
+package com.example.lucasrosario.extensionchord.utility;
 
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
 import android.widget.LinearLayout;
+
+import com.example.lucasrosario.extensionchord.R;
+import com.example.lucasrosario.extensionchord.SearchFragment;
+import com.example.lucasrosario.extensionchord.SearchTrackDisplayItem;
 
 import java.io.InputStream;
 import java.util.List;

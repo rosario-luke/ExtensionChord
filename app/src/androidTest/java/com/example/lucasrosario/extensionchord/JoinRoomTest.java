@@ -38,7 +38,7 @@ public class JoinRoomTest extends ActivityInstrumentationTestCase2<RoomActivity>
         currUser.setUsername("Tester");
         currUser.signUp();
 
-        roomManager.createRoom("TestRoom", new ParseGeoPoint(0.0, 0.0));
+        roomManager.createRoom("TestRoom", "",new ParseGeoPoint(0.0, 0.0));
         Thread.sleep(1000);
     }
 

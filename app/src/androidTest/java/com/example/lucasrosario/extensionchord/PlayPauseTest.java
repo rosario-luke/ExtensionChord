@@ -39,7 +39,7 @@ public class PlayPauseTest extends ActivityInstrumentationTestCase2<RoomActivity
         currUser.signUp();
 
         ParseGeoPoint geoPoint = new ParseGeoPoint(40.126126, -88.225247);
-        roomManager.createRoom("TestRoom",geoPoint);
+        roomManager.createRoom("TestRoom","",geoPoint);
 
         try {
             Thread.sleep(1000);

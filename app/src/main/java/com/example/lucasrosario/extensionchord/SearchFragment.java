@@ -13,6 +13,9 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
+import com.example.lucasrosario.extensionchord.utility.SoundCloudArtFetcher;
+import com.example.lucasrosario.extensionchord.utility.SoundCloudSearch;
+
 import java.util.ArrayList;
 
 

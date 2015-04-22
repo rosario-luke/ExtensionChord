@@ -65,7 +65,7 @@ public class ViewRoomTest extends ActivityInstrumentationTestCase2<MainActivity>
     }
 
     public void testGetRooms() throws Exception {
-        manager.createRoom("Test Room", testPoint);
+        manager.createRoom("Test Room", "",testPoint);
 
         results = manager.getNearbyRooms(0.5, testPoint);
 

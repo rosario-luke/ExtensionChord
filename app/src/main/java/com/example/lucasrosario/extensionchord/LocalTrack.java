@@ -22,7 +22,7 @@ public class LocalTrack {
         trackID = tID;
     }
 
-    static String getTrackFromJSON(JSONObject o){
+    public static String getTrackFromJSON(JSONObject o){
         String track;
         try{
             track = o.getString("title");
@@ -32,7 +32,7 @@ public class LocalTrack {
         return track;
     }
 
-    static String getArtistFromJSON(JSONObject o){
+    public static String getArtistFromJSON(JSONObject o){
         String artist = "";
         try{
             JSONObject uploader = o.getJSONObject("user");
@@ -43,7 +43,7 @@ public class LocalTrack {
         return artist;
     }
 
-    static String getAlbumFromJSON(JSONObject o){
+    public static String getAlbumFromJSON(JSONObject o){
         String album = "";
         try{
             album = o.getString("release");

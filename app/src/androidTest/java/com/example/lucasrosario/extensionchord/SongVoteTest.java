@@ -3,13 +3,12 @@ package com.example.lucasrosario.extensionchord;
 import android.test.ActivityInstrumentationTestCase2;
 import android.util.Log;
 
+import com.example.lucasrosario.extensionchord.utility.SoundCloudSearch;
 import com.parse.ParseException;
 import com.parse.ParseGeoPoint;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
 import com.parse.ParseUser;
-
-import junit.framework.Assert;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -41,7 +40,7 @@ public class SongVoteTest extends ActivityInstrumentationTestCase2<RoomActivity>
         currUser.setUsername("Tester");
         currUser.signUp();
 
-        roomManager.createRoom("TestRoom", new ParseGeoPoint(0.0, 0.0));
+        roomManager.createRoom("TestRoom", "", new ParseGeoPoint(0.0, 0.0));
         Thread.sleep(1000);
         RoomManager.addUserToRoom("TestRoom");
         searchCompleted = false;
