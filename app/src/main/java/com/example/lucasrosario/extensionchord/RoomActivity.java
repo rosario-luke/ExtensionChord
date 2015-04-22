@@ -23,12 +23,15 @@ import android.widget.TextView;
 
 import com.example.lucasrosario.extensionchord.parse_objects.ParseMusicQueue;
 import com.example.lucasrosario.extensionchord.parse_objects.ParseRoom;
+import com.example.lucasrosario.extensionchord.parse_objects.ParseTrack;
 import com.example.lucasrosario.extensionchord.room_fragments.SearchFragment;
 import com.example.lucasrosario.extensionchord.room_fragments.TrackInfoDialogFragment;
 import com.example.lucasrosario.extensionchord.room_fragments.ViewQueueFragment;
 import com.example.lucasrosario.extensionchord.room_fragments.ViewRoomUsersFragment;
 import com.parse.Parse;
 import com.parse.ParseUser;
+
+import java.util.List;
 
 
 public class RoomActivity extends FragmentActivity {
@@ -84,7 +87,11 @@ public class RoomActivity extends FragmentActivity {
     }
 
     public void startMediaPlayer(){
+        ParseRoom currRoom = RoomManager.getParseRoom(roomName);
+        ParseMusicQueue queue = currRoom.getParseMusicQueue();
+
         try {
+            setCurrentMediaPlayerURL("http://api.soundcloud.com/tracks/" + queue.getTrackList().get(0).getTrackID() + "/stream?client_id=" + Constants.API_KEY);
             currentMediaPlayer.start();
         }catch(Exception e){
             e.printStackTrace();
@@ -107,17 +114,23 @@ public class RoomActivity extends FragmentActivity {
             public void onCompletion(MediaPlayer mp) {
                 ParseRoom currRoom = RoomManager.getParseRoom(roomName);
                 ParseMusicQueue queue = currRoom.getParseMusicQueue();
-                queue.pop();
-                resetMediaPlayer();
-                try {
+                List<ParseTrack> tList = queue.getTrackList();
+
+                if(!tList.isEmpty()) {
+                    queue.pop();
+                    resetMediaPlayer();
+                    setCurrentMediaPlayerURL("http://api.soundcloud.com/tracks/" + queue.getTrackList().get(0).getTrackID() + "/stream?client_id=" + Constants.API_KEY);
+
+//                try {
                     viewQueueFragment.refresh();
-                }catch(Exception e){
+
+/*                }catch(Exception e){
                     if(!queue.getTrackList().isEmpty())
                         setCurrentMediaPlayerURL("http://api.soundcloud.com/tracks/" + queue.getTrackList().get(0).getTrackID() + "/stream?client_id="+Constants.API_KEY);
+                }*/
+                    setMediaPlayerOnCompletionListener();
+                    startMediaPlayer();
                 }
-                setMediaPlayerOnCompletionListener();
-
-                startMediaPlayer();
             }
         });
     }

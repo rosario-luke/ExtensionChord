@@ -191,19 +191,18 @@ public class ViewQueueFragment extends Fragment {
     public void addTracks(ParseMusicQueue currQueue){
         ArrayList<ViewTrackDisplayItem> viewList = new ArrayList<ViewTrackDisplayItem>();
         CurrentSongDisplayItem currentSongItem = null;
+        List<ParseTrack> tList = currQueue.getTrackList();
 
-        if(currQueue.getTrackList() == null || currQueue.getTrackList().isEmpty()){
+        if(tList == null || tList.isEmpty()){
             ((RoomActivity) getActivity()).dismissProgressDialog();
             Toast.makeText(getActivity(), "Music Queue is Currently Empty", Toast.LENGTH_SHORT).show();
             return;
         }
-        ParseTrack currSong = currQueue.getTrackList().get(0);
+        ParseTrack currSong = tList.get(0);
 
         // Add the current song to the Fragment as a CurrentSongDisplayItem
         if(currSong != null) {
             currentSongItem = new CurrentSongDisplayItem(this.getActivity(), currSong);
-
-            String currURL = "http://api.soundcloud.com/tracks/" + currSong.getTrackID() + "/stream?client_id="+ Constants.API_KEY;
 
             currentSongItem.setPlayListener(new Button.OnClickListener(){
                 @Override
@@ -219,12 +218,7 @@ public class ViewQueueFragment extends Fragment {
                 }
             });
 
-
-            ((RoomActivity) getActivity()).setCurrentMediaPlayerURL(currURL);
-
-
             // Add the rest of the music queue to the Fragment as ViewTrackDisplayItems
-            List<ParseTrack> tList = currQueue.getTrackList();
             int tListSize = tList.size();
             for (int count = 1; count < tListSize; count++) {
                 ViewTrackDisplayItem tempItem = new ViewTrackDisplayItem(this.getActivity(), tList.get(count), count);
