@@ -260,13 +260,10 @@ public class RoomActivity extends FragmentActivity {
 
             Field mEdgeSize = draggerObj.getClass().getDeclaredField("mEdgeSize");
             mEdgeSize.setAccessible(true);
+            int edge = mEdgeSize.getInt(draggerObj);
 
-            Display display = getWindowManager().getDefaultDisplay();
-            Point size = new Point();
-            display.getSize(size);
-
-            // Setting the drag margin to be equal to the screen's width
-            mEdgeSize.setInt(draggerObj, size.x);
+            // Making the drag margin a little wider
+            mEdgeSize.setInt(draggerObj, edge * 5);
         } catch (Exception e) {
             Log.d("Navigation Drawer", "Navigation drawer drag margin setting failed");
         }
