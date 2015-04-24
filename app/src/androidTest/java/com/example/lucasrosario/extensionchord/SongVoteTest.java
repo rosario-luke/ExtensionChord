@@ -88,6 +88,16 @@ public class SongVoteTest extends ActivityInstrumentationTestCase2<RoomActivity>
         assertEquals(false, skip);
     }
 
+    public void testEdgeOneSkipSong() throws Exception {
+        ParseRoom room = roomManager.getParseRoom("[Tester] TestRoom");
+        ParseMusicQueue queue = room.getParseMusicQueue();
+        List<ParseTrack> trackList = queue.getTrackList();
+        trackList.get(0).addDownvoteUser("User1");
+        boolean skip = queue.checkTrackDownvotes(trackList.get(0), 1);
+        assertEquals(true, skip);
+    }
+
+
     public void testSkipSong() throws Exception {
         ParseRoom room = roomManager.getParseRoom("[Tester] TestRoom");
         ParseMusicQueue queue = room.getParseMusicQueue();
@@ -99,6 +109,20 @@ public class SongVoteTest extends ActivityInstrumentationTestCase2<RoomActivity>
         trackList.get(0).addDownvoteUser("User5");
         trackList.get(0).addDownvoteUser("User6");
         trackList.get(0).addDownvoteUser("User7");
+        boolean skip = queue.checkTrackDownvotes(trackList.get(0), 10);
+        assertEquals(true, skip);
+    }
+
+    public void testEdgeSkipSong() throws Exception {
+        ParseRoom room = roomManager.getParseRoom("[Tester] TestRoom");
+        ParseMusicQueue queue = room.getParseMusicQueue();
+        List<ParseTrack> trackList = queue.getTrackList();
+        trackList.get(0).addDownvoteUser("User1");
+        trackList.get(0).addDownvoteUser("User2");
+        trackList.get(0).addDownvoteUser("User3");
+        trackList.get(0).addDownvoteUser("User4");
+        trackList.get(0).addDownvoteUser("User5");
+        trackList.get(0).addDownvoteUser("User6");
         boolean skip = queue.checkTrackDownvotes(trackList.get(0), 10);
         assertEquals(true, skip);
     }
