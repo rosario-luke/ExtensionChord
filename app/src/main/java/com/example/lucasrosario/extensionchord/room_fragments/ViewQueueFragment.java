@@ -4,7 +4,6 @@ import android.app.Activity;
 import android.support.v4.app.Fragment;
 import android.net.Uri;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.ContextMenu;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
@@ -14,9 +13,8 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
-import com.example.lucasrosario.extensionchord.Constants;
 import com.example.lucasrosario.extensionchord.R;
-import com.example.lucasrosario.extensionchord.RoomActivity;
+import com.example.lucasrosario.extensionchord.activities.RoomActivity;
 import com.example.lucasrosario.extensionchord.RoomManager;
 import com.example.lucasrosario.extensionchord.custom_views.CurrentSongDisplayItem;
 import com.example.lucasrosario.extensionchord.custom_views.ViewTrackDisplayItem;

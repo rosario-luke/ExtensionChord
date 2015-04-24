@@ -1,4 +1,4 @@
-package com.example.lucasrosario.extensionchord;
+package com.example.lucasrosario.extensionchord.activities;
 
 import android.app.ProgressDialog;
 import android.graphics.Point;
@@ -27,6 +27,9 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.lucasrosario.extensionchord.Constants;
+import com.example.lucasrosario.extensionchord.R;
+import com.example.lucasrosario.extensionchord.RoomManager;
 import com.example.lucasrosario.extensionchord.parse_objects.ParseMusicQueue;
 import com.example.lucasrosario.extensionchord.parse_objects.ParseRoom;
 import com.example.lucasrosario.extensionchord.parse_objects.ParseTrack;

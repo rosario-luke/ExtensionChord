@@ -1,11 +1,9 @@
 package com.example.lucasrosario.extensionchord;
 
-import android.content.Intent;
 import android.test.ActivityInstrumentationTestCase2;
-import android.test.ActivityUnitTestCase;
 import android.util.Log;
 
-import com.parse.Parse;
+import com.example.lucasrosario.extensionchord.activities.JoinRoomActivity;
 import com.parse.ParseException;
 import com.parse.ParseGeoPoint;
 import com.parse.ParseObject;

@@ -3,6 +3,7 @@ package com.example.lucasrosario.extensionchord;
 import android.test.ActivityInstrumentationTestCase2;
 import android.util.Log;
 
+import com.example.lucasrosario.extensionchord.activities.RoomActivity;
 import com.example.lucasrosario.extensionchord.utility.SoundCloudSearch;
 import com.parse.ParseException;
 import com.parse.ParseGeoPoint;

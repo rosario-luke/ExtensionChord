@@ -9,7 +9,7 @@
     xmlns:custom="http://schemas.android.com/apk/res-auto"
     android:animateLayoutChanges="true"
     android:id="@+id/createRoomLayout"
-    tools:context="com.example.lucasrosario.extensionchord.JoinRoomActivity">
+    tools:context="com.example.lucasrosario.extensionchord.activities.JoinRoomActivity">
 
     <Button
         android:layout_width="105dp"

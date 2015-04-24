@@ -11,12 +11,11 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
-import android.widget.Toast;
 
 import com.example.lucasrosario.extensionchord.LocalTrack;
 import com.example.lucasrosario.extensionchord.OnSearchTaskCompleted;
 import com.example.lucasrosario.extensionchord.R;
-import com.example.lucasrosario.extensionchord.RoomActivity;
+import com.example.lucasrosario.extensionchord.activities.RoomActivity;
 import com.example.lucasrosario.extensionchord.RoomManager;
 import com.example.lucasrosario.extensionchord.custom_views.SearchTrackDisplayItem;
 import com.example.lucasrosario.extensionchord.utility.SoundCloudArtFetcher;

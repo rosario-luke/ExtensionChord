@@ -4,7 +4,7 @@
     android:id="@+id/room_drawer_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.example.lucasrosario.extensionchord.RoomActivity">
+    tools:context="com.example.lucasrosario.extensionchord.activities.RoomActivity">
 
     <!-- The main content view -->
     <FrameLayout android:id="@+id/container" android:layout_width="match_parent"

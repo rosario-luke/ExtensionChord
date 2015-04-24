@@ -1,4 +1,4 @@
-package com.example.lucasrosario.extensionchord;
+package com.example.lucasrosario.extensionchord.activities;
 
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
@@ -8,6 +8,9 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
+
+import com.example.lucasrosario.extensionchord.LoginManager;
+import com.example.lucasrosario.extensionchord.R;
 
 
 public class SignUpActivity extends ActionBarActivity {

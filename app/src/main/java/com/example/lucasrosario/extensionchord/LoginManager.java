@@ -4,6 +4,7 @@ import android.content.Context;
 import android.widget.Toast;
 import android.content.Intent;
 
+import com.example.lucasrosario.extensionchord.activities.JoinRoomActivity;
 import com.parse.LogInCallback;
 import com.parse.SignUpCallback;
 import com.parse.ParseException;

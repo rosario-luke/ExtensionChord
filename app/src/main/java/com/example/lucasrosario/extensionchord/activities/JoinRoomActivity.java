@@ -1,4 +1,4 @@
-package com.example.lucasrosario.extensionchord;
+package com.example.lucasrosario.extensionchord.activities;
 
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -19,6 +19,8 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.lucasrosario.extensionchord.R;
+import com.example.lucasrosario.extensionchord.RoomManager;
 import com.example.lucasrosario.extensionchord.custom_views.RoomListItemView;
 import com.example.lucasrosario.extensionchord.parse_objects.ParseRoom;
 import com.google.android.gms.common.ConnectionResult;
