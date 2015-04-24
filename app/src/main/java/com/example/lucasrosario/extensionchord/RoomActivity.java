@@ -161,9 +161,18 @@ public class RoomActivity extends FragmentActivity implements MediaPlayer.OnPrep
 
             @Override
             public void onCompletion(MediaPlayer mp) {
+                ParseRoom currRoom;
+                ParseMusicQueue queue = null;
+                boolean cError = true;
+                while(cError){
+                    try {
+                        currRoom = RoomManager.getParseRoom(roomName).fetch();
+                        queue = currRoom.getParseMusicQueue().fetch();
+                        cError = false;
+                    } catch(Exception e){
 
-                ParseRoom currRoom = RoomManager.getParseRoom(roomName);
-                ParseMusicQueue queue = currRoom.getParseMusicQueue();
+                    }
+                }
                 queue.pop();
                 List<ParseTrack> tList = queue.getTrackList();
                 prepared = false;
