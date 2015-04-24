@@ -1,4 +1,4 @@
-package com.example.lucasrosario.extensionchord.activities;
+package com.example.lucasrosario.extensionchord;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -9,8 +9,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
-import com.example.lucasrosario.extensionchord.LoginManager;
-import com.example.lucasrosario.extensionchord.R;
+import com.parse.ParseObject;
 import com.parse.ParseUser;
 
 

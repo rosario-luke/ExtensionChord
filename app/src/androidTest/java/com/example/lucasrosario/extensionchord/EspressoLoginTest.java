@@ -4,7 +4,7 @@ import android.support.test.InstrumentationRegistry;
 import android.test.ActivityInstrumentationTestCase2;
 import android.util.Log;
 
-import com.example.lucasrosario.extensionchord.activities.MainActivity;
+import com.parse.Parse;
 import com.parse.ParseException;
 import com.parse.ParseUser;
 

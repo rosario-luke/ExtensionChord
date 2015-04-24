@@ -1,9 +1,11 @@
 package com.example.lucasrosario.extensionchord;
 
+import android.content.Intent;
 import android.test.ActivityInstrumentationTestCase2;
+import android.test.ActivityUnitTestCase;
 import android.util.Log;
 
-import com.example.lucasrosario.extensionchord.activities.MainActivity;
+import com.parse.Parse;
 import com.parse.ParseUser;
 import com.parse.ParseException;
 

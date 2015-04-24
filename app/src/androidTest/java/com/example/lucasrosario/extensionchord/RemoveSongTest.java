@@ -1,8 +1,8 @@
 package com.example.lucasrosario.extensionchord;
 
 import android.test.ActivityInstrumentationTestCase2;
+import android.util.Log;
 
-import com.example.lucasrosario.extensionchord.activities.RoomActivity;
 import com.example.lucasrosario.extensionchord.parse_objects.ParseMusicQueue;
 import com.example.lucasrosario.extensionchord.parse_objects.ParseRoom;
 import com.example.lucasrosario.extensionchord.parse_objects.ParseTrack;

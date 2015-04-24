@@ -2,7 +2,6 @@ package com.example.lucasrosario.extensionchord;
 
 import android.test.ActivityInstrumentationTestCase2;
 
-import com.example.lucasrosario.extensionchord.activities.JoinRoomActivity;
 import com.example.lucasrosario.extensionchord.parse_objects.ParseRoom;
 import com.example.lucasrosario.extensionchord.parse_objects.RoomUser;
 import com.parse.ParseACL;
