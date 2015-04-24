@@ -41,8 +41,10 @@ public class ParseMusicQueue extends ParseObject {
         if(tracks == null ||!tracks.isEmpty()) {
             first = tracks.get(0);
             List<ParseTrack> firstList = new ArrayList<ParseTrack>();
+            Log.d("Pop", first.getTrackName());
             firstList.add(first);
             removeAll("tracks", firstList);
+            saveInBackground();
         }
         return first;
     }
@@ -53,6 +55,7 @@ public class ParseMusicQueue extends ParseObject {
             List<ParseTrack> dList = new ArrayList<>();
             dList.add(toDelete);
             removeAll("tracks", dList);
+
         }
     }
 

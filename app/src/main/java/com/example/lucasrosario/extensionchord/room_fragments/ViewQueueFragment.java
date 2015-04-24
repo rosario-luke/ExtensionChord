@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.support.v4.app.Fragment;
 import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.ContextMenu;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
@@ -81,24 +82,23 @@ public class ViewQueueFragment extends Fragment {
         ((RoomActivity) getActivity()).showProgressDialog();
         String roomName = ((RoomActivity)getActivity()).getRoomName();
 
-            RoomManager.getParseRoom(roomName).fetchIfNeededInBackground(new GetCallback<ParseRoom>() {
+            RoomManager.getParseRoom(roomName).fetchInBackground(new GetCallback<ParseRoom>() {
                 public void done(ParseRoom room, ParseException e) {
                     if (e == null) {
 
-                        room.getParseMusicQueue().fetchIfNeededInBackground(new GetCallback<ParseMusicQueue>() {
+                        room.getParseMusicQueue().fetchInBackground(new GetCallback<ParseMusicQueue>() {
                             public void done(ParseMusicQueue queue, ParseException e) {
                                 if (e == null) {
-
                                     addTracks(queue);
                                 } else {
                                     ((RoomActivity) getActivity()).dismissProgressDialog();
-                                    Toast.makeText(getActivity(), "Error occured while fetching room info", Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(getActivity(), "Error occurred while fetching room info", Toast.LENGTH_SHORT).show();
                                 }
                             }
                         });
                     } else {
                         ((RoomActivity) getActivity()).dismissProgressDialog();
-                        Toast.makeText(getActivity(), "Error occured while fetching room info", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getActivity(), "Error occurred while fetching room info", Toast.LENGTH_SHORT).show();
                     }
                 }
             });
@@ -210,6 +210,7 @@ public class ViewQueueFragment extends Fragment {
                 @Override
                 public void onClick(View v){
                     ((RoomActivity)getActivity()).startMediaPlayer();
+                    Log.d("Play", "Play button clicked");
                 }
             });
 

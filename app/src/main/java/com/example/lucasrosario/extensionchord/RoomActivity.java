@@ -24,6 +24,7 @@ import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.lucasrosario.extensionchord.parse_objects.ParseMusicQueue;
 import com.example.lucasrosario.extensionchord.parse_objects.ParseRoom;
@@ -77,13 +78,15 @@ public class RoomActivity extends FragmentActivity {
         return currentMediaPlayer;
     }
 
-    public void setCurrentMediaPlayerURL(String url){
+    public boolean setCurrentMediaPlayerURL(String url){
         try {
             currentMediaPlayer.setDataSource(url);
             currentMediaPlayer.prepare();
+            return false;
         }catch(Exception e){
             dismissProgressDialog();
             e.printStackTrace();
+            return true;
         }
     }
 
@@ -110,7 +113,11 @@ public class RoomActivity extends FragmentActivity {
         currentMediaPlayer.reset();
         currentMediaPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
         if(!queue.getTrackList().isEmpty()) {
-            setCurrentMediaPlayerURL("http://api.soundcloud.com/tracks/" + queue.getTrackList().get(0).getTrackID() + "/stream?client_id=" + Constants.API_KEY);
+            boolean cError = setCurrentMediaPlayerURL("http://api.soundcloud.com/tracks/" + queue.getTrackList().get(0).getTrackID() + "/stream?client_id=" + Constants.API_KEY);
+            if(cError){
+                Toast.makeText(this,"Error Playing Song: " + queue.getTrackList().get(0).getTrackName(), Toast.LENGTH_SHORT).show();
+                queue.pop();
+            }
         }
     }
 
@@ -126,7 +133,7 @@ public class RoomActivity extends FragmentActivity {
 
                 if(tList != null && !tList.isEmpty()) {
                     resetMediaPlayer();
-                    setCurrentMediaPlayerURL("http://api.soundcloud.com/tracks/" + tList.get(0).getTrackID() + "/stream?client_id=" + Constants.API_KEY);
+                    //setCurrentMediaPlayerURL("http://api.soundcloud.com/tracks/" + tList.get(0).getTrackID() + "/stream?client_id=" + Constants.API_KEY);
 
 //                try {
                     viewQueueFragment.refresh();
@@ -135,7 +142,7 @@ public class RoomActivity extends FragmentActivity {
                     if(!queue.getTrackList().isEmpty())
                         setCurrentMediaPlayerURL("http://api.soundcloud.com/tracks/" + queue.getTrackList().get(0).getTrackID() + "/stream?client_id="+Constants.API_KEY);
                 }*/
-                    setMediaPlayerOnCompletionListener();
+                    //setMediaPlayerOnCompletionListener();
                     startMediaPlayer();
                 }
                 else
