@@ -74,7 +74,7 @@ public class PlayPauseTest extends ActivityInstrumentationTestCase2<RoomActivity
     public void testPlayMusic(){
         ParseTrack currSong = testRoom.getParseMusicQueue().getTrackList().get(0);
         String currURL = "http://api.soundcloud.com/tracks/" + currSong.getTrackID() + "/stream?client_id=3fe96f34e369ae1ef5cf7e8fcc6c8eec";
-        roomActivity.setCurrentMediaPlayerURL(currURL);
+        roomActivity.setCurrentMediaPlayerURL(currURL, false);
 
         assertFalse(roomActivity.getMediaPlayer().isPlaying());
         roomActivity.startMediaPlayer();
@@ -85,7 +85,7 @@ public class PlayPauseTest extends ActivityInstrumentationTestCase2<RoomActivity
     public void testPauseMusic(){
         ParseTrack currSong = testRoom.getParseMusicQueue().getTrackList().get(0);
         String currURL = "http://api.soundcloud.com/tracks/" + currSong.getTrackID() + "/stream?client_id=3fe96f34e369ae1ef5cf7e8fcc6c8eec";
-        roomActivity.setCurrentMediaPlayerURL(currURL);
+        roomActivity.setCurrentMediaPlayerURL(currURL, false);
 
         assertFalse(roomActivity.getMediaPlayer().isPlaying());
         roomActivity.startMediaPlayer();
@@ -107,7 +107,7 @@ public class PlayPauseTest extends ActivityInstrumentationTestCase2<RoomActivity
     public void testAutoPlay(){
         ParseTrack currSong = testRoom.getParseMusicQueue().getTrackList().get(0);
         String currURL = "http://api.soundcloud.com/tracks/" + currSong.getTrackID() + "/stream?client_id=3fe96f34e369ae1ef5cf7e8fcc6c8eec";
-        roomActivity.setCurrentMediaPlayerURL(currURL);
+        roomActivity.setCurrentMediaPlayerURL(currURL, false);
         roomActivity.setMediaPlayerOnCompletionListener();
 
         assertFalse(roomActivity.getMediaPlayer().isPlaying());
