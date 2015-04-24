@@ -79,7 +79,7 @@ public class SongVoteTest extends ActivityInstrumentationTestCase2<RoomActivity>
         }
     }
 
-    public void testSkipSong() throws Exception {
+    public void testNoSkipSong() throws Exception {
         ParseRoom room = roomManager.getParseRoom("[Tester] TestRoom");
         ParseMusicQueue queue = room.getParseMusicQueue();
         List<ParseTrack> trackList = queue.getTrackList();
@@ -87,6 +87,22 @@ public class SongVoteTest extends ActivityInstrumentationTestCase2<RoomActivity>
         boolean skip = queue.checkTrackDownvotes(trackList.get(0), 10);
         assertEquals(false, skip);
     }
+
+    public void testSkipSong() throws Exception {
+        ParseRoom room = roomManager.getParseRoom("[Tester] TestRoom");
+        ParseMusicQueue queue = room.getParseMusicQueue();
+        List<ParseTrack> trackList = queue.getTrackList();
+        trackList.get(0).addDownvoteUser("User1");
+        trackList.get(0).addDownvoteUser("User2");
+        trackList.get(0).addDownvoteUser("User3");
+        trackList.get(0).addDownvoteUser("User4");
+        trackList.get(0).addDownvoteUser("User5");
+        trackList.get(0).addDownvoteUser("User6");
+        trackList.get(0).addDownvoteUser("User7");
+        boolean skip = queue.checkTrackDownvotes(trackList.get(0), 10);
+        assertEquals(true, skip);
+    }
+
 
     public void onTaskCompleted(Object obj){
         ArrayList<LocalTrack> tList = (ArrayList<LocalTrack>) obj;
