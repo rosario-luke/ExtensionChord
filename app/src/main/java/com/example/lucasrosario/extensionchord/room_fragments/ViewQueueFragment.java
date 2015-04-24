@@ -210,7 +210,7 @@ public class ViewQueueFragment extends Fragment {
                 @Override
                 public void onClick(View v){
                     ((RoomActivity)getActivity()).startMediaPlayer();
-                    Log.d("Play", "Play button clicked");
+                    //Log.d("Play", "Play button clicked");
                 }
             });
 

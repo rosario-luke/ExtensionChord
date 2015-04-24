@@ -2,6 +2,7 @@ package com.example.lucasrosario.extensionchord;
 
 import android.app.ProgressDialog;
 import android.graphics.Point;
+import android.net.Uri;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
@@ -40,7 +41,7 @@ import java.lang.reflect.Field;
 import java.util.List;
 
 
-public class RoomActivity extends FragmentActivity {
+public class RoomActivity extends FragmentActivity implements MediaPlayer.OnPreparedListener {
     private String[] mDrawerStrings;
     private DrawerLayout mDrawerLayout;
     private ActionBarDrawerToggle mDrawerToggle;
@@ -50,9 +51,11 @@ public class RoomActivity extends FragmentActivity {
     private ViewRoomUsersFragment viewRoomUsersFragment;
     private Fragment curFragment;
     private String roomName;
-    private MediaPlayer currentMediaPlayer = new MediaPlayer();
+   // private MediaPlayer currentMediaPlayer = new MediaPlayer();
+    private MediaPlayer currentMediaPlayer;
     private boolean testFlag = false;
     private ProgressDialog progressDialog;
+    private boolean prepared = false;
 
     public void setRoomName(String name) { roomName = name; }
     public String getRoomName(){
@@ -78,16 +81,27 @@ public class RoomActivity extends FragmentActivity {
         return currentMediaPlayer;
     }
 
-    public boolean setCurrentMediaPlayerURL(String url){
+    public boolean setCurrentMediaPlayerURL(String url, boolean async){
         try {
             currentMediaPlayer.setDataSource(url);
-            currentMediaPlayer.prepare();
+            if(async){
+                currentMediaPlayer.prepareAsync();
+                return false;
+            } else {
+                currentMediaPlayer.prepare();
+            }
+            prepared = true;
             return false;
         }catch(Exception e){
             dismissProgressDialog();
             e.printStackTrace();
             return true;
         }
+    }
+    public void onPrepared(MediaPlayer mp){
+        currentMediaPlayer.start();
+        prepared = true;
+
     }
 
     public void setTestFlag(boolean b){
@@ -96,9 +110,15 @@ public class RoomActivity extends FragmentActivity {
 
     public void startMediaPlayer(){
         try {
-            currentMediaPlayer.start();
+            if(prepared) {
+                currentMediaPlayer.start();
+            } else {
+                resetMediaPlayer();
+                currentMediaPlayer.start();
+            }
         }catch(Exception e){
             e.printStackTrace();
+
         }
     }
 
@@ -109,11 +129,26 @@ public class RoomActivity extends FragmentActivity {
     public void resetMediaPlayer(){
         ParseRoom currRoom = RoomManager.getParseRoom(roomName);
         ParseMusicQueue queue = currRoom.getParseMusicQueue();
-
+        //currentMediaPlayer.stop();
         currentMediaPlayer.reset();
         currentMediaPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
         if(!queue.getTrackList().isEmpty()) {
-            boolean cError = setCurrentMediaPlayerURL("http://api.soundcloud.com/tracks/" + queue.getTrackList().get(0).getTrackID() + "/stream?client_id=" + Constants.API_KEY);
+            boolean cError = setCurrentMediaPlayerURL("http://api.soundcloud.com/tracks/" + queue.getTrackList().get(0).getTrackID() + "/stream?client_id=" + Constants.API_KEY, false);
+            if(cError){
+                Toast.makeText(this,"Error Playing Song: " + queue.getTrackList().get(0).getTrackName(), Toast.LENGTH_SHORT).show();
+                queue.pop();
+            }
+        }
+    }
+
+    public void resetMediaPlayerAsync(){
+        ParseRoom currRoom = RoomManager.getParseRoom(roomName);
+        ParseMusicQueue queue = currRoom.getParseMusicQueue();
+        //currentMediaPlayer.stop();
+        currentMediaPlayer.reset();
+        currentMediaPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
+        if(!queue.getTrackList().isEmpty()) {
+            boolean cError = setCurrentMediaPlayerURL("http://api.soundcloud.com/tracks/" + queue.getTrackList().get(0).getTrackID() + "/stream?client_id=" + Constants.API_KEY, true);
             if(cError){
                 Toast.makeText(this,"Error Playing Song: " + queue.getTrackList().get(0).getTrackName(), Toast.LENGTH_SHORT).show();
                 queue.pop();
@@ -126,11 +161,12 @@ public class RoomActivity extends FragmentActivity {
 
             @Override
             public void onCompletion(MediaPlayer mp) {
+
                 ParseRoom currRoom = RoomManager.getParseRoom(roomName);
                 ParseMusicQueue queue = currRoom.getParseMusicQueue();
                 queue.pop();
                 List<ParseTrack> tList = queue.getTrackList();
-
+                prepared = false;
                 if(tList != null && !tList.isEmpty()) {
                     resetMediaPlayer();
                     //setCurrentMediaPlayerURL("http://api.soundcloud.com/tracks/" + tList.get(0).getTrackID() + "/stream?client_id=" + Constants.API_KEY);
@@ -143,7 +179,7 @@ public class RoomActivity extends FragmentActivity {
                         setCurrentMediaPlayerURL("http://api.soundcloud.com/tracks/" + queue.getTrackList().get(0).getTrackID() + "/stream?client_id="+Constants.API_KEY);
                 }*/
                     //setMediaPlayerOnCompletionListener();
-                    startMediaPlayer();
+                    //startMediaPlayer();
                 }
                 else
                     viewQueueFragment.refresh();
@@ -156,8 +192,10 @@ public class RoomActivity extends FragmentActivity {
         super.onCreate(savedInstanceState);
 
         Parse.initialize(this, "f539HwpFiyK3DhDsOb7xYRNwCtr7vCeMihU776Vk", "tH1ktzEjhCBZSvMzVR9Thjqj6sDtrrb1gwUYIlh1");
+        currentMediaPlayer = new MediaPlayer();
         currentMediaPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
         setMediaPlayerOnCompletionListener();
+        currentMediaPlayer.setOnPreparedListener(this);
 
         setContentView(R.layout.activity_room);
 
