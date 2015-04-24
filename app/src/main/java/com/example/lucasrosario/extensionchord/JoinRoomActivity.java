@@ -53,6 +53,10 @@ public class JoinRoomActivity extends Activity implements GoogleApiClient.Connec
                 EditText edPass = (EditText) findViewById(R.id.roomPasswordField);
 
                 roomManager.createRoom(edName.getText().toString(), edPass.getText().toString(), geoPoint);
+
+                edName.setText("");
+                edPass.setText("");
+
                 //@TODO WONKY ALERT
 //                joinRoom(edName.getText().toString());
             }
@@ -161,6 +165,8 @@ public class JoinRoomActivity extends Activity implements GoogleApiClient.Connec
 
                     // Set up the input
                     final EditText input = new EditText(JoinRoomActivity.this);
+                    input.setId(R.id.alertedit);
+
                     // Specify the type of input expected; this, for example, sets the input as a password, and will mask the text
                     input.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
                     builder.setView(input);

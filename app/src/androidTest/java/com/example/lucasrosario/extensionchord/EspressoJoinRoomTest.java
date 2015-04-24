@@ -2,6 +2,7 @@ package com.example.lucasrosario.extensionchord;
 
 import android.support.test.InstrumentationRegistry;
 import android.support.test.espresso.Espresso;
+import android.support.test.espresso.action.ViewActions;
 import android.test.ActivityInstrumentationTestCase2;
 import android.util.Log;
 
@@ -21,6 +22,8 @@ import static android.support.test.espresso.assertion.ViewAssertions.matches;
 import static android.support.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static android.support.test.espresso.matcher.ViewMatchers.withId;
 import static android.support.test.espresso.matcher.ViewMatchers.withText;
+import static android.support.test.espresso.matcher.ViewMatchers.isRoot;
+
 
 /**
  * Created by lucaspritz on 4/24/15.
@@ -62,26 +65,26 @@ public class EspressoJoinRoomTest extends ActivityInstrumentationTestCase2<MainA
     @Override
     public void tearDown() throws Exception {
         ParseQuery<ParseObject> query = ParseQuery.getQuery("ParseRoom");
-        query.whereEqualTo("roomName", "[Tester] TestRoom");
+        query.whereEqualTo("roomName", "[Tester] testCreateRoom");
         List<ParseObject> objs;
 
-//        try {
-//            objs = query.find();
-//            ParseObject.deleteAll(objs);
-//
-//        } catch(ParseException e) {
-//            Log.d("Parse Exception", e.getMessage());
-//        }
-//
-//        query.whereEqualTo("roomName", "[Tester] TestRoomHasPassword");
-//
-//        try {
-//            objs = query.find();
-//            ParseObject.deleteAll(objs);
-//
-//        } catch(ParseException e) {
-//            Log.d("Parse Exception", e.getMessage());
-//        }
+        try {
+            objs = query.find();
+            ParseObject.deleteAll(objs);
+
+        } catch(ParseException e) {
+            Log.d("Parse Exception", e.getMessage());
+        }
+
+        query.whereEqualTo("roomName", "[Tester] testCreateRoomNoPassword");
+
+        try {
+            objs = query.find();
+            ParseObject.deleteAll(objs);
+
+        } catch(ParseException e) {
+            Log.d("Parse Exception", e.getMessage());
+        }
 
         //Delete the user from the server.
         if (ParseUser.getCurrentUser() != null) {
@@ -113,7 +116,6 @@ public class EspressoJoinRoomTest extends ActivityInstrumentationTestCase2<MainA
         // from is displayed on the screen (Reload button in this case)
         onView(withId(R.id.createRoomReload))
                 .check(matches(isDisplayed()));
-
 
         onView(withId(R.id.expandCreateRoomBtn))
                 .perform(click());
@@ -149,8 +151,53 @@ public class EspressoJoinRoomTest extends ActivityInstrumentationTestCase2<MainA
 
         onView(withId(R.id.searchField))
                 .check(matches(isDisplayed()));
+
+        onView(isRoot()).perform(ViewActions.pressBack());
+        onView(isRoot()).perform(ViewActions.pressBack());
+
+        // Wait for extra buttons to show up
+        Thread.sleep(200);
+
+        // Make a room with a password
+        onView(withId(R.id.roomNameField))
+                .perform(typeText("testCreateRoom"), closeSoftKeyboard());
+
+        onView(withId(R.id.roomPasswordField))
+                .perform(typeText("password"), closeSoftKeyboard());
+
+        onView(withId(R.id.submitCreateRoomButton))
+                .perform(click());
+
+        // Wait for new ParseRoom to be created
+        Thread.sleep(500);
+
+        onView(withId(R.id.createRoomReload))
+                .perform(click());
+
+        // Wait for RoomList to be populated
+        Thread.sleep(1000);
+
+        Espresso.onView(withText("[Tester] testCreateRoom"))
+                .perform(click());
+
+        onView(withId(R.id.alertedit)).perform(typeText("Garbage password lol."));
+        onView(withId(android.R.id.button1)).perform(click());
+
+        onView(withId(R.id.createRoomReload))
+                .check(matches(isDisplayed()));
+
+        Espresso.onView(withText("[Tester] testCreateRoom"))
+                .perform(click());
+
+        onView(withId(R.id.alertedit)).perform(typeText("password"));
+        onView(withId(android.R.id.button1)).perform(click());
+
+        Thread.sleep(200);
+        // Test to see if RoomActivity has loaded
+        onView(withId(R.id.container))
+                .check(matches(isDisplayed()));
+
+        onView(withId(R.id.searchField))
+                .check(matches(isDisplayed()));
     }
-
-
-
 }
