@@ -16,11 +16,17 @@ import com.example.lucasrosario.extensionchord.R;
 
 /**
  * Created by lucas on 2/19/15.
+ * CustomView for the SearchFragment to display tracks and their info
  */
 public class SearchTrackDisplayItem extends LinearLayout{
 
     private LocalTrack track;
 
+    /**
+     * Default constructor
+     * @param context
+     * @param attrs
+     */
     public SearchTrackDisplayItem(Context context, AttributeSet attrs) {
         super(context, attrs);
 
@@ -48,6 +54,11 @@ public class SearchTrackDisplayItem extends LinearLayout{
         album_view.setText(album);
     }
 
+    /**
+     * Constructor when building view manually
+     * @param context
+     * @param t - LocalTrack item with info to display
+     */
     public SearchTrackDisplayItem(Context context, LocalTrack t) {
         super(context);
 
@@ -69,17 +80,33 @@ public class SearchTrackDisplayItem extends LinearLayout{
         album_view.setText(track.getTrackAlbum());
     }
 
+    /**
+     * Get name of track this view holds
+     * @return - track name
+     */
     public String getTrackName(){
         return ((TextView)this.findViewById(R.id.track_name)).getText().toString();
     }
 
+    /**
+     * Sets onClickListener for button embedded in this view
+     * @param listener - listener to call
+     */
     public void setBtnListener(OnClickListener listener){
         Button addBtn = (Button)this.findViewById(R.id.add_track_button);
         addBtn.setOnClickListener(listener);
     }
 
+    /**
+     * Get the LocalTrack this item stores
+     * @return LocalTrack
+     */
     public LocalTrack getTrack(){ return track;}
 
+    /**
+     * Sets the ImageView embedded in this view
+     * @param map - Bitmap to set the ImageView to
+     */
     public void setAlbumArt(Bitmap map){
         ImageView image = (ImageView)findViewById(R.id.album_art);
         image.setImageBitmap(map);

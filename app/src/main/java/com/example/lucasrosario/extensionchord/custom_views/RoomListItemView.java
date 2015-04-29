@@ -15,9 +15,16 @@ import com.example.lucasrosario.extensionchord.R;
 
 /**
  * Created by lucas on 2/19/15.
+ * This class is a custom view. It is a combination of a rounded button on top on a label.
+ * This class allows for the insertion of a custom OnClickListener for the button
  */
 public class RoomListItemView extends LinearLayout{
 
+    /**
+     * Constructor used when built from XML
+     * @param context - Context to insert view into
+     * @param attrs - Custom attributes to set the label text
+     */
     public RoomListItemView(Context context, AttributeSet attrs) {
         super(context, attrs);
 
@@ -41,6 +48,11 @@ public class RoomListItemView extends LinearLayout{
 
     }
 
+    /**
+     * Constructor called when constructing view manually
+     * @param context  - Current context that view is inserted into
+     * @param roomName - Name for label
+     */
     public RoomListItemView(Context context, String roomName) {
         super(context);
 
@@ -68,6 +80,10 @@ public class RoomListItemView extends LinearLayout{
         myButton.setOnClickListener(listener);
     }
 
+    /**
+     * Sets if the rounded button is clickable
+     * @param isClickable - boolean to set clickable to
+     */
     public void setButtonClickable(Boolean isClickable) {
         Button myButton = (Button) getChildAt(0);
         myButton.setClickable(isClickable);
