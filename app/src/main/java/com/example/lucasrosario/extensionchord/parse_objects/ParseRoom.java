@@ -14,22 +14,39 @@ import java.util.List;
 
 /**
  * Created by lucas on 2/21/15.
+ * Custom ParseObject that represents a MusicRoom
  */
 @ParseClassName("ParseRoom")
 public class ParseRoom extends ParseObject {
 
+    /**
+     * Returns roomname
+     * @return name of the room
+     */
     public String getRoomName() {
         return getString("roomName");
     }
 
+    /**
+     * Sets the roomname
+     * @param value value to set roomname to
+     */
     public void setRoomName(String value) {
         put("roomName", "[" + getCreator().getUsername() + "] " + value);
     }
 
+    /**
+     * Returns the ParseUser Object for the User that created the room
+     * @return ParseUser
+     */
     public ParseUser getCreator() {
         return getParseUser("creator");
     }
 
+    /**
+     * Sets the Creator field
+     * @param creator ParseUser that created the room
+     */
     public void setCreator(ParseUser creator) {
         put("creator", creator);
     }
@@ -79,30 +96,61 @@ public class ParseRoom extends ParseObject {
         return getRoomUsers().size();
     }
 
+    /**
+     * Gets the location of where the room was created
+     * @return
+     */
     public ParseGeoPoint getLocation() {
         return getParseGeoPoint("location");
     }
 
+    /**
+     * Sets the location of the room
+     * @param value ParseGeoPoint of the location
+     */
     public void setLocation(ParseGeoPoint value) {
         put("location", value);
     }
 
+    /**
+     * Sets the password for the room
+     * @param pass Password for the room
+     */
     public void setPassword(String pass){
         put("password", pass);
     }
 
+    /**
+     *
+     * @return The password for the room
+     */
     public String getPassword(){
         return getString("password");
     }
 
+    /**
+     * Creates a query object for ParseRooms
+     * @return QueryObject
+     */
     public static ParseQuery<ParseRoom> getQuery() {
         return ParseQuery.getQuery(ParseRoom.class);
     }
 
+    /**
+     * Gets the MusicQueue associated with this room
+     * @return ParseMusicQueue for this room
+     */
     public ParseMusicQueue getParseMusicQueue() { return (ParseMusicQueue)getParseObject("musicQueue");}
 
+    /**
+     * Sets the MusicQueue associated with this room
+     */
     public void setParseMusicQueue() { put("musicQueue", new ParseMusicQueue());}
 
+    /**
+     * Deletes the music queue associated with this room
+     * @throws Exception
+     */
     public void deleteMusicQueue() throws Exception{
         ParseMusicQueue queue = getParseMusicQueue();
         List<ParseTrack> tracks = queue.getTrackList();

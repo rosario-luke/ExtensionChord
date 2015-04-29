@@ -59,6 +59,9 @@ public class SearchFragment extends Fragment implements OnSearchTaskCompleted {
         return fragment;
     }
 
+    /**
+     * Required empty public constructor
+     */
     public SearchFragment() {
         // Required empty public constructor
     }
@@ -117,6 +120,11 @@ public class SearchFragment extends Fragment implements OnSearchTaskCompleted {
         public void onFragmentInteraction(Uri uri);
     }
 
+    /**
+     * Grabs the text in V and starts a SoundCloud query using the input
+     * @param v View that was clicked
+     * @param testFlag Flag for testing
+     */
     public void onSearchBtnClick(View v, boolean testFlag){
 
         LinearLayout myLayout = (LinearLayout)getView().findViewById(R.id.search_layout);
@@ -139,11 +147,19 @@ public class SearchFragment extends Fragment implements OnSearchTaskCompleted {
 
     }
 
+    /**
+     * Creates a new AlbumArtAdder thread and runs it
+     * @param imageList
+     */
     public void addAlbumArt(Bitmap[] imageList){
         new AlbumArtAdder(imageList).run();
         soundCloudArtFetcher = null;
     }
 
+    /**
+     * Method called when a SearchTask is completed. Calls addTracks
+     * @param c - ArrayList of LocalTrack objects returned by SoundcloudSearch
+     */
     public void onTaskCompleted(Object c){
 
         ArrayList<LocalTrack> tList = (ArrayList<LocalTrack>)(c);
@@ -163,6 +179,11 @@ public class SearchFragment extends Fragment implements OnSearchTaskCompleted {
         }
     }
 
+    /**
+     * Takes in a list of tracks and generates SearchTrackDisplayItems for each
+     * Starts a new TrackItemAdder with this generated views
+     * @param tList - ArrayList of LocalTracks to add
+     */
     public void addTracks(ArrayList<LocalTrack> tList){
 
         ArrayList<SearchTrackDisplayItem> viewList = new ArrayList<SearchTrackDisplayItem>();
@@ -184,9 +205,18 @@ public class SearchFragment extends Fragment implements OnSearchTaskCompleted {
         new TrackItemAdder(viewList, this).run();
     }
 
+    /**
+     * Helper class that adds items to the view not in the UI thread
+     */
     public class TrackItemAdder implements Runnable {
         private ArrayList<SearchTrackDisplayItem> tList;
         private SearchFragment fragment;
+
+        /**
+         * Constructor for TrackItemAdder
+         * @param l Views to add
+         * @param frag Fragment to add views to
+         */
         public TrackItemAdder(ArrayList<SearchTrackDisplayItem> l, SearchFragment frag) {
             this.tList = l;
             this.fragment = frag;
@@ -203,6 +233,10 @@ public class SearchFragment extends Fragment implements OnSearchTaskCompleted {
         }
     }
 
+    /**
+     * Creates a new SoundCloudArtFetcher if one is not currently running
+     * Starts SoundCloudArtFetcher
+     */
     public void fetchAlbumArt(){
         if(soundCloudArtFetcher == null) {
             soundCloudArtFetcher = new SoundCloudArtFetcher(this);
@@ -210,6 +244,9 @@ public class SearchFragment extends Fragment implements OnSearchTaskCompleted {
         }
     }
 
+    /**
+     * Helper class to add AlbumArt to the UI
+     */
     public class AlbumArtAdder implements Runnable {
         private Bitmap[] imageList;
 
