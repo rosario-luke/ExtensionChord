@@ -1,23 +1,16 @@
 package com.example.lucasrosario.extensionchord;
 
 import android.app.ProgressDialog;
-import android.graphics.Point;
-import android.net.Uri;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
 import android.content.Context;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
-import android.support.v4.app.FragmentActivity;
-import android.support.v4.widget.DrawerLayout;
 import android.os.Bundle;
+import android.support.v4.app.FragmentActivity;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
+import android.support.v4.widget.DrawerLayout;
 import android.support.v4.widget.ViewDragHelper;
-import android.support.v7.app.ActionBarDrawerToggle;
 import android.util.Log;
-import android.view.Display;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
@@ -42,27 +35,43 @@ import java.util.List;
 
 
 public class RoomActivity extends FragmentActivity implements MediaPlayer.OnPreparedListener {
-    private String[] mDrawerStrings;
     private DrawerLayout mDrawerLayout;
-    private ActionBarDrawerToggle mDrawerToggle;
-    private ListView mDrawerList;
     private SearchFragment searchFragment;
     private ViewQueueFragment viewQueueFragment;
     private ViewRoomUsersFragment viewRoomUsersFragment;
-    private Fragment curFragment;
     private String roomName;
-   // private MediaPlayer currentMediaPlayer = new MediaPlayer();
     private MediaPlayer currentMediaPlayer;
     private boolean testFlag = false;
     private ProgressDialog progressDialog;
     private boolean prepared = false;
 
-    public void setRoomName(String name) { roomName = name; }
-    public String getRoomName(){
+    /**
+     * Stores the room name associated with this activity.
+     *
+     * @param name = Name of the room
+     */
+    public void setRoomName(String name) {
+        roomName = name;
+    }
+
+    /**
+     * Gets the room name associated with this activity.
+     *
+     * @return The room name
+     */
+    public String getRoomName() {
         return roomName;
     }
 
-    public void showEditDialog(String trackName, String albumName, String artistName, String submitter) {
+    /**
+     * Shows a dialog fragment for showing track info.
+     *
+     * @param trackName  = Name of the track
+     * @param albumName  = Name of the album
+     * @param artistName = Name of the artist
+     * @param submitter  = Name of the submitter
+     */
+    public void showTrackInfoDialog(String trackName, String albumName, String artistName, String submitter) {
         FragmentManager fm = getSupportFragmentManager();
         TrackInfoDialogFragment trackInfoDialogFragment = new TrackInfoDialogFragment();
         Bundle dialogBundle = new Bundle();
@@ -77,14 +86,14 @@ public class RoomActivity extends FragmentActivity implements MediaPlayer.OnPrep
         trackInfoDialogFragment.show(fm, "fragment_track_info");
     }
 
-    public MediaPlayer getMediaPlayer(){
+    public MediaPlayer getMediaPlayer() {
         return currentMediaPlayer;
     }
 
-    public boolean setCurrentMediaPlayerURL(String url, boolean async){
+    public boolean setCurrentMediaPlayerURL(String url, boolean async) {
         try {
             currentMediaPlayer.setDataSource(url);
-            if(async){
+            if (async) {
                 currentMediaPlayer.prepareAsync();
                 return false;
             } else {
@@ -92,105 +101,92 @@ public class RoomActivity extends FragmentActivity implements MediaPlayer.OnPrep
             }
             prepared = true;
             return false;
-        }catch(Exception e){
+        } catch (Exception e) {
             dismissProgressDialog();
             e.printStackTrace();
             return true;
         }
     }
-    public void onPrepared(MediaPlayer mp){
+
+    public void onPrepared(MediaPlayer mp) {
         currentMediaPlayer.start();
         prepared = true;
 
     }
 
-    public void setTestFlag(boolean b){
+    public void setTestFlag(boolean b) {
         testFlag = b;
     }
 
-    public void startMediaPlayer(){
+    public void startMediaPlayer() {
         try {
-            if(prepared) {
+            if (prepared) {
                 currentMediaPlayer.start();
             } else {
                 resetMediaPlayer();
                 currentMediaPlayer.start();
             }
-        }catch(Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
-
         }
     }
 
-    public void stopMediaPlayer(){
+    public void stopMediaPlayer() {
         currentMediaPlayer.pause();
     }
 
-    public void resetMediaPlayer(){
+    public void resetMediaPlayer() {
         ParseRoom currRoom = RoomManager.getParseRoom(roomName);
         ParseMusicQueue queue = currRoom.getParseMusicQueue();
-        //currentMediaPlayer.stop();
         currentMediaPlayer.reset();
         currentMediaPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
-        if(!queue.getTrackList().isEmpty()) {
+        if (!queue.getTrackList().isEmpty()) {
             boolean cError = setCurrentMediaPlayerURL("http://api.soundcloud.com/tracks/" + queue.getTrackList().get(0).getTrackID() + "/stream?client_id=" + Constants.API_KEY, false);
-            if(cError){
-                Toast.makeText(this,"Error Playing Song: " + queue.getTrackList().get(0).getTrackName(), Toast.LENGTH_SHORT).show();
+            if (cError) {
+                Toast.makeText(this, "Error Playing Song: " + queue.getTrackList().get(0).getTrackName(), Toast.LENGTH_SHORT).show();
                 queue.pop();
             }
         }
     }
 
-    public void resetMediaPlayerAsync(){
+    public void resetMediaPlayerAsync() {
         ParseRoom currRoom = RoomManager.getParseRoom(roomName);
         ParseMusicQueue queue = currRoom.getParseMusicQueue();
-        //currentMediaPlayer.stop();
         currentMediaPlayer.reset();
         currentMediaPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
-        if(!queue.getTrackList().isEmpty()) {
+        if (!queue.getTrackList().isEmpty()) {
             boolean cError = setCurrentMediaPlayerURL("http://api.soundcloud.com/tracks/" + queue.getTrackList().get(0).getTrackID() + "/stream?client_id=" + Constants.API_KEY, true);
-            if(cError){
-                Toast.makeText(this,"Error Playing Song: " + queue.getTrackList().get(0).getTrackName(), Toast.LENGTH_SHORT).show();
+            if (cError) {
+                Toast.makeText(this, "Error Playing Song: " + queue.getTrackList().get(0).getTrackName(), Toast.LENGTH_SHORT).show();
                 queue.pop();
             }
         }
     }
 
-    public void setMediaPlayerOnCompletionListener(){
-        currentMediaPlayer.setOnCompletionListener (new MediaPlayer.OnCompletionListener(){
+    public void setMediaPlayerOnCompletionListener() {
+        currentMediaPlayer.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
 
             @Override
             public void onCompletion(MediaPlayer mp) {
                 ParseRoom currRoom;
                 ParseMusicQueue queue = null;
                 boolean cError = true;
-                while(cError){
+                while (cError) {
                     try {
                         currRoom = RoomManager.getParseRoom(roomName).fetch();
                         queue = currRoom.getParseMusicQueue().fetch();
                         cError = false;
-                    } catch(Exception e){
-
+                    } catch (Exception e) {
+                        // Do nothing
                     }
                 }
                 queue.pop();
                 List<ParseTrack> tList = queue.getTrackList();
                 prepared = false;
-                if(tList != null && !tList.isEmpty()) {
+                if (tList != null && !tList.isEmpty()) {
                     resetMediaPlayer();
-                    //setCurrentMediaPlayerURL("http://api.soundcloud.com/tracks/" + tList.get(0).getTrackID() + "/stream?client_id=" + Constants.API_KEY);
-
-//                try {
                     viewQueueFragment.refresh();
-
-/*                }catch(Exception e){
-                    if(!queue.getTrackList().isEmpty())
-                        setCurrentMediaPlayerURL("http://api.soundcloud.com/tracks/" + queue.getTrackList().get(0).getTrackID() + "/stream?client_id="+Constants.API_KEY);
-                }*/
-                    //setMediaPlayerOnCompletionListener();
-                    //startMediaPlayer();
-                }
-                else
+                } else
                     viewQueueFragment.refresh();
             }
         });
@@ -215,31 +211,30 @@ public class RoomActivity extends FragmentActivity implements MediaPlayer.OnPrep
         viewRoomUsersFragment = new ViewRoomUsersFragment();
         Bundle bundle = getIntent().getExtras();
         Bundle args = new Bundle();
-        try{
-            args.putString("room_name",bundle.getString("roomName"));
-        }catch(NullPointerException e){
+        try {
+            args.putString("room_name", bundle.getString("roomName"));
+        } catch (NullPointerException e) {
             args.putString("room_name", "[Tester] TestRoom");
         }
 
         viewRoomUsersFragment.setArguments(args);
         viewRoomUsersFragment.newInstance();
 
-
         // Is this unnecessary? vvv
         FragmentManager fragmentManager = this.getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
 
-        fragmentTransaction.add(R.id.container,searchFragment,"SearchFragment");
+        fragmentTransaction.add(R.id.container, searchFragment, "SearchFragment");
         fragmentTransaction.commit();
-        curFragment = searchFragment;
 
         progressDialog = new ProgressDialog(this);
         progressDialog.setTitle("Loading");
         progressDialog.setMessage("Wait while loading...");
-
-        //setUpSearchFragment();
     }
 
+    /**
+     * Creates the navigation drawer for navigating between fragments in the activity.
+     */
     private void createNavigationDrawer() {
         if (ParseUser.getCurrentUser() != null) {
             String userName = ParseUser.getCurrentUser().getUsername();
@@ -255,9 +250,9 @@ public class RoomActivity extends FragmentActivity implements MediaPlayer.OnPrep
         }
 
         mDrawerLayout = (DrawerLayout) findViewById(R.id.room_drawer_layout);
-        mDrawerList = (ListView) findViewById(R.id.room_left_drawer);
+        ListView mDrawerList = (ListView) findViewById(R.id.room_left_drawer);
 
-        mDrawerStrings = getResources().getStringArray(R.array.navdrawer_array);
+        String[] mDrawerStrings = getResources().getStringArray(R.array.navdrawer_array);
         mDrawerList.setAdapter(new ArrayAdapter<String>(this, R.layout.generic_list_item, mDrawerStrings));
 
         mDrawerLayout.setDrawerListener(new DrawerLayout.DrawerListener() {
@@ -287,7 +282,7 @@ public class RoomActivity extends FragmentActivity implements MediaPlayer.OnPrep
 
         mDrawerList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                switch(position){
+                switch (position) {
                     case 0:
                         setUpSearchFragment();
                         break;
@@ -324,101 +319,56 @@ public class RoomActivity extends FragmentActivity implements MediaPlayer.OnPrep
     }
 
     @Override
-    protected void onDestroy(){
+    protected void onDestroy() {
         RoomManager.removeUserFromRoom(ParseUser.getCurrentUser().getUsername());
-        ParseRoom room = RoomManager.getParseRoom(roomName);
-/*
-        String creatorUe = ParseUser.getCurrentUser().getUsername();
-        if (creatorUsername.equals(currentUsername)) {
-            RoomManager.deleteRoom(roomName);
-            stopMediaPlayer();
-        }*/
 
         super.onDestroy();
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_room, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
-
-        return super.onOptionsItemSelected(item);
-    }
-
-    public void setUpRoomUsersFragment(){
+    public void setUpRoomUsersFragment() {
         FragmentManager fragmentManager = this.getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
 
-        fragmentTransaction.replace(R.id.container,viewRoomUsersFragment,"ViewRoomUsersFragment");
-//        fragmentTransaction.hide(curFragment);
+        fragmentTransaction.replace(R.id.container, viewRoomUsersFragment, "ViewRoomUsersFragment");
         fragmentTransaction.commit();
-        curFragment = viewRoomUsersFragment;
     }
 
-
-    public void setUpSearchFragment(){
+    public void setUpSearchFragment() {
         FragmentManager fragmentManager = this.getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
 
-        fragmentTransaction.replace(R.id.container,searchFragment,"SearchFragment");
-//        fragmentTransaction.hide(curFragment);
+        fragmentTransaction.replace(R.id.container, searchFragment, "SearchFragment");
         fragmentTransaction.commit();
-        curFragment = searchFragment;
     }
 
-    public void setUpViewQueueFragment(){
+    public void setUpViewQueueFragment() {
         FragmentManager fragmentManager = this.getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
 
-        fragmentTransaction.replace(R.id.container,viewQueueFragment,"ViewQueueFragment");
-//        fragmentTransaction.hide(curFragment);
+        fragmentTransaction.replace(R.id.container, viewQueueFragment, "ViewQueueFragment");
         fragmentTransaction.commit();
-        curFragment = viewQueueFragment;
     }
 
-    public void onSearchBtnClick(View v){
-
-        InputMethodManager imm = (InputMethodManager)getSystemService(
-                Context.INPUT_METHOD_SERVICE);
+    public void onSearchBtnClick(View v) {
+        InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
         imm.hideSoftInputFromWindow(v.getWindowToken(), 0);
         showProgressDialog();
         searchFragment.onSearchBtnClick(v, testFlag);
-
     }
 
-    public void onRefreshClick(View v) throws Exception{
+    public void onRefreshClick(View v) throws Exception {
         viewQueueFragment.onRefreshClick(v);
     }
 
-    public void showProgressDialog(){
-        if(!progressDialog.isShowing()){
+    public void showProgressDialog() {
+        if (!progressDialog.isShowing()) {
             progressDialog.show();
         }
     }
 
-    public void dismissProgressDialog(){
-        if(progressDialog.isShowing()){
+    public void dismissProgressDialog() {
+        if (progressDialog.isShowing()) {
             progressDialog.dismiss();
         }
     }
-
-    /*public void addTracks(ArrayList<LocalTrack> tracks){
-        if(curFragment.equals(searchFragment)) {
-            searchFragment.addTracks(tracks);
-        }
-    }*/
 }

@@ -4,7 +4,6 @@ import android.app.Activity;
 import android.support.v4.app.Fragment;
 import android.net.Uri;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.ContextMenu;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
@@ -14,7 +13,6 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
-import com.example.lucasrosario.extensionchord.Constants;
 import com.example.lucasrosario.extensionchord.R;
 import com.example.lucasrosario.extensionchord.RoomActivity;
 import com.example.lucasrosario.extensionchord.RoomManager;
@@ -256,7 +254,7 @@ public class ViewQueueFragment extends Fragment {
                 String artistName = track.getTrackArtist();
                 String submitter = track.getSubmitter();
 
-                ((RoomActivity) getActivity()).showEditDialog(trackName, albumName, artistName, submitter);
+                ((RoomActivity) getActivity()).showTrackInfoDialog(trackName, albumName, artistName, submitter);
             } else {
                 Toast.makeText(getActivity(), "Was Null", Toast.LENGTH_SHORT).show();
             }
