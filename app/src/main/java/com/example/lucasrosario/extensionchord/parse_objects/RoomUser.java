@@ -6,6 +6,9 @@ import com.parse.ParseObject;
 import com.parse.ParseQuery;
 
 /**
+ * A RoomUser exists only within the context of a ParseRoom. Every
+ * user that has joined a ParseRoom has an associated RoomUser.
+ *
  * Created by Brett on 3/3/2015.
  */
 @ParseClassName("RoomUser")

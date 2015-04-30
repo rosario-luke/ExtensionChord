@@ -25,17 +25,18 @@ import java.util.List;
 public class RoomManager {
     private Context context;
 
-    public RoomManager(Context c){
+    public RoomManager(Context c) {
         context = c;
     }
 
     /**
      * Creates a new room and saves it to Parse
-     * @param roomName  name of the room to add the user to
+     *
+     * @param roomName     name of the room to add the user to
      * @param roomPassword password for room
-     * @param geoPoint location of room
+     * @param geoPoint     location of room
      */
-    public void createRoom(String roomName, String roomPassword, ParseGeoPoint geoPoint){
+    public void createRoom(String roomName, String roomPassword, ParseGeoPoint geoPoint) {
         // 1
         ParseRoom room = new ParseRoom();
         room.setLocation(geoPoint);
@@ -54,7 +55,7 @@ public class RoomManager {
         room.saveInBackground(new SaveCallback() {
             @Override
             public void done(ParseException e) {
-                if (e  == null) {
+                if (e == null) {
                     Toast.makeText(context, "Created Room Successfully", Toast.LENGTH_LONG).show();
                 } else {
                     Toast.makeText(context, e.getMessage(), Toast.LENGTH_LONG).show();
@@ -67,7 +68,7 @@ public class RoomManager {
      * Gets a list of nearby rooms in a specified radius (km), must pass in your current location.
      *
      * @param radius = radius in kilometers.
-     * @param point = center location of the search.
+     * @param point  = center location of the search.
      */
     public List<ParseRoom> getNearbyRooms(double radius, ParseGeoPoint point) {
         List<ParseRoom> rooms = new ArrayList<ParseRoom>();
@@ -113,6 +114,7 @@ public class RoomManager {
 
     /**
      * Gets a ParseRoom object by roomname
+     *
      * @param roomName name of room to fetch
      * @return ParseRoom object with the roomname specified
      */
@@ -132,16 +134,15 @@ public class RoomManager {
 
     /**
      * Removes a user from a room
+     *
      * @param username user to remove from the user's current room
      */
     public static void removeUserFromRoom(String username) {
         ParseQuery<RoomUser> query = RoomUser.getQuery();
         query.whereEqualTo("username", username);
-        List<RoomUser> users;
 
         try {
             RoomUser.deleteAll(query.find());
-
         } catch (ParseException e) {
             Log.d("RoomManager", "Failed to remove " + username + " from the room");
         }
@@ -149,6 +150,7 @@ public class RoomManager {
 
     /**
      * Deletes room with specified roomname
+     *
      * @param roomName name of room to delete
      */
     public static void deleteRoom(String roomName) {
@@ -167,6 +169,7 @@ public class RoomManager {
 
     /**
      * Deletes all users from a specified room
+     *
      * @param roomName name of room to clear all users from
      */
     private static void deleteUsersFrom(String roomName) {
@@ -182,10 +185,11 @@ public class RoomManager {
 
     /**
      * Adds a track to the music queue of specified room
-     * @param track Track to add
+     *
+     * @param track    Track to add
      * @param roomName Name of room to add track to
      */
-    public static void addTrack (LocalTrack track, String roomName){
+    public static void addTrack(LocalTrack track, String roomName) {
         ParseQuery<ParseRoom> query = ParseRoom.getQuery();
         query.whereEqualTo("roomName", roomName);
 
@@ -207,13 +211,13 @@ public class RoomManager {
 
         try {
             pTrack.save();
-        }catch(ParseException e){
+        } catch (ParseException e) {
             Log.d("RoomManager", "Failed to add parseTrack in : " + roomName);
         }
 
-        try{
+        try {
             List<ParseRoom> rList = query.find();
-            if(rList.isEmpty()){
+            if (rList.isEmpty()) {
                 Log.d("Adding Track", "Could not find room");
                 return;
             }
@@ -221,22 +225,22 @@ public class RoomManager {
             currQueue = currRoom.getParseMusicQueue();
             currQueue.addTrackToQueue(pTrack);
             currQueue.saveInBackground();
-        }catch (ParseException e){
+        } catch (ParseException e) {
             Log.d("RoomManager", e.toString());
         }
     }
 
     /**
      * Checks if a track has a quorum of votes necessary to delete it
-     * @param track track to check
+     *
+     * @param track    track to check
      * @param roomName name of room that track resides in
      * @return whether the track was deleted
      */
-    public static boolean checkTrack(ParseTrack track, String roomName)
-    {
+    public static boolean checkTrack(ParseTrack track, String roomName) {
         ParseRoom currRoom = getParseRoom(roomName);
         ParseMusicQueue queue = currRoom.getParseMusicQueue();
-        if(queue.checkTrackDownvotes(track, currRoom.getRoomUsersSize())) {
+        if (queue.checkTrackDownvotes(track, currRoom.getRoomUsersSize())) {
             deleteTrack(track, roomName, true);
             return true;
         }
@@ -245,37 +249,38 @@ public class RoomManager {
 
     /**
      * Deletes a track from a specified room
+     *
      * @param toDelete track to delete
      * @param roomName name of room to delete track from
      * @param testFlag testflag for overriding admin privileges
      * @return if the track was deleted
      */
-    public static boolean deleteTrack(ParseTrack toDelete, String roomName, boolean testFlag){
+    public static boolean deleteTrack(ParseTrack toDelete, String roomName, boolean testFlag) {
         ParseRoom currRoom;
         ParseMusicQueue currQueue;
         RoomUser roomUser;
         ParseQuery<RoomUser> ruQuery = RoomUser.getQuery();
         ruQuery.whereEqualTo("username", ParseUser.getCurrentUser().getUsername());
-        try{
+        try {
             // TODO: Change this to be asynchronous
             currRoom = RoomManager.getParseRoom(roomName).fetchIfNeeded();
             currQueue = currRoom.getParseMusicQueue().fetchIfNeeded();
             List<RoomUser> ruList = ruQuery.find();
             roomUser = ruList.get(0);
-        } catch(ParseException e){
-
+        } catch (ParseException e) {
             return false;
         }
-        if(roomUser != null && (roomUser.isAdmin() || testFlag)) {
+
+        if (roomUser != null && (roomUser.isAdmin() || testFlag)) {
             currQueue.deleteTrack(toDelete);
             try {
                 currQueue.save();
-            } catch(ParseException e){
+            } catch (ParseException e) {
                 return false;
             }
             return true;
         } else {
-            if(roomUser == null){
+            if (roomUser == null) {
                 Log.d("Delete track", "roomUser was null");
             } else {
                 Log.d("Delete track", "was not an admin");

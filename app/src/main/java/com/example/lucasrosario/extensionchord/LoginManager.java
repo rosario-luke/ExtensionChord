@@ -41,7 +41,7 @@ public class LoginManager {
      * @param password = password associated with the user.
      */
     public void signup(String username, String password) {
-        if(!testFlag && !username.equalsIgnoreCase("Tester")) {
+        if (!testFlag && !username.equalsIgnoreCase("Tester")) {
             //Set user information.
             ParseUser currUser = new ParseUser();
             currUser.setUsername(username);

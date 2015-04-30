@@ -7,4 +7,5 @@ public class Constants {
 
     final public static String API_KEY = "3fe96f34e369ae1ef5cf7e8fcc6c8eec";
     final public static double SKIP_THRESHOLD = 0.6;
+    final public static double SEARCH_RADIUS = 0.5;
 }

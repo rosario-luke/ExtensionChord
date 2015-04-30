@@ -14,11 +14,11 @@ import java.util.List;
  */
 @ParseClassName("ParseMusicQueue")
 public class ParseMusicQueue extends ParseObject {
-    public void addTrackToQueue(ParseTrack track){
+    public void addTrackToQueue(ParseTrack track) {
         add("tracks", track);
     }
 
-    public List<ParseTrack> getTrackList(){
+    public List<ParseTrack> getTrackList() {
         List<ParseTrack> tracks = getList("tracks");
         if (tracks != null)
             for (ParseTrack track : tracks) {
@@ -35,10 +35,10 @@ public class ParseMusicQueue extends ParseObject {
         return getList("tracks");
     }
 
-    public ParseTrack pop(){
+    public ParseTrack pop() {
         List<ParseTrack> tracks = getList("tracks");
         ParseTrack first = null;
-        if(tracks == null ||!tracks.isEmpty()) {
+        if (tracks == null || !tracks.isEmpty()) {
             first = tracks.get(0);
             List<ParseTrack> firstList = new ArrayList<ParseTrack>();
             Log.d("Pop", first.getTrackName());
@@ -49,24 +49,26 @@ public class ParseMusicQueue extends ParseObject {
         return first;
     }
 
-    public void deleteTrack(ParseTrack toDelete){
+    public void deleteTrack(ParseTrack toDelete) {
         List<ParseTrack> tracks = getList("tracks");
-        if(tracks.contains(toDelete)){
+        if (tracks.contains(toDelete)) {
             List<ParseTrack> dList = new ArrayList<>();
             dList.add(toDelete);
             removeAll("tracks", dList);
-
         }
     }
 
-    public boolean checkTrackDownvotes(ParseTrack track, int numUsers)
-    {
-        if(track != null && (double) (track.getDownvoteList().size()) >= (Constants.SKIP_THRESHOLD * numUsers))
-        {
+    /**
+     * Checks whether or not the track has enough downvotes to be deleted.
+     *
+     * @param track    ParseTrack being downvoted
+     * @param numUsers Number of users in the room
+     * @return True if the track meets deletion criteria, otherwise false
+     */
+    public boolean checkTrackDownvotes(ParseTrack track, int numUsers) {
+        if (track != null && (double) (track.getDownvoteList().size()) >= (Constants.SKIP_THRESHOLD * numUsers)) {
             return true;
         }
         return false;
     }
-
-    public Integer getCurrentTrack(){ return (int)getList("tracks").get(0); }
 }

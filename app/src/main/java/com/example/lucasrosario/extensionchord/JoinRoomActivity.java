@@ -8,8 +8,6 @@ import android.location.Location;
 import android.os.Bundle;
 import android.text.InputType;
 import android.util.Log;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -46,7 +44,7 @@ public class JoinRoomActivity extends Activity implements GoogleApiClient.Connec
 
         // The make room button to be clicked after you fill out a name
         Button makeRoom = (Button) findViewById(R.id.submitCreateRoomButton);
-        makeRoom.setOnClickListener(new Button.OnClickListener(){
+        makeRoom.setOnClickListener(new Button.OnClickListener() {
             public void onClick(View v) {
 
                 EditText edName = (EditText) findViewById(R.id.roomNameField);
@@ -56,9 +54,6 @@ public class JoinRoomActivity extends Activity implements GoogleApiClient.Connec
 
                 edName.setText("");
                 edPass.setText("");
-
-                //@TODO WONKY ALERT
-//                joinRoom(edName.getText().toString());
             }
         });
 
@@ -75,7 +70,6 @@ public class JoinRoomActivity extends Activity implements GoogleApiClient.Connec
                 logout();
             }
         });
-
 
         buildGoogleApiClient();
         mGoogleApiClient.connect();
@@ -97,12 +91,11 @@ public class JoinRoomActivity extends Activity implements GoogleApiClient.Connec
     protected synchronized void buildGoogleApiClient() {
         Log.d("Location", "Going to get location");
         mGoogleApiClient = new GoogleApiClient.Builder(this)
-              .addConnectionCallbacks(this)
-               .addOnConnectionFailedListener(this)
+                .addConnectionCallbacks(this)
+                .addOnConnectionFailedListener(this)
                 .addApi(LocationServices.API)
                 .build();
     }
-
 
     public void onConnected(Bundle bundle) {
         Log.d("Location", "Connected");
@@ -117,7 +110,7 @@ public class JoinRoomActivity extends Activity implements GoogleApiClient.Connec
         }
     }
 
-    public void refreshLocation(){
+    public void refreshLocation() {
         mLastLocation = LocationServices.FusedLocationApi.getLastLocation(mGoogleApiClient);
 
         if (mLastLocation != null) {
@@ -128,7 +121,7 @@ public class JoinRoomActivity extends Activity implements GoogleApiClient.Connec
         }
     }
 
-    private void logout(){
+    private void logout() {
         ParseUser.getCurrentUser().logOut();
         Intent intent = new Intent(this, MainActivity.class);
         startActivity(intent);
@@ -137,7 +130,7 @@ public class JoinRoomActivity extends Activity implements GoogleApiClient.Connec
 
     private void viewRoomList() {
         refreshLocation();
-        List<ParseRoom> rooms = roomManager.getNearbyRooms(0.5, geoPoint);
+        List<ParseRoom> rooms = roomManager.getNearbyRooms(Constants.SEARCH_RADIUS, geoPoint);
         String[] values = new String[rooms.size()];
 
         for (int i = 0; i < rooms.size(); i++) {
@@ -155,13 +148,12 @@ public class JoinRoomActivity extends Activity implements GoogleApiClient.Connec
                 // When clicked, show a toast with the TextView text or do whatever you need.
                 final String roomName = ((TextView) view).getText().toString();
                 String pass = RoomManager.getParseRoom(roomName).getPassword();
-                if(pass == null || pass.equals("")){
+                if (pass == null || pass.equals("")) {
                     joinRoom(roomName);
-                }
-                else {
+                } else {
                     //Ask user for password.
                     AlertDialog.Builder builder = new AlertDialog.Builder(JoinRoomActivity.this);
-                    builder.setTitle("Please Enter Room Password.");
+                    builder.setTitle("Please Enter Room Password");
 
                     // Set up the input
                     final EditText input = new EditText(JoinRoomActivity.this);
@@ -180,7 +172,7 @@ public class JoinRoomActivity extends Activity implements GoogleApiClient.Connec
                             if (givenPass.equals(realPass)) {
                                 joinRoom(roomName);
                             } else {
-                                Toast.makeText(JoinRoomActivity.this, "Error Incorrect Password.", Toast.LENGTH_LONG).show();
+                                Toast.makeText(JoinRoomActivity.this, "Error: Incorrect Password", Toast.LENGTH_LONG).show();
                                 dialog.cancel();
                             }
                         }
@@ -198,7 +190,12 @@ public class JoinRoomActivity extends Activity implements GoogleApiClient.Connec
         });
     }
 
-    public void joinRoom(String roomName){
+    /**
+     * Allows the current user to join a room
+     *
+     * @param roomName Name of the room to join
+     */
+    public void joinRoom(String roomName) {
         RoomManager.addUserToRoom(roomName);
 
         Intent myIntent = new Intent(JoinRoomActivity.this, RoomActivity.class);
@@ -218,28 +215,5 @@ public class JoinRoomActivity extends Activity implements GoogleApiClient.Connec
 
         mLastLocation = null;
         geoPoint = null;
-    }
-
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_join_room, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
-
-        return super.onOptionsItemSelected(item);
     }
 }
