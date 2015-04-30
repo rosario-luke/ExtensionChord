@@ -60,7 +60,7 @@ public class EspressoSearchSongTest extends ActivityInstrumentationTestCase2<Mai
             try {
                 ParseUser.getCurrentUser().delete();
                 ParseQuery<ParseRoom> query = ParseQuery.getQuery("ParseRoom");
-                query.whereEqualTo("roomName", "[Tester] testCreateRoom");
+                query.whereEqualTo("roomName", "[Tester] TestCreateRoom");
                 List<ParseRoom> rList = query.find();
                 ParseRoom.deleteAll(rList);
 
@@ -100,7 +100,7 @@ public class EspressoSearchSongTest extends ActivityInstrumentationTestCase2<Mai
         Thread.sleep(1000);
 
         onView(withId(R.id.roomNameField))
-                .perform(typeText("testCreateRoom"), closeSoftKeyboard());
+                .perform(typeText("TestCreateRoom"), closeSoftKeyboard());
 
         onView(withId(R.id.submitCreateRoomButton))
                 .perform(click());
@@ -114,7 +114,7 @@ public class EspressoSearchSongTest extends ActivityInstrumentationTestCase2<Mai
         // Wait for RoomList to be populated
         Thread.sleep(1000);
 
-        Espresso.onView(withText("[Tester] testCreateRoom"))
+        Espresso.onView(withText("[Tester] TestCreateRoom"))
                 .perform(click());
 
         // Wait for RoomActivity to launch

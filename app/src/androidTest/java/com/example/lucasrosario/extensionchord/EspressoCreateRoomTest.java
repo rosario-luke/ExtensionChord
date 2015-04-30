@@ -37,8 +37,6 @@ public class EspressoCreateRoomTest extends ActivityInstrumentationTestCase2<Mai
         injectInstrumentation(InstrumentationRegistry.getInstrumentation());
         mActivity = getActivity();
 
-
-
         try {
             ParseUser.logIn("Tester", "Banana");
             ParseUser.getCurrentUser().delete();
@@ -61,7 +59,7 @@ public class EspressoCreateRoomTest extends ActivityInstrumentationTestCase2<Mai
             try {
                 ParseUser.getCurrentUser().delete();
                 ParseQuery<ParseRoom> query = ParseQuery.getQuery("ParseRoom");
-                query.whereEqualTo("roomName", "[Tester] testCreateRoom");
+                query.whereEqualTo("roomName", "[Tester] TestCreateRoom");
                 List<ParseRoom> rList = query.find();
                 ParseRoom.deleteAll(rList);
 
@@ -69,7 +67,6 @@ public class EspressoCreateRoomTest extends ActivityInstrumentationTestCase2<Mai
                 e.printStackTrace();
             }
         }
-
 
         super.tearDown();
     }
@@ -101,7 +98,7 @@ public class EspressoCreateRoomTest extends ActivityInstrumentationTestCase2<Mai
         Thread.sleep(1000);
 
         onView(withId(R.id.roomNameField))
-                .perform(typeText("testCreateRoom"), closeSoftKeyboard());
+                .perform(typeText("TestCreateRoom"), closeSoftKeyboard());
 
         onView(withId(R.id.submitCreateRoomButton))
                 .perform(click());
@@ -115,10 +112,6 @@ public class EspressoCreateRoomTest extends ActivityInstrumentationTestCase2<Mai
         // Wait for RoomList to be populated
         Thread.sleep(1000);
 
-        Espresso.onView(withText("[Tester] testCreateRoom")).check(matches(isDisplayed()));
-
-
-
-
+        Espresso.onView(withText("[Tester] TestCreateRoom")).check(matches(isDisplayed()));
     }
 }

@@ -32,6 +32,13 @@ public class SearchTest extends ActivityInstrumentationTestCase2<RoomActivity> i
         roomActivity = getActivity();
         roomManager = new RoomManager(roomActivity);
 
+        try {
+            ParseUser.logIn("Tester", "Banana");
+            ParseUser.getCurrentUser().delete();
+        } catch(ParseException e) {
+            Log.i("Login Test", "User not found.");
+        }
+
         System.out.println("Got past initialize");
         //Testing if the user can login given correct details.
         ParseUser currUser = new ParseUser();

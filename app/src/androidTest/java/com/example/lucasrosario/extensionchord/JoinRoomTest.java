@@ -31,6 +31,13 @@ public class JoinRoomTest extends ActivityInstrumentationTestCase2<RoomActivity>
         roomActivity = getActivity();
         roomManager = new RoomManager(roomActivity);
 
+        try {
+            ParseUser.logIn("Tester", "Banana");
+            ParseUser.getCurrentUser().delete();
+        } catch(ParseException e) {
+            Log.i("Login Test", "User not found.");
+        }
+
         //Testing if the user can login given correct details.
         ParseUser currUser = new ParseUser();
         currUser.setPassword("Banana");

@@ -65,7 +65,7 @@ public class EspressoJoinRoomTest extends ActivityInstrumentationTestCase2<MainA
     @Override
     public void tearDown() throws Exception {
         ParseQuery<ParseObject> query = ParseQuery.getQuery("ParseRoom");
-        query.whereEqualTo("roomName", "[Tester] testCreateRoom");
+        query.whereEqualTo("roomName", "[Tester] TestCreateRoom");
         List<ParseObject> objs;
 
         try {
@@ -76,7 +76,7 @@ public class EspressoJoinRoomTest extends ActivityInstrumentationTestCase2<MainA
             Log.d("Parse Exception", e.getMessage());
         }
 
-        query.whereEqualTo("roomName", "[Tester] testCreateRoomNoPassword");
+        query.whereEqualTo("roomName", "[Tester] TestCreateRoomNoPassword");
 
         try {
             objs = query.find();
@@ -125,7 +125,7 @@ public class EspressoJoinRoomTest extends ActivityInstrumentationTestCase2<MainA
 
         // Make a room with no password
         onView(withId(R.id.roomNameField))
-                .perform(typeText("testCreateRoomNoPassword"), closeSoftKeyboard());
+                .perform(typeText("TestCreateRoomNoPassword"), closeSoftKeyboard());
 
         onView(withId(R.id.submitCreateRoomButton))
                 .perform(click());
@@ -139,7 +139,7 @@ public class EspressoJoinRoomTest extends ActivityInstrumentationTestCase2<MainA
         // Wait for RoomList to be populated
         Thread.sleep(1000);
 
-        Espresso.onView(withText("[Tester] testCreateRoomNoPassword"))
+        Espresso.onView(withText("[Tester] TestCreateRoomNoPassword"))
                 .perform(click());
 
         // Wait for RoomActivity to launch
@@ -160,7 +160,7 @@ public class EspressoJoinRoomTest extends ActivityInstrumentationTestCase2<MainA
 
         // Make a room with a password
         onView(withId(R.id.roomNameField))
-                .perform(typeText("testCreateRoom"), closeSoftKeyboard());
+                .perform(typeText("TestCreateRoom"), closeSoftKeyboard());
 
         onView(withId(R.id.roomPasswordField))
                 .perform(typeText("password"), closeSoftKeyboard());
@@ -177,7 +177,7 @@ public class EspressoJoinRoomTest extends ActivityInstrumentationTestCase2<MainA
         // Wait for RoomList to be populated
         Thread.sleep(1000);
 
-        Espresso.onView(withText("[Tester] testCreateRoom"))
+        Espresso.onView(withText("[Tester] TestCreateRoom"))
                 .perform(click());
 
         onView(withId(R.id.alertedit)).perform(typeText("Garbage password lol."));
@@ -186,7 +186,7 @@ public class EspressoJoinRoomTest extends ActivityInstrumentationTestCase2<MainA
         onView(withId(R.id.createRoomReload))
                 .check(matches(isDisplayed()));
 
-        Espresso.onView(withText("[Tester] testCreateRoom"))
+        Espresso.onView(withText("[Tester] TestCreateRoom"))
                 .perform(click());
 
         onView(withId(R.id.alertedit)).perform(typeText("password"));
