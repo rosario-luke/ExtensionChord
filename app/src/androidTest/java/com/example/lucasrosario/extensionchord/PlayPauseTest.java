@@ -33,7 +33,6 @@ public class PlayPauseTest extends ActivityInstrumentationTestCase2<RoomActivity
         }catch(Exception e){
             e.printStackTrace();
         }
-        Parse.initialize(roomActivity, "f539HwpFiyK3DhDsOb7xYRNwCtr7vCeMihU776Vk", "tH1ktzEjhCBZSvMzVR9Thjqj6sDtrrb1gwUYIlh1");
 
         //Testing if the user can login given correct details.
         ParseUser currUser = new ParseUser();

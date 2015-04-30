@@ -141,7 +141,7 @@ public class RoomActivity extends FragmentActivity implements MediaPlayer.OnPrep
         currentMediaPlayer.reset();
         currentMediaPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
         if (!queue.getTrackList().isEmpty()) {
-            boolean cError = setCurrentMediaPlayerURL("http://api.soundcloud.com/tracks/" + queue.getTrackList().get(0).getTrackID() + "/stream?client_id=" + Constants.API_KEY, false);
+            boolean cError = setCurrentMediaPlayerURL("http://api.soundcloud.com/tracks/" + queue.getTrackList().get(0).getTrackID() + "/stream?client_id=" + Constants.SOUNDCLOUD_API_KEY, false);
             if (cError) {
                 Toast.makeText(this, "Error Playing Song: " + queue.getTrackList().get(0).getTrackName(), Toast.LENGTH_SHORT).show();
                 queue.pop();
@@ -155,7 +155,7 @@ public class RoomActivity extends FragmentActivity implements MediaPlayer.OnPrep
         currentMediaPlayer.reset();
         currentMediaPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
         if (!queue.getTrackList().isEmpty()) {
-            boolean cError = setCurrentMediaPlayerURL("http://api.soundcloud.com/tracks/" + queue.getTrackList().get(0).getTrackID() + "/stream?client_id=" + Constants.API_KEY, true);
+            boolean cError = setCurrentMediaPlayerURL("http://api.soundcloud.com/tracks/" + queue.getTrackList().get(0).getTrackID() + "/stream?client_id=" + Constants.SOUNDCLOUD_API_KEY, true);
             if (cError) {
                 Toast.makeText(this, "Error Playing Song: " + queue.getTrackList().get(0).getTrackName(), Toast.LENGTH_SHORT).show();
                 queue.pop();
@@ -196,7 +196,6 @@ public class RoomActivity extends FragmentActivity implements MediaPlayer.OnPrep
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        Parse.initialize(this, "f539HwpFiyK3DhDsOb7xYRNwCtr7vCeMihU776Vk", "tH1ktzEjhCBZSvMzVR9Thjqj6sDtrrb1gwUYIlh1");
         currentMediaPlayer = new MediaPlayer();
         currentMediaPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
         setMediaPlayerOnCompletionListener();
