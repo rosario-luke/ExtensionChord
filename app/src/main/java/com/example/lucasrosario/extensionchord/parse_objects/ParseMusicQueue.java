@@ -18,6 +18,12 @@ public class ParseMusicQueue extends ParseObject {
         add("tracks", track);
     }
 
+    /**
+     *  This function is used to return the list of tracks stored within Parse.
+     *  It calls fetch on all the tracks so it should contain all the information needed.
+     *
+     * @return The list containing all the tracks.
+     */
     public List<ParseTrack> getTrackList() {
         List<ParseTrack> tracks = getList("tracks");
         if (tracks != null)
@@ -35,6 +41,11 @@ public class ParseMusicQueue extends ParseObject {
         return getList("tracks");
     }
 
+    /**
+     * Simple Pop function for the track list. Pops the first track from the list within Parse.
+     *
+     * @return the popped element.
+     */
     public ParseTrack pop() {
         List<ParseTrack> tracks = getList("tracks");
         ParseTrack first = null;
@@ -49,6 +60,11 @@ public class ParseMusicQueue extends ParseObject {
         return first;
     }
 
+    /**
+     * Deletes a track from the ParseMusicQueue
+     *
+     * @param toDelete: The track to delete.
+     */
     public void deleteTrack(ParseTrack toDelete) {
         List<ParseTrack> tracks = getList("tracks");
         if (tracks.contains(toDelete)) {

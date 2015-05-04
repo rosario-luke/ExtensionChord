@@ -108,6 +108,10 @@ public class RoomActivity extends FragmentActivity implements MediaPlayer.OnPrep
         }
     }
 
+    /**
+     * Called when the MediaPlayer is prepared asynchronously and starts the MediaPlayer.
+     * @param mp: MediaPlayer that was prepared.
+     */
     public void onPrepared(MediaPlayer mp) {
         currentMediaPlayer.start();
         prepared = true;
@@ -118,6 +122,9 @@ public class RoomActivity extends FragmentActivity implements MediaPlayer.OnPrep
         testFlag = b;
     }
 
+    /**
+     * Attempt to start the MediaPlayer.
+     */
     public void startMediaPlayer() {
         try {
             if (prepared) {
@@ -131,10 +138,16 @@ public class RoomActivity extends FragmentActivity implements MediaPlayer.OnPrep
         }
     }
 
+    /**
+     * Stop the MediaPlayer.
+     */
     public void stopMediaPlayer() {
         currentMediaPlayer.pause();
     }
 
+    /**
+     * Resets the MediaPlayer by remaking the media player and setting the proper parameters.
+     */
     public void resetMediaPlayer() {
         ParseRoom currRoom = RoomManager.getParseRoom(roomName);
         ParseMusicQueue queue = currRoom.getParseMusicQueue();
@@ -149,6 +162,9 @@ public class RoomActivity extends FragmentActivity implements MediaPlayer.OnPrep
         }
     }
 
+    /**
+     * Attempts to reset the MediaPlayer asynchronously.
+     */
     public void resetMediaPlayerAsync() {
         ParseRoom currRoom = RoomManager.getParseRoom(roomName);
         ParseMusicQueue queue = currRoom.getParseMusicQueue();
@@ -163,6 +179,9 @@ public class RoomActivity extends FragmentActivity implements MediaPlayer.OnPrep
         }
     }
 
+    /**
+     * Sets the callback that is called when the MediaPlayer finishes the current playing track.
+     */
     public void setMediaPlayerOnCompletionListener() {
         currentMediaPlayer.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
 
@@ -192,6 +211,10 @@ public class RoomActivity extends FragmentActivity implements MediaPlayer.OnPrep
         });
     }
 
+    /**
+     * Called when the activity is created. Holds initialization logic.
+     * @param savedInstanceState
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -324,6 +347,9 @@ public class RoomActivity extends FragmentActivity implements MediaPlayer.OnPrep
         super.onDestroy();
     }
 
+    /**
+     * Sets up the fragment for viewing the RoomUsers.
+     */
     public void setUpRoomUsersFragment() {
         FragmentManager fragmentManager = this.getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
@@ -332,6 +358,9 @@ public class RoomActivity extends FragmentActivity implements MediaPlayer.OnPrep
         fragmentTransaction.commit();
     }
 
+    /**
+     * Sets up the fragment for searching for ParseTracks.
+     */
     public void setUpSearchFragment() {
         FragmentManager fragmentManager = this.getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
@@ -340,6 +369,9 @@ public class RoomActivity extends FragmentActivity implements MediaPlayer.OnPrep
         fragmentTransaction.commit();
     }
 
+    /**
+     * Sets up the fragment for Viewing the ParseQueue.
+     */
     public void setUpViewQueueFragment() {
         FragmentManager fragmentManager = this.getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
@@ -348,6 +380,10 @@ public class RoomActivity extends FragmentActivity implements MediaPlayer.OnPrep
         fragmentTransaction.commit();
     }
 
+    /**
+     * Sets the callback for the SearchFragment's main button.
+     * @param v
+     */
     public void onSearchBtnClick(View v) {
         InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
         imm.hideSoftInputFromWindow(v.getWindowToken(), 0);
@@ -355,16 +391,27 @@ public class RoomActivity extends FragmentActivity implements MediaPlayer.OnPrep
         searchFragment.onSearchBtnClick(v, testFlag);
     }
 
+    /**
+     * Sets the callback for the ViewQueueFragment's refresh button.
+     * @param v
+     * @throws Exception
+     */
     public void onRefreshClick(View v) throws Exception {
         viewQueueFragment.onRefreshClick(v);
     }
 
+    /**
+     * Shows the loading screen.
+     */
     public void showProgressDialog() {
         if (!progressDialog.isShowing()) {
             progressDialog.show();
         }
     }
 
+    /**
+     * Dismisses the loading screen.
+     */
     public void dismissProgressDialog() {
         if (progressDialog.isShowing()) {
             progressDialog.dismiss();
