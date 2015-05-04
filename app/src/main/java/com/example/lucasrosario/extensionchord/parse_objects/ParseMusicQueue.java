@@ -18,6 +18,10 @@ public class ParseMusicQueue extends ParseObject {
         add("tracks", track);
     }
 
+    /**
+     * Gets the track list from the queue
+     * @return a List with all the ParseTracks in the queue
+     */
     public List<ParseTrack> getTrackList() {
         List<ParseTrack> tracks = getList("tracks");
         if (tracks != null)
@@ -35,6 +39,10 @@ public class ParseMusicQueue extends ParseObject {
         return getList("tracks");
     }
 
+    /**
+     * pop() function for the queue
+     * @return the top ParseTrack on the queue and deletes it from the queue
+     */
     public ParseTrack pop() {
         List<ParseTrack> tracks = getList("tracks");
         ParseTrack first = null;
@@ -49,6 +57,10 @@ public class ParseMusicQueue extends ParseObject {
         return first;
     }
 
+    /**
+     * Deletes a ParseTrack from the Queue
+     * @param toDelete the ParseTrack to delete from the queue
+     */
     public void deleteTrack(ParseTrack toDelete) {
         List<ParseTrack> tracks = getList("tracks");
         if (tracks.contains(toDelete)) {

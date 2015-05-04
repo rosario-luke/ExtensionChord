@@ -11,6 +11,10 @@ import java.util.List;
  */
 @ParseClassName("ParseTrack")
 public class ParseTrack extends ParseObject{
+
+    /*
+     * All setters for ParseTrack variables
+     */
     public void setTrackName(String trackName){
         put("trackName",trackName);
     }
@@ -30,24 +34,19 @@ public class ParseTrack extends ParseObject{
         put("submitter", submitter);
     }
 
+    /*
+     * All getters for ParseTrack variables
+     */
     public String getTrackName() { return getString("trackName"); }
-
     public List<String> getDownvoteList() { return getList("downvote"); }
-
     public String getTrackArtist() {
         return getString("trackArtist");
     }
-
     public String getTrackAlbum() {
         return getString("trackAlbum");
     }
-
     public int getTrackID() { return getInt("trackID"); }
-
-    public String getSubmitter() {
-        return getString("submitter");
-    }
-
+    public String getSubmitter() { return getString("submitter"); }
     public static ParseQuery<ParseTrack> getQuery() {
         return ParseQuery.getQuery(ParseTrack.class);
     }

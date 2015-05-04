@@ -9,7 +9,10 @@ import android.widget.EditText;
 
 import com.parse.ParseUser;
 
-
+/**
+ * First activity that comes up when the app launches. Gives a place to sign in that leads to the
+ * Join Room Activity, and a button that leads to the signup activity.
+ */
 public class MainActivity extends Activity {
 
     @Override

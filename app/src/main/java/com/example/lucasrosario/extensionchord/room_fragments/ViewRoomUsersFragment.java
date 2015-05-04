@@ -4,7 +4,6 @@ import android.app.Activity;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.ContextMenu;
 import android.view.ContextMenu.ContextMenuInfo;
 import android.view.LayoutInflater;
@@ -66,6 +65,10 @@ public class ViewRoomUsersFragment extends Fragment {
     public ViewRoomUsersFragment() {
     }
 
+    /*
+     * oncreate function called when fragment is opened,
+     * sets the roomname and mParams
+     */
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
