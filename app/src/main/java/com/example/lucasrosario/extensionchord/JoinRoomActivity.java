@@ -27,7 +27,10 @@ import com.parse.ParseUser;
 
 import java.util.List;
 
-
+/**
+ * The JoinRoom activity shows all the rooms within a certain radius, and
+ * allows a user to join one or make their own.
+ */
 public class JoinRoomActivity extends Activity implements GoogleApiClient.ConnectionCallbacks,
         GoogleApiClient.OnConnectionFailedListener {
 

@@ -56,7 +56,7 @@ public class CurrentSongDisplayItem extends LinearLayout{
     /**
      * Constructor for when manually adding  a ParseTrack
      * @param context
-     * @param t
+     * @param t the ParseTrack to be displayed in this display item
      */
     public CurrentSongDisplayItem(Context context, ParseTrack t) {
         super(context);

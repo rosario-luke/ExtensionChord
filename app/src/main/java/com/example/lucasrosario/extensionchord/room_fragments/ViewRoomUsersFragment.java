@@ -97,12 +97,6 @@ public class ViewRoomUsersFragment extends Fragment {
         return rootView;
     }
 
-    public void onButtonPressed(Uri uri) {
-        if (mListener != null) {
-            mListener.onFragmentInteraction(uri);
-        }
-    }
-
     @Override
     public void onAttach(Activity activity) {
         super.onAttach(activity);

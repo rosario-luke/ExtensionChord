@@ -33,7 +33,10 @@ import com.parse.ParseUser;
 import java.lang.reflect.Field;
 import java.util.List;
 
-
+/**
+ * RoomActivity is when you're in a room. Ties together the Search, View Queue, and
+ * View Room Users fragments.
+ */
 public class RoomActivity extends FragmentActivity implements MediaPlayer.OnPreparedListener {
     private DrawerLayout mDrawerLayout;
     private SearchFragment searchFragment;
@@ -86,10 +89,20 @@ public class RoomActivity extends FragmentActivity implements MediaPlayer.OnPrep
         trackInfoDialogFragment.show(fm, "fragment_track_info");
     }
 
+    /**
+     * returns the current media player
+     * @return current media player
+     */
     public MediaPlayer getMediaPlayer() {
         return currentMediaPlayer;
     }
 
+    /**
+     * Sets the URL for the current media player
+     * @param url the url to set
+     * @param async if the media player should prepare asyncronously
+     * @return if the media player url was set
+     */
     public boolean setCurrentMediaPlayerURL(String url, boolean async) {
         try {
             currentMediaPlayer.setDataSource(url);

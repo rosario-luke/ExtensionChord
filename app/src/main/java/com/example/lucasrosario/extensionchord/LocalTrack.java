@@ -4,6 +4,9 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 /**
+ * A LocalTrack holds track information on the phone, instead of querying Parse for a track
+ * every time we need information about it. It's merely a temporary local copy.
+ *
  * Created by Jakub on 3/16/2015.
  */
 public class LocalTrack {

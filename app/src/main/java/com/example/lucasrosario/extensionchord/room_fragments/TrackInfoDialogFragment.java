@@ -9,6 +9,9 @@ import android.widget.TextView;
 
 import com.example.lucasrosario.extensionchord.R;
 
+/**
+ * Shows track information about a track when longpressed on the view queue fragment
+ */
 public class TrackInfoDialogFragment extends DialogFragment {
     public TrackInfoDialogFragment() {
         // Empty constructor required for DialogFragment
