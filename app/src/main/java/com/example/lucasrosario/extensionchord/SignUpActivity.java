@@ -7,7 +7,10 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-
+/**
+ * The activity for creating an account for our App. Gets the username and the password twice,
+ * then calls the RoomManager to sign them up.
+ */
 public class SignUpActivity extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
