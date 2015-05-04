@@ -11,3 +11,8 @@ Contributors
 * Evan Mackenna-Ramsay
 * Jakub Wlodarcyz
 * Sumant Sabada
+
+
+Download
+--------
+You can download the .apk file from the release tab above
