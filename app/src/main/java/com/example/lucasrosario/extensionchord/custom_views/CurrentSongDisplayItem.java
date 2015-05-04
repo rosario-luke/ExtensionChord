@@ -15,11 +15,17 @@ import com.example.lucasrosario.extensionchord.R;
 
 /**
  * Created by lucaspritz on 4/7/15.
+ * A custom view for the current song playing
  */
 public class CurrentSongDisplayItem extends LinearLayout{
 
     private ParseTrack track;
 
+    /**
+     * Default constructor for when creating the class using xml
+     * @param context
+     * @param attrs
+     */
     public CurrentSongDisplayItem(Context context, AttributeSet attrs) {
         super(context, attrs);
 
@@ -47,6 +53,11 @@ public class CurrentSongDisplayItem extends LinearLayout{
         album_view.setText(album);
     }
 
+    /**
+     * Constructor for when manually adding  a ParseTrack
+     * @param context
+     * @param t
+     */
     public CurrentSongDisplayItem(Context context, ParseTrack t) {
         super(context);
 
@@ -68,22 +79,41 @@ public class CurrentSongDisplayItem extends LinearLayout{
         album_view.setText(track.getTrackAlbum());
     }
 
+    /**
+     * Getter for the trackname
+     * @return track name of the song playing
+     */
     public String getTrackName(){
         return ((TextView)this.findViewById(R.id.track_name)).getText().toString();
     }
 
+    /**
+     * Getter for the ParseTrack object that this class holds
+     * @return ParseTrack object
+     */
     public ParseTrack getTrack(){ return track;}
 
+    /**
+     * Sets the OnClickListener for the play button
+     * @param listener
+     */
     public void setPlayListener(OnClickListener listener){
         Button play_button = (Button)this.findViewById(R.id.play_button);
         play_button.setOnClickListener(listener);
     }
 
+    /**
+     * Sets the OnClickListener for the pause button
+     * @param listener
+     */
     public void setPauseListener(OnClickListener listener){
         Button pause_button = (Button)this.findViewById(R.id.pause_button);
         pause_button.setOnClickListener(listener);
     }
 
+    /**
+     * Hides the play and pause buttons
+     */
     public void hideButtons(){
         Button pause_button = (Button)this.findViewById(R.id.pause_button);
         Button play_button = (Button)this.findViewById(R.id.play_button);

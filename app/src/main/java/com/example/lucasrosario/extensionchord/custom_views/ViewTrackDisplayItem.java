@@ -14,6 +14,7 @@ import com.example.lucasrosario.extensionchord.R;
 
 /**
  * Created by Jakub on 3/17/2015.
+ * Custom view for the music queue in the ViewQueueFragment
  */
 public class ViewTrackDisplayItem extends LinearLayout{
 
@@ -75,20 +76,40 @@ public class ViewTrackDisplayItem extends LinearLayout{
 
     }
 
+    /**
+     * Sets the context menu that comes up when the view is long pressed
+     * @return
+     */
     public ContextMenu.ContextMenuInfo getContextMenuInfo() {
         return cMenu;
     }
 
+    /**
+     * Returns whether the menuInfo passed in is the views context menu
+     * @param menuInfo ContextMenuInfo item to compare
+     * @return
+     */
     public boolean isContextView(ContextMenu.ContextMenuInfo menuInfo) {
         return menuInfo == (ContextMenu.ContextMenuInfo)cMenu;
     }
 
+    /**
+     * Getter for the track name
+     * @return track name
+     */
     public String getTrackName(){
         return ((TextView)this.findViewById(R.id.track_name)).getText().toString();
     }
 
+    /**
+     * Returns the ParseTrack object that the view holds
+     * @return
+     */
     public ParseTrack getTrack(){ return track;}
 
+    /**
+     * Custom ContextMenuInfo for this class used for calling the context menu
+     */
     public static class TrackDisplayContextMenu implements ContextMenu.ContextMenuInfo {
         public ViewTrackDisplayItem  trackDisplayItem = null;
 
