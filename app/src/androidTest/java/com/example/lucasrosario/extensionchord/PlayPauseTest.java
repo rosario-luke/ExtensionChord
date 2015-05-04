@@ -72,17 +72,26 @@ public class PlayPauseTest extends ActivityInstrumentationTestCase2<RoomActivity
         ParseUser.getCurrentUser().delete();
     }
 
+    /**
+     * Testing the ability to play music in the room
+     */
     public void testPlayMusic(){
         ParseTrack currSong = testRoom.getParseMusicQueue().getTrackList().get(0);
         String currURL = "http://api.soundcloud.com/tracks/" + currSong.getTrackID() + "/stream?client_id=3fe96f34e369ae1ef5cf7e8fcc6c8eec";
         roomActivity.setCurrentMediaPlayerURL(currURL, false);
 
+        // Checking that the music is not already playing
         assertFalse(roomActivity.getMediaPlayer().isPlaying());
+        // Starting the music
         roomActivity.startMediaPlayer();
+        // Checking the music is playing
         assertTrue(roomActivity.getMediaPlayer().isPlaying());
         roomActivity.getMediaPlayer().stop();
     }
 
+    /**
+     * Testing the ability to pause the music in the room
+     */
     public void testPauseMusic(){
         ParseTrack currSong = testRoom.getParseMusicQueue().getTrackList().get(0);
         String currURL = "http://api.soundcloud.com/tracks/" + currSong.getTrackID() + "/stream?client_id=3fe96f34e369ae1ef5cf7e8fcc6c8eec";
@@ -90,11 +99,17 @@ public class PlayPauseTest extends ActivityInstrumentationTestCase2<RoomActivity
 
         assertFalse(roomActivity.getMediaPlayer().isPlaying());
         roomActivity.startMediaPlayer();
+        // Checking music is playing prior to the pause attempt
         assertTrue(roomActivity.getMediaPlayer().isPlaying());
+        // Pausing the music
         roomActivity.stopMediaPlayer();
+        // Checking the music is paused
         assertFalse(roomActivity.getMediaPlayer().isPlaying());
     }
 
+    /**
+     * Testing the ability to pop songs from the music queue
+     */
     public void testPopQueue(){
         ParseMusicQueue testQueue = testRoom.getParseMusicQueue();
         int initListLen = testQueue.getTrackList().size();
@@ -105,6 +120,9 @@ public class PlayPauseTest extends ActivityInstrumentationTestCase2<RoomActivity
         assertTrue(initListLen == testQueue.getTrackList().size() + 1);
     }
 
+    /**
+     * Testing that the next song in the queue will be played automatically
+     */
     public void testAutoPlay(){
         ParseTrack currSong = testRoom.getParseMusicQueue().getTrackList().get(0);
         String currURL = "http://api.soundcloud.com/tracks/" + currSong.getTrackID() + "/stream?client_id=3fe96f34e369ae1ef5cf7e8fcc6c8eec";

@@ -65,11 +65,16 @@ public class ViewRoomTest extends ActivityInstrumentationTestCase2<MainActivity>
             }
     }
 
+    /**
+     * Tests that nearby rooms are visible
+     * @throws Exception
+     */
     public void testGetRooms() throws Exception {
         manager.createRoom("Test Room", "",testPoint);
 
         results = manager.getNearbyRooms(0.5, testPoint);
 
+        // Checks that the room was found
         assertTrue(results.size() > 0);
     }
 }

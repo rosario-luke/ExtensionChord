@@ -96,8 +96,11 @@ public class SeeUsersTest extends ActivityInstrumentationTestCase2<JoinRoomActiv
      */
     public void testAdmin() throws ParseException {
         RoomUser testAdmin = new RoomUser();
+        // checks user is not already admin
         assertFalse(testAdmin.isAdmin());
+        // makes user an admin
         testAdmin.setAdmin(true);
+        // checks user is now admin
         assertTrue(testAdmin.isAdmin());
     }
 

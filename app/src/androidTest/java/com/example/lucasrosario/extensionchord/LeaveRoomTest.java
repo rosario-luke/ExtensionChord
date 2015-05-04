@@ -59,6 +59,10 @@ public class LeaveRoomTest extends ActivityInstrumentationTestCase2<JoinRoomActi
 
     }
 
+    /**
+     * Test to check the ability for users to be removed from rooms
+     * @throws ParseException
+     */
     public void testLeaveRoom() throws ParseException {
         ParseRoom room = new ParseRoom();
         room.setLocation(new ParseGeoPoint(0.0, 0.0));
@@ -68,10 +72,13 @@ public class LeaveRoomTest extends ActivityInstrumentationTestCase2<JoinRoomActi
         room.setCreator(test);
         room.setRoomName("SUTestRoom");
         List<RoomUser> preUsers = room.getRoomUsers();
+        // Checks the initial number of users in the room is correct
         assertEquals(2, preUsers.size());
+        // Removes both users
         RoomManager.removeUserFromRoom("ATester1");
         RoomManager.removeUserFromRoom("ATester2");
         List<RoomUser> users = room.getRoomUsers();
+        // Checks the new number of users in the room is correct
         assertEquals(0, users.size());
     }
 

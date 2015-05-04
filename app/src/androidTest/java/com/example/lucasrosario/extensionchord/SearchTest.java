@@ -83,32 +83,50 @@ public class SearchTest extends ActivityInstrumentationTestCase2<RoomActivity> i
         }
     }
 
+    /**
+     * Testing ability to search Soundcloud for a given phrase
+     * @throws Exception
+     */
     public void testSearchFunctionBasic() throws Exception{
 
 
 
+        // Defining/performing the search to be carried out
         new SoundCloudSearch(this).execute("kayne");
         Thread.sleep(1500);
+        // Checks that the search completed successfully
         assertTrue(searchCompleted);
 
 
     }
 
+    /**
+     * Testing the ability to search Soundcloud for phrases containing spaces
+     * @throws Exception
+     */
     public void testSearchFunctionWithSpaces() throws Exception{
 
 
+        // Defining/performing search
         new SoundCloudSearch(this).execute("kayne west");
         Thread.sleep(1500);
+        // Checks that the search completed successfully
         assertTrue(searchCompleted);
 
 
     }
 
+    /**
+     * Testing what happens if a search is performed without a search phrase
+     * @throws Exception
+     */
     public void testSearchFunctionBlank() throws Exception{
 
 
+        // Searches with blank search
         new SoundCloudSearch(this).execute("");
         Thread.sleep(1500);
+        // Checks that the search completed successfully
         assertTrue(searchCompleted);
 
 

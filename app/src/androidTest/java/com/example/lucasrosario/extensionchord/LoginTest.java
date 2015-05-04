@@ -49,6 +49,10 @@ public class LoginTest extends ActivityInstrumentationTestCase2<MainActivity> {
         }
     }
 
+    /**
+     * Test to show the user can log into a given room with the correct details
+     * @throws Exception
+     */
     public void testLogin() throws Exception {
         //Testing if the user can login given correct details.
         ParseUser currUser = new ParseUser();
@@ -63,6 +67,10 @@ public class LoginTest extends ActivityInstrumentationTestCase2<MainActivity> {
         assertNotNull(ParseUser.getCurrentUser());
     }
 
+    /**
+     * Testing the sign up functionality
+     * @throws Exception
+     */
     public void testSignUp() throws Exception {
         //Testing if user gets signed up and then logged in.
 

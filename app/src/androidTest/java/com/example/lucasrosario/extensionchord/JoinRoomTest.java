@@ -77,6 +77,10 @@ public class JoinRoomTest extends ActivityInstrumentationTestCase2<RoomActivity>
         }
     }
 
+    /**
+     * Test that tests ability to add a user to a room
+     * @throws Exception
+     */
     public void testJoinRoom() throws Exception {
         RoomUser user = new RoomUser();
 
@@ -90,10 +94,13 @@ public class JoinRoomTest extends ActivityInstrumentationTestCase2<RoomActivity>
             fail();
         }
 
+        // adds user to room
         user.joinRoom(testRoom.getRoomName());
 
+        // gets users in the test room
         List<RoomUser> roomUsers = testRoom.getRoomUsers();
 
+        // checks that the user has been added to the list
         assertEquals("Tester", roomUsers.get(0).getUsername());
     }
 }

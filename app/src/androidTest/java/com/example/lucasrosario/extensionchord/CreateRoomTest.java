@@ -89,6 +89,7 @@ public class CreateRoomTest extends ActivityInstrumentationTestCase2<JoinRoomAct
         } catch(ParseException e) {
             fail(e.getMessage());
         }
+        // checks the room has been created successfully
         assertNotNull(objs);
         assertEquals(1, objs.size());
     }
