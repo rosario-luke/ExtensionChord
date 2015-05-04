@@ -74,6 +74,10 @@ public class SeeUsersTest extends ActivityInstrumentationTestCase2<JoinRoomActiv
             user.delete();
     }
 
+    /**
+     * Test to show that the correct number of users are in the room when checking its occupants
+     * @throws ParseException
+     */
     public void testSeeUsers() throws ParseException {
         room = new ParseRoom();
         room.setLocation(new ParseGeoPoint(0.0, 0.0));
@@ -86,6 +90,10 @@ public class SeeUsersTest extends ActivityInstrumentationTestCase2<JoinRoomActiv
         assertEquals(2, users.size());
     }
 
+    /**
+     * Test to show that creating admins functions correctly
+     * @throws ParseException
+     */
     public void testAdmin() throws ParseException {
         RoomUser testAdmin = new RoomUser();
         assertFalse(testAdmin.isAdmin());
