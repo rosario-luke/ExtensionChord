@@ -14,6 +14,14 @@ public class LocalTrack {
     private String trackAlbum;
     private int trackID;
 
+    /**
+     * Constructor for a Local Track object. Holds information within the phone as opposed to within parse.
+     * @param o: JSON holding the information.
+     * @param tName: Track Name
+     * @param tArtist: Track Artist
+     * @param tAlbum: Track Album
+     * @param tID: Track ID
+     */
     public LocalTrack(JSONObject o, String tName, String tArtist, String tAlbum, int tID){
         jsonObject = o;
         trackName = tName;
@@ -22,6 +30,11 @@ public class LocalTrack {
         trackID = tID;
     }
 
+    /**
+     * Gets the track name from the JSON.
+     * @param o: JSON to get track name from.
+     * @return the track name.
+     */
     public static String getTrackFromJSON(JSONObject o){
         String track;
         try{
@@ -32,6 +45,11 @@ public class LocalTrack {
         return track;
     }
 
+    /**
+     * Gets the artist name from the JSON
+     * @param o: Json Object to get track artist from.
+     * @return Track Artist.
+     */
     public static String getArtistFromJSON(JSONObject o){
         String artist = "";
         try{
@@ -43,6 +61,11 @@ public class LocalTrack {
         return artist;
     }
 
+    /**
+     * Gets the album name from the JSON
+     * @param o: JSON to get album name from.
+     * @return The album name.
+     */
     public static String getAlbumFromJSON(JSONObject o){
         String album = "";
         try{
@@ -53,6 +76,11 @@ public class LocalTrack {
         return album;
     }
 
+    /**
+     * Gets the track ID from the JSON
+     * @param o: JSON to get track ID from.
+     * @return The track ID.
+     */
     static public int getTrackIDFromJSON(JSONObject o){
         try{
             return o.getInt("id");
@@ -62,6 +90,10 @@ public class LocalTrack {
         }
     }
 
+    /**
+     * Checks if the track has album art.
+     * @return whether the track has album art or not.
+     */
     public boolean hasAlbumArt(){
         try{
             jsonObject.getString("artwork_url");
@@ -71,6 +103,10 @@ public class LocalTrack {
         return true;
     }
 
+    /**
+     * Gets the URL for the album art.
+     * @return Album Art URL.
+     */
     public String getAlbumArtUrl() {
         try {
             return jsonObject.getString("artwork_url");
@@ -79,16 +115,32 @@ public class LocalTrack {
         }
     }
 
+    /**
+     * Gets the track name.
+     * @return The track name.
+     */
     public String getTrackName() { return trackName; }
 
+    /**
+     * Gets the track artist.
+     * @return the track artist.
+     */
     public String getTrackArtist() {
         return trackArtist;
     }
 
+    /**
+     * gets the Track album
+     * @return The track album.
+     */
     public String getTrackAlbum() {
         return trackAlbum;
     }
 
+    /**
+     * Gets the Track ID.
+     * @return The track ID.
+     */
     public int getTrackID() { return trackID; }
 
 }
