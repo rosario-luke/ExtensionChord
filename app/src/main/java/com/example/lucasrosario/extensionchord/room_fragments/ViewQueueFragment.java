@@ -30,6 +30,8 @@ import java.util.List;
 
 /**
  * Created by lucaspritz on 3/16/15.
+ * This class is an extension of an Android Fragment that is used to view the current music queue
+ * as well as play music
  */
 public class ViewQueueFragment extends Fragment {
 
@@ -47,7 +49,6 @@ public class ViewQueueFragment extends Fragment {
      * @param param2 Parameter 2.
      * @return A new instance of fragment SearchFragment.
      */
-    // TODO: Rename and change types and number of parameters
     public static ViewQueueFragment newInstance(String param1, String param2) {
         ViewQueueFragment fragment = new ViewQueueFragment();
         Bundle args = new Bundle();
@@ -56,6 +57,9 @@ public class ViewQueueFragment extends Fragment {
         return fragment;
     }
 
+    /**
+     * Default empty constructor for fragments
+     */
     public ViewQueueFragment() {
         // Required empty public constructor
     }
@@ -68,14 +72,25 @@ public class ViewQueueFragment extends Fragment {
         }
     }
 
+    /**
+     * Refreshes the music queue by calling buildTrackList()
+     */
     public void refresh(){
         buildTrackList();
     }
 
+    /**
+     * Button handler to when refresh is clicked
+     * @param v
+     */
     public void onRefreshClick(View v){
         refresh();
     }
 
+    /**
+     * Queries the parse database for the current room queue. Upon return calls addTracks
+     * to update the GUI
+     */
     public void buildTrackList(){
         ((RoomActivity) getActivity()).showProgressDialog();
         String roomName = ((RoomActivity)getActivity()).getRoomName();
@@ -142,6 +157,10 @@ public class ViewQueueFragment extends Fragment {
         public void onFragmentInteraction(Uri uri);
     }
 
+    /**
+     * A separate runnable class that updates the GUI portion of the fragment to
+     * reflect the current ParseMusicQueue for the room
+     */
     public class TrackItemAdder implements Runnable {
         private ArrayList<ViewTrackDisplayItem> tList;
         private ViewQueueFragment fragment;
@@ -152,6 +171,9 @@ public class ViewQueueFragment extends Fragment {
             this.fragment = frag;
         }
 
+        /**
+         * Does the actual work for the runnable
+         */
         public void run() {
             LinearLayout viewCurrentSongLayout = (LinearLayout) fragment.getView().findViewById(R.id.current_song);
             viewCurrentSongLayout.removeAllViews();
@@ -186,6 +208,10 @@ public class ViewQueueFragment extends Fragment {
         }
     }
 
+    /**
+     * Creates new ViewTrackDisplayItems using the current ParseMusicQueue
+     * @param currQueue - The current ParseMusicQueue for the room
+     */
     public void addTracks(ParseMusicQueue currQueue){
         ArrayList<ViewTrackDisplayItem> viewList = new ArrayList<ViewTrackDisplayItem>();
         CurrentSongDisplayItem currentSongItem = null;
@@ -240,6 +266,13 @@ public class ViewQueueFragment extends Fragment {
 
     }
 
+    /**
+     * Overrides the default behavior for when an item is long-pressed
+     * This handles the extra options available for skipping, deleting, and viewing
+     * extra info for a track
+     * @param item - The item that was clicked
+     * @return
+     */
     @Override
     public boolean onContextItemSelected(MenuItem item) {
         CharSequence itemTitle = item.getTitle();
