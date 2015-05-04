@@ -36,6 +36,10 @@ public class JoinRoomActivity extends Activity implements GoogleApiClient.Connec
     private Location mLastLocation;
     private RoomManager roomManager;
 
+    /**
+     * Called when the activity is created, holds all initilization logic.
+     * @param savedInstanceState
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -88,6 +92,9 @@ public class JoinRoomActivity extends Activity implements GoogleApiClient.Connec
 
     }
 
+    /**
+     * Builds the Google API client. This is primarily for getting the location.
+     */
     protected synchronized void buildGoogleApiClient() {
         Log.d("Location", "Going to get location");
         mGoogleApiClient = new GoogleApiClient.Builder(this)
@@ -97,6 +104,10 @@ public class JoinRoomActivity extends Activity implements GoogleApiClient.Connec
                 .build();
     }
 
+    /**
+     * Once the API is connected, it gets the location and stores it.
+     * @param bundle
+     */
     public void onConnected(Bundle bundle) {
         Log.d("Location", "Connected");
         mLastLocation = LocationServices.FusedLocationApi.getLastLocation(mGoogleApiClient);
@@ -110,6 +121,9 @@ public class JoinRoomActivity extends Activity implements GoogleApiClient.Connec
         }
     }
 
+    /**
+     * Refreshes the location, useful for if the user is moving.
+     */
     public void refreshLocation() {
         mLastLocation = LocationServices.FusedLocationApi.getLastLocation(mGoogleApiClient);
 
@@ -121,6 +135,9 @@ public class JoinRoomActivity extends Activity implements GoogleApiClient.Connec
         }
     }
 
+    /**
+     * Logs the current user out.
+     */
     private void logout() {
         ParseUser.getCurrentUser().logOut();
         Intent intent = new Intent(this, MainActivity.class);
@@ -128,6 +145,9 @@ public class JoinRoomActivity extends Activity implements GoogleApiClient.Connec
         finish();
     }
 
+    /**
+     * Refreshes the list of rooms.
+     */
     private void viewRoomList() {
         refreshLocation();
         List<ParseRoom> rooms = roomManager.getNearbyRooms(Constants.SEARCH_RADIUS, geoPoint);
@@ -204,12 +224,20 @@ public class JoinRoomActivity extends Activity implements GoogleApiClient.Connec
         JoinRoomActivity.this.startActivity(myIntent);
     }
 
+    /**
+     * Called when the connection to the API was suspended for whatever reason.
+     * @param cs
+     */
     public void onConnectionSuspended(int cs) {
         Log.d("Location", "Could not find location");
         mLastLocation = null;
         geoPoint = null;
     }
 
+    /**
+     * Called when the connection to the API fails. Primarily due to no internet available.
+     * @param cr
+     */
     public void onConnectionFailed(ConnectionResult cr) {
         Log.d("Location", "Could not find location");
 
