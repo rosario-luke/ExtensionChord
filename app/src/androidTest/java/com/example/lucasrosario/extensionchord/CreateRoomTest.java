@@ -1,11 +1,8 @@
 package com.example.lucasrosario.extensionchord;
 
-import android.content.Intent;
 import android.test.ActivityInstrumentationTestCase2;
-import android.test.ActivityUnitTestCase;
 import android.util.Log;
 
-import com.parse.Parse;
 import com.parse.ParseException;
 import com.parse.ParseGeoPoint;
 import com.parse.ParseObject;
@@ -15,6 +12,9 @@ import com.parse.ParseUser;
 import java.util.List;
 
 /**
+ * The device these tests are running on must have its screen
+ * unlocked and lit up in order for these tests to pass.
+ *
  * Created by lucas on 2/21/15.
  */
 public class CreateRoomTest extends ActivityInstrumentationTestCase2<JoinRoomActivity> {

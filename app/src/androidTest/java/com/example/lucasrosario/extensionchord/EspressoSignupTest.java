@@ -1,34 +1,24 @@
 package com.example.lucasrosario.extensionchord;
 
-import android.app.Activity;
-import android.app.Instrumentation;
 import android.support.test.InstrumentationRegistry;
-import android.support.test.internal.runner.lifecycle.ActivityLifecycleMonitorRegistry;
-import android.support.test.runner.lifecycle.ActivityLifecycleMonitor;
-import android.support.test.runner.lifecycle.Stage;
 import android.test.ActivityInstrumentationTestCase2;
 import android.util.Log;
 
-import com.android.support.test.deps.guava.base.Throwables;
-import com.android.support.test.deps.guava.collect.Sets;
 import com.parse.ParseException;
 import com.parse.ParseUser;
-
-import java.util.Collection;
-import java.util.Set;
-import java.util.concurrent.Callable;
-import java.util.concurrent.atomic.AtomicReference;
 
 import static android.support.test.espresso.Espresso.onView;
 import static android.support.test.espresso.action.ViewActions.click;
 import static android.support.test.espresso.action.ViewActions.closeSoftKeyboard;
 import static android.support.test.espresso.action.ViewActions.typeText;
-import static android.support.test.espresso.action.ViewActions.typeTextIntoFocusedView;
 import static android.support.test.espresso.assertion.ViewAssertions.matches;
 import static android.support.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static android.support.test.espresso.matcher.ViewMatchers.withId;
 
 /**
+ * The device these tests are running on must have its screen
+ * unlocked and lit up in order for these tests to pass.
+ *
  * Created by lucas on 4/9/15.
  */
 public class EspressoSignupTest extends ActivityInstrumentationTestCase2<MainActivity> {

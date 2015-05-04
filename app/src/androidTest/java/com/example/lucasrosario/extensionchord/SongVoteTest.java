@@ -17,6 +17,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
+ * The device these tests are running on must have its screen
+ * unlocked and lit up in order for these tests to pass.
+ *
  * Created by Brett on 3/3/2015.
  */
 public class SongVoteTest extends ActivityInstrumentationTestCase2<RoomActivity> implements OnSearchTaskCompleted{
