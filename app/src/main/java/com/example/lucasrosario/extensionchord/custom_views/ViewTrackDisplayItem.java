@@ -20,6 +20,12 @@ public class ViewTrackDisplayItem extends LinearLayout{
 
     private ParseTrack track;
     private TrackDisplayContextMenu cMenu;
+
+    /**
+     * Default Constructor.
+     * @param context
+     * @param attrs
+     */
     public ViewTrackDisplayItem(Context context, AttributeSet attrs) {
         super(context, attrs);
 
@@ -49,6 +55,12 @@ public class ViewTrackDisplayItem extends LinearLayout{
         cMenu = new TrackDisplayContextMenu(this);
     }
 
+    /**
+     * Constructor when given a Parse Track.
+     * @param context
+     * @param t: The Parse track that holds all the information about the Track.
+     * @param count
+     */
     public ViewTrackDisplayItem(Context context, ParseTrack t, int count) {
         super(context);
 
