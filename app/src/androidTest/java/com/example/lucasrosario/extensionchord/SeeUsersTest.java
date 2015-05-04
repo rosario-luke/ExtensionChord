@@ -13,6 +13,9 @@ import com.parse.ParseUser;
 import java.util.List;
 
 /**
+ * The device these tests are running on must have its screen
+ * unlocked and lit up in order for these tests to pass.
+ *
  * Created by Evan on 18/03/2015.
  */
 public class SeeUsersTest extends ActivityInstrumentationTestCase2<JoinRoomActivity> {

@@ -11,6 +11,9 @@ import com.parse.ParseUser;
 import java.util.List;
 
 /**
+ * The device these tests are running on must have its screen
+ * unlocked and lit up in order for these tests to pass.
+ *
  * Created by Jakub on 2/27/2015.
  */
 public class ViewRoomTest extends ActivityInstrumentationTestCase2<MainActivity> {

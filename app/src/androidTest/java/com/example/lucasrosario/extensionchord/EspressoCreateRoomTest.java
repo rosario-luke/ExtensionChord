@@ -22,6 +22,9 @@ import static android.support.test.espresso.matcher.ViewMatchers.withId;
 import static android.support.test.espresso.matcher.ViewMatchers.withText;
 
 /**
+ * The device these tests are running on must have its screen
+ * unlocked and lit up in order for these tests to pass.
+ *
  * Created by lucas on 4/9/15.
  */
 public class EspressoCreateRoomTest extends ActivityInstrumentationTestCase2<MainActivity> {

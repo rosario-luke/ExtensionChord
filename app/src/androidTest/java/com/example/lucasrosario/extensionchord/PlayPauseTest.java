@@ -5,11 +5,13 @@ import android.test.ActivityInstrumentationTestCase2;
 import com.example.lucasrosario.extensionchord.parse_objects.ParseMusicQueue;
 import com.example.lucasrosario.extensionchord.parse_objects.ParseRoom;
 import com.example.lucasrosario.extensionchord.parse_objects.ParseTrack;
-import com.parse.Parse;
 import com.parse.ParseGeoPoint;
 import com.parse.ParseUser;
 
 /**
+ * The device these tests are running on must have its screen
+ * unlocked and lit up in order for these tests to pass.
+ *
  * Created by Jakub on 4/9/2015.
  */
 public class PlayPauseTest extends ActivityInstrumentationTestCase2<RoomActivity> {
